@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { AppBar, Link } from "@mui/material";
-import Bar from "./component/Bar";
+
 function App() {
   const dispatch = useDispatch();
   React.useEffect(() => {
@@ -27,13 +27,10 @@ function App() {
           <Route path="/signin" exact component={Signin} />
           <Route path="/signup" exact component={Signup} />
         </Container>
-        <Bar />
+
         <Box sx={{ width: "100vw", height: "100vh" }}>
           <Route path="/" exact component={Home} />
         </Box>
-        <Container maxWidth="xl">
-          <Route path="/" exact component={Home} />
-        </Container>
       </ConnectedRouter>
     </>
   );
