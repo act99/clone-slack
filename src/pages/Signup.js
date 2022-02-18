@@ -8,6 +8,16 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/loginReducer";
+import { Link } from "@mui/material";
+import ButtonBase from "@mui/material/ButtonBase";
+import { styled } from "@mui/material/styles";
+
+const Img = styled("img")({
+  margin: "auto",
+  display: "block",
+  maxWidth: "100%",
+  maxHeight: "100%",
+});
 
 export default function Signup() {
   const dispatch = useDispatch();
@@ -36,111 +46,163 @@ export default function Signup() {
   };
 
   return (
-    <Grid container component="main" sx={{ height: "92vh", margin: "0.7vh" }}>
-      <CssBaseline />
-      <Grid
-        item
-        xs={false}
-        sm={4}
-        md={7}
-        sx={{
-          backgroundImage: "url(https://source.unsplash.com/random)",
-          backgroundRepeat: "no-repeat",
-          backgroundColor: (t) =>
-            t.palette.mode === "light"
-              ? t.palette.grey[50]
-              : t.palette.grey[900],
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <Box
-          sx={{
-            my: 8,
-            mx: 4,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Grid container>
-            <Grid item xs sx={{ mt: 5 }}>
-              <Typography
-                component="h1"
-                variant="h5"
-                sx={{ fontWeight: "bold", ml: 1 }}
-              >
-                회원가입
-              </Typography>
-            </Grid>
-            <Grid item></Grid>
-          </Grid>
+    <>
+      <Grid container component="main" sx={{ height: "100vh" }}>
+        <CssBaseline />
+        <Grid item xs={12} mx={"auto"} component={Paper} square>
           <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 1 }}
+            sx={{
+              my: 8,
+              mx: 4,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="이메일"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="nickname"
-              label="닉네임"
-              name="nickname"
-              autoComplete="text"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="비밀번호"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="checkPassword"
-              label="비밀번호 확인"
-              type="password"
-              id="checkPassword"
-              autoComplete="current-password"
-            />
+            <ButtonBase sx={{ width: 128, height: 64 }}>
+              <Img
+                alt="complex"
+                src="https://aem.dropbox.com/cms/content/dam/dropbox/www/en-us/business/app-integrations/slack/Slack_logo_new.png"
+              />
+            </ButtonBase>
+            <Grid container textAlign="center">
+              <Grid item xs sx={{ mt: 5 }}>
+                <Typography
+                  component="h1"
+                  variant="h3"
+                  sx={{ fontWeight: "bold", ml: 1 }}
+                >
+                  이메일로 회원가입을 해주세요
+                </Typography>
+                <Typography
+                  component="h1"
+                  variant="h7"
+                  sx={{ fontWeight: "bold", ml: 1, mt: 1, fontSize: "16px" }}
+                >
+                  직장에서 사용하는 이메일주소로 회원가입하는 걸 추천드려요.
+                </Typography>
+              </Grid>
+              <Grid item></Grid>
+            </Grid>
 
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="error"
-              sx={{ mt: 3, mb: 2, backgroundColor: "#f86453", py: 1.5 }}
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 1, maxWidth: 550 }}
             >
-              <Typography
-                component="h2"
-                variant="h6"
-                sx={{ fontWeight: "bold", ml: 1 }}
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="email"
+                name="email"
+                autoComplete="email"
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="nickname"
+                label="nickname"
+                name="nickname"
+                autoComplete="text"
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="checkPassword"
+                label="checkPassword"
+                type="password"
+                id="checkPassword"
+                autoComplete="current-password"
+              />
+
+              <Button
+                type="submit"
+                fullWidth
+                color="secondary"
+                variant="contained"
+                sx={{ mt: 3, mb: 2, backgroundColor: "#611f69", py: 1.5 }}
               >
-                회원가입
-              </Typography>
-            </Button>
+                <Typography
+                  component="h2"
+                  variant="h6"
+                  sx={{ fontWeight: "bold", ml: 1 }}
+                >
+                  회원가입
+                </Typography>
+              </Button>
+              <Grid container>
+                <Grid
+                  item
+                  xs
+                  sx={{
+                    mt: 5,
+                    textAlign: "center",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <Typography
+                    variant="caption"
+                    sx={{ fontSize: "16px", fontWeight: "bold", mb: 2 }}
+                  >
+                    이미 Slack을 사용하고 있나요?
+                  </Typography>
+                  <Link href="/signin" variant="body2">
+                    {"Slack 로그인"}
+                  </Link>
+                </Grid>
+              </Grid>
+            </Box>
           </Box>
-        </Box>
+          <Box sx={{ height: "5vh" }}></Box>
+          <Copyright />
+        </Grid>
       </Grid>
-    </Grid>
+    </>
+  );
+}
+
+function Copyright() {
+  return (
+    <>
+      <Typography variant="body2" color="text.secondary" align="center">
+        {"Copyright © "}
+        <Link color="inherit" href="https://github.com/act99/mini_project">
+          Frontend
+        </Link>
+
+        {new Date().getFullYear()}
+        {"."}
+      </Typography>
+      <Typography variant="body2" color="text.secondary" align="center">
+        {"Copyright © "}
+
+        <Link
+          color="inherit"
+          href="https://github.com/hyeonjh/gongguri_backend"
+        >
+          Back end
+        </Link>
+        {new Date().getFullYear()}
+        {"."}
+      </Typography>
+    </>
   );
 }
