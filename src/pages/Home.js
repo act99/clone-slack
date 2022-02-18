@@ -2,6 +2,8 @@ import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
+import Bar from "../component/Bar";
+import ChattingContainer from "../container/ChattingContainer";
 
 const Home = () => {
   const Item = styled(Paper)(({ theme }) => ({
@@ -14,6 +16,7 @@ const Home = () => {
   }));
   return (
     <Box sx={{ width: 1 }}>
+      <Bar />
       <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={0}>
         <Box gridColumn="span 1">
           <Item>1</Item>
@@ -22,7 +25,7 @@ const Home = () => {
           <Item>2</Item>
         </Box>
         <Box gridColumn="span 7">
-          <Item>3</Item>
+          <ChattingContainer />
         </Box>
       </Box>
     </Box>
