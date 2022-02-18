@@ -31,6 +31,9 @@ function App() {
         <Box sx={{ width: "100vw", height: "100vh" }}>
           <Route path="/" exact component={Home} />
         </Box>
+        <Container maxWidth="xl">
+          <Route path="/" exact component={Home} />
+        </Container>
       </ConnectedRouter>
     </>
   );
