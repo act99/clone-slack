@@ -2,6 +2,8 @@ import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
+import Bar from "../component/Bar";
+import Grid from "@mui/material/Grid";
 
 const Home = () => {
   const Item = styled(Paper)(({ theme }) => ({
@@ -13,20 +15,20 @@ const Home = () => {
     fontWeight: "bold",
   }));
   return (
-    <Box sx={{ width: 1 }}>
-      <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={0}>
-        <Box gridColumn="span 1">
-          <Item>1</Item>
-        </Box>
-        <Box gridColumn="span 4">
-          <Item>2</Item>
-        </Box>
-        <Box gridColumn="span 7">
-          <Item>3</Item>
-        </Box>
-      </Box>
+    <Box sx={{ flexGrow: 1 }}>
+      <Bar />
+      <Grid container>
+        <Grid item xs={6} md={1}>
+          <Item>xs=6 md=8</Item>
+        </Grid>
+        <Grid item xs={6} md={4}>
+          <Item>xs=6 md=8</Item>
+        </Grid>
+        <Grid item xs={6} md={7}>
+          <Item>xs=6 md=4</Item>
+        </Grid>
+      </Grid>
     </Box>
   );
 };
-
 export default Home;
