@@ -3,6 +3,7 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Bar from "../component/Bar";
+import Grid from "@mui/material/Grid";
 import ChattingContainer from "../container/ChattingContainer";
 
 const Home = () => {
@@ -15,21 +16,20 @@ const Home = () => {
     fontWeight: "bold",
   }));
   return (
-    <Box sx={{ width: 1 }}>
+    <Box sx={{ flexGrow: 1 }}>
       <Bar />
-      <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={0}>
-        <Box gridColumn="span 1">
-          <Item>1</Item>
-        </Box>
-        <Box gridColumn="span 4">
-          <Item>2</Item>
-        </Box>
-        <Box gridColumn="span 7">
+      <Grid container>
+        <Grid item xs={6} md={0.5}>
+          <Item>xs=6 md=8</Item>
+        </Grid>
+        <Grid item xs={6} md={2.5}>
+          <Item>xs=6 md=8</Item>
+        </Grid>
+        <Grid item xs={6} md={9}>
           <ChattingContainer />
-        </Box>
-      </Box>
+        </Grid>
+      </Grid>
     </Box>
   );
 };
-
 export default Home;
