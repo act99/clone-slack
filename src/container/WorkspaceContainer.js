@@ -7,7 +7,7 @@ import {
   WorkspaceName,
   Workspaces,
   WorkspaceWrapper,
-} from "../shared/Style";
+} from "../shared/style";
 import ButtonList from "../component/WorkspaceContainer/ButtonList";
 
 const WorkspaceContainer = (props) => {

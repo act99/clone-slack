@@ -3,7 +3,7 @@ import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
-import { WorkspaceName } from "../../shared/Style";
+import { WorkspaceName } from "../../shared/style";
 import { deepOrange } from "@mui/material/colors";
 
 export default function MenuHeader() {

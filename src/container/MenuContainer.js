@@ -1,7 +1,7 @@
 import React from "react";
 import Directlist from "../component/MenuContainer/DirectList";
 import MenuHeader from "../component/MenuContainer/MenuHeader";
-import { MenuScroll, WorkspaceName } from "../shared/Style";
+import { MenuScroll, WorkspaceName } from "../shared/style";
 
 const MenuContainer = (props) => {
   return (

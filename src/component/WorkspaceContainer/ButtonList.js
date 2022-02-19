@@ -1,5 +1,5 @@
 import React from "react";
-import { WorkspaceButton, WorkspaceModal } from "../../shared/Style";
+import { WorkspaceButton, WorkspaceModal } from "../../shared/style";
 
 const ButtonList = (props) => {
   const EnterWorkspace = () => {
