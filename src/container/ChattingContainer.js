@@ -1,10 +1,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import Test2 from "./Test2";
-import Test from "./Test";
-import Test4 from "./Test4";
-import ChatRoom from "./Test3";
-
+import Profile from "../component/ChattingContainer/Profile";
+import Bookmark from "../component/ChattingContainer/Bookmark";
 const ChattingContainer = (props) => {
   return (
     <>
@@ -12,26 +9,31 @@ const ChattingContainer = (props) => {
         sx={{
           width: "100%",
           height: 50,
+          pl: 2,
         }}
         style={{
-          borderBottom: "solid 1px #585858",
+          borderBottom: "solid 1px #e2e2e2",
         }}
-      ></Box>
+      >
+        <Profile />
+      </Box>
       <Box
         sx={{
           width: "100%",
           height: 40,
+          pl: 2,
         }}
         style={{
-          borderBottom: "solid 1px #585858",
+          borderBottom: "solid 1px #e2e2e2",
         }}
-      ></Box>
-
+      >
+        <Bookmark />
+      </Box>
       <Box
         sx={{
           width: "100%",
           height: 650,
-          backgroundColor: "black",
+          // backgroundColor: "black",
           "&:hover": {
             backgroundColor: "primary.main",
             opacity: [0.9, 0.8, 0.7],
@@ -42,7 +44,7 @@ const ChattingContainer = (props) => {
           sx={{
             width: "100%",
             height: 50,
-            backgroundColor: "red",
+            // backgroundColor: "red",
             "&:hover": {
               backgroundColor: "primary.main",
               opacity: [0.9, 0.8, 0.7],
@@ -50,9 +52,6 @@ const ChattingContainer = (props) => {
           }}
         />
       </Box>
-      {/* <Test /> */}
-      <Test2 />
-      {/* <ChatRoom /> */}
     </>
   );
 };
