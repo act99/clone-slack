@@ -56,6 +56,8 @@ const ChattingContainer = (props) => {
             height: "70vh",
             backgroundColor: "blue",
             overflow: "scroll",
+            msOverflowStyle: "none",
+            scrollbarWidth: "none",
           }}
         >
           <Box
