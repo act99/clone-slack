@@ -119,14 +119,15 @@ export const WorkspaceName = styled.button`
   border-top: 1px solid rgb(82, 38, 83);
   border-bottom: 1px solid rgb(82, 38, 83);
   font-weight: 900;
-  font-size: 24px;
+  font-size: 19px;
   background: transparent;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
   padding: 0;
-  padding-left: 16px;
+
   margin: 0;
+
   color: white;
   cursor: pointer;
 `;
@@ -170,11 +171,11 @@ export const WorkspaceButton = styled.button`
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  background: white;
+  background: #616061;
   border: 3px solid #3f0e40;
   margin-bottom: 15px;
   font-size: 18px;
   font-weight: 700;
-  color: black;
+  color: white;
   cursor: pointer;
 `;
