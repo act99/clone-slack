@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Bar from "../component/Bar";
 import Grid from "@mui/material/Grid";
+import ChattingContainer from "../container/ChattingContainer";
 
 const Home = () => {
   const Item = styled(Paper)(({ theme }) => ({
@@ -18,14 +19,14 @@ const Home = () => {
     <Box sx={{ flexGrow: 1 }}>
       <Bar />
       <Grid container>
-        <Grid item xs={6} md={1}>
+        <Grid item xs={6} md={0.5}>
           <Item>xs=6 md=8</Item>
         </Grid>
-        <Grid item xs={6} md={4}>
+        <Grid item xs={6} md={2.5}>
           <Item>xs=6 md=8</Item>
         </Grid>
-        <Grid item xs={6} md={7}>
-          <Item>xs=6 md=4</Item>
+        <Grid item xs={6} md={9}>
+          <ChattingContainer />
         </Grid>
       </Grid>
     </Box>
