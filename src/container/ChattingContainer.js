@@ -2,10 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Profile from "../component/ChattingContainer/Profile";
 import Bookmark from "../component/ChattingContainer/Bookmark";
-import ChattingInput from "../component/ChattingContainer/ChattingInput";
 import { Button, ButtonGroup } from "@mui/material";
-import ChatComponent from "../component/ChattingContainer/ChatComponent";
-import WebTest from "../component/ChattingContainer/webtest";
 const ChattingContainer = (props) => {
   return (
     <>
@@ -167,7 +164,6 @@ const ChattingContainer = (props) => {
             <Button>Three</Button>
           </ButtonGroup>
           {/* <ChatComponent /> */}
-          <WebTest />
         </Box>
       </Box>
     </>
