@@ -114,7 +114,7 @@ export default function Signin() {
                   variant="h6"
                   sx={{ fontWeight: "bold", ml: 1 }}
                 >
-                  회원가입
+                  로그인
                 </Typography>
               </Button>
               <Grid container>
