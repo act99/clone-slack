@@ -3,5 +3,9 @@ import Box from "@mui/material/Box";
 
 import { Header } from "../shared/style";
 export default function Bar() {
-  return <Header />;
+  return (
+    <Box
+      sx={{ backgroundColor: "#350d36", height: "5vh", width: "100%" }}
+    ></Box>
+  );
 }

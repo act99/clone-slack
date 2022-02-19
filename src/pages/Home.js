@@ -6,7 +6,6 @@ import Bar from "../component/Bar";
 import Grid from "@mui/material/Grid";
 import ChattingContainer from "../container/ChattingContainer";
 import WorkspaceContainer from "../container/WorkspaceContainer";
-import { height } from "@mui/system";
 import MenuContainer from "../container/MenuContainer";
 
 const Home = () => {
@@ -19,26 +18,18 @@ const Home = () => {
     fontWeight: "bold",
   }));
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box
+      sx={{ flexGrow: 1, width: "100vw", height: "100vh", display: "absolute" }}
+    >
       <Bar />
       <Grid container>
-        <Grid
-          item
-          xs={6}
-          md={0.5}
-          sx={{ width: "100vw", height: "100vh", backgroundColor: "#3f0e40" }}
-        >
+        <Grid item xs={6} md={0.5} sx={{ backgroundColor: "#3f0e40" }}>
           <WorkspaceContainer />
         </Grid>
-        <Grid
-          item
-          xs={6}
-          md={2.5}
-          sx={{ width: "100vw", height: "100vh", backgroundColor: "#3f0e40" }}
-        >
+        <Grid item xs={6} md={1.5} sx={{ backgroundColor: "#3f0e40" }}>
           <MenuContainer />
         </Grid>
-        <Grid item xs={6} md={9}>
+        <Grid item xs={6} md={10}>
           <ChattingContainer />
         </Grid>
       </Grid>
