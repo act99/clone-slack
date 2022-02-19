@@ -27,7 +27,6 @@ function App() {
           <Route path="/signin" exact component={Signin} />
           <Route path="/signup" exact component={Signup} />
         </Container>
-
         <Box sx={{ width: "100vw", height: "100vh" }}>
           <Route path="/" exact component={Home} />
         </Box>
