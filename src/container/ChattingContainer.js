@@ -2,14 +2,17 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Profile from "../component/ChattingContainer/Profile";
 import Bookmark from "../component/ChattingContainer/Bookmark";
+import ChattingInput from "../component/ChattingContainer/ChattingInput";
+import { Button, ButtonGroup } from "@mui/material";
+import ChatComponent from "../component/ChattingContainer/ChatComponent";
+import WebTest from "../component/ChattingContainer/webtest";
 const ChattingContainer = (props) => {
   return (
     <>
       <Box
         sx={{
           width: "100%",
-          height: 50,
-          pl: 2,
+          height: "5vh",
         }}
         style={{
           borderBottom: "solid 1px #e2e2e2",
@@ -20,11 +23,10 @@ const ChattingContainer = (props) => {
       <Box
         sx={{
           width: "100%",
-          height: 40,
-          pl: 2,
+          height: "4vh",
         }}
         style={{
-          borderBottom: "solid 1px #e2e2e2",
+          borderBottom: "solid 1px  #e2e2e2",
         }}
       >
         <Bookmark />
@@ -32,7 +34,7 @@ const ChattingContainer = (props) => {
       <Box
         sx={{
           width: "100%",
-          height: 650,
+          height: "84vh",
           // backgroundColor: "black",
           "&:hover": {
             backgroundColor: "primary.main",
@@ -40,17 +42,133 @@ const ChattingContainer = (props) => {
           },
         }}
       >
-        <Box
+        {/* <Box
           sx={{
             width: "100%",
-            height: 50,
+            height: "100%",
             // backgroundColor: "red",
             "&:hover": {
               backgroundColor: "primary.main",
               opacity: [0.9, 0.8, 0.7],
             },
           }}
-        />
+        /> */}
+        <Box
+          sx={{
+            width: "100%",
+            height: "70vh",
+            backgroundColor: "blue",
+            overflow: "scroll",
+          }}
+        >
+          <Box
+            sx={{
+              width: "100%",
+              height: "5vh",
+              backgroundColor: " white",
+              my: 3,
+            }}
+          ></Box>
+          <Box
+            sx={{
+              width: "100%",
+              height: "5vh",
+              backgroundColor: " white",
+              my: 3,
+            }}
+          ></Box>
+          <Box
+            sx={{
+              width: "100%",
+              height: "5vh",
+              backgroundColor: " white",
+              my: 3,
+            }}
+          ></Box>
+          <Box
+            sx={{
+              width: "100%",
+              height: "5vh",
+              backgroundColor: " white",
+              my: 3,
+            }}
+          ></Box>
+          <Box
+            sx={{
+              width: "100%",
+              height: "5vh",
+              backgroundColor: " white",
+              my: 3,
+            }}
+          ></Box>
+          <Box
+            sx={{
+              width: "100%",
+              height: "5vh",
+              backgroundColor: " white",
+              my: 3,
+            }}
+          ></Box>
+          <Box
+            sx={{
+              width: "100%",
+              height: "5vh",
+              backgroundColor: " white",
+              my: 3,
+            }}
+          ></Box>
+          <Box
+            sx={{
+              width: "100%",
+              height: "5vh",
+              backgroundColor: " white",
+              my: 3,
+            }}
+          ></Box>
+          <Box
+            sx={{
+              width: "100%",
+              height: "5vh",
+              backgroundColor: " white",
+              my: 3,
+            }}
+          ></Box>
+          <Box
+            sx={{
+              width: "100%",
+              height: "5vh",
+              backgroundColor: " white",
+              my: 3,
+            }}
+          ></Box>
+          <Box
+            sx={{
+              width: "100%",
+              height: "5vh",
+              backgroundColor: " white",
+              my: 3,
+            }}
+          ></Box>
+        </Box>
+        <Box
+          sx={{
+            width: "100%",
+            height: "14vh",
+            backgroundColor: "black",
+          }}
+        >
+          <ButtonGroup
+            variant="text"
+            aria-label="text button group"
+            sx={{ p: 1 }}
+          >
+            <Button>One</Button>
+            <Button>Two</Button>
+            <Button>Three</Button>
+          </ButtonGroup>
+          {/* <ChatComponent /> */}
+          <WebTest />
+        </Box>
       </Box>
     </>
   );

@@ -71,16 +71,19 @@ export default function Profile() {
             backgroundColor: "#44bedf",
             border: "solid 0px",
             borderRadius: "5px",
+            ml: 1,
             mr: 1,
             fontSize: "25px",
+            mb: 0,
           }}
         />
         <Typography
           sx={{
+            mt: 0.5,
+            ml: 1,
             fontWeight: "bold",
-            fontSize: "20px",
+            fontSize: "18px",
             color: "black",
-            my: "auto",
           }}
         >
           이주석

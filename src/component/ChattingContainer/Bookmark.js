@@ -2,6 +2,8 @@ import * as React from "react";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import { Box, ButtonGroup } from "@mui/material";
+import LinkIcon from "@mui/icons-material/Link";
 
 export default function Bookmark() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -22,6 +24,7 @@ export default function Bookmark() {
       <Button
         aria-describedby={id}
         sx={{
+          ml: 1,
           display: "block",
           color: "#707170",
           fontWeight: "bold",
@@ -43,7 +46,43 @@ export default function Bookmark() {
           horizontal: "left",
         }}
       >
-        <Typography sx={{ p: 2 }}>The content of the Popover.</Typography>
+        <ButtonGroup
+          orientation="vertical"
+          aria-label="vertical outlined button group"
+          sx={{ py: 3, px: 2, backgroundColor: "#f8f8f8" }}
+        >
+          <Button sx={{ border: "0px" }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                width: 300,
+              }}
+            >
+              <Box
+                sx={{
+                  backgroundColor: "#ffffff",
+                  fontSize: 27,
+                  mr: 3,
+                  color: "gray",
+                  width: 40,
+                  height: 40,
+                }}
+              >
+                <LinkIcon />
+              </Box>
+              <Box orientation="vertical" textAlign="start">
+                <Typography sx={{ fontWeight: "bold", color: "black" }}>
+                  이 채널에 책갈피 추가
+                </Typography>
+                <Typography sx={{ color: "black", fontSize: 14 }}>
+                  팀의 중요한 링크 쉽게 찾기
+                </Typography>
+              </Box>
+            </Box>
+          </Button>
+        </ButtonGroup>
       </Popover>
     </div>
   );

@@ -18,14 +18,14 @@ const ChatComponent = () => {
   }, [userData]);
 
   const connect = () => {
-    let Sock = new SockJS("http://52.78.96.234:8080/ws");
+    let Sock = new SockJS("52.78.96.234:8080/chat");
     stompClient = over(Sock);
     stompClient.connect({}, onConnected, onError);
   };
 
   const onConnected = () => {
     setUserData({ ...userData, connected: true });
-    stompClient.subscribe("/chatroom/public", onMessageReceived);
+    stompClient.subscribe("/new", onMessageReceived);
     stompClient.subscribe(
       "/user/" + userData.username + "/private",
       onPrivateMessage
