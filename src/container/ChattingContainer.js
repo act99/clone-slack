@@ -3,6 +3,8 @@ import Box from "@mui/material/Box";
 import Profile from "../component/ChattingContainer/Profile";
 import Bookmark from "../component/ChattingContainer/Bookmark";
 import { Button, ButtonGroup } from "@mui/material";
+import ChatRoom from "../component/ChattingContainer/ChatRoom";
+
 const ChattingContainer = (props) => {
   return (
     <>
@@ -165,7 +167,7 @@ const ChattingContainer = (props) => {
             <Button>Two</Button>
             <Button>Three</Button>
           </ButtonGroup>
-          {/* <ChatComponent /> */}
+          <ChatRoom />
         </Box>
       </Box>
     </>
