@@ -2,6 +2,7 @@ import * as React from "react";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Avatar from "@mui/material/Avatar";
 import { WorkspaceName } from "../../shared/style";
 import { deepOrange } from "@mui/material/colors";
@@ -26,12 +27,14 @@ export default function MenuHeader() {
 
   return (
     <div>
-      <Button aria-describedby={id} onClick={handleClick}>
+      <Button
+        aria-describedby={id}
+        onClick={handleClick}
+        sx={{ color: "white", fontWeight: 900, fontSize: "19px" }}
+      >
+        <ExpandMoreIcon />
         <p
           style={{
-            color: "white",
-            fontSize: "19px",
-            fontWeight: 900,
             margin: "5px",
           }}
         >

@@ -3,11 +3,13 @@ import { createBrowserHistory } from "history";
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import thunk from "redux-thunk";
 import loginReducer from "./modules/loginReducer";
+import workSpaceReducer from "./modules/workSpaceReducer";
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
   router: connectRouter(history),
   loginReducer: loginReducer,
+  workSpaceReducer: workSpaceReducer,
 });
 
 const middlewares = [thunk.withExtraArgument({ history: history })];

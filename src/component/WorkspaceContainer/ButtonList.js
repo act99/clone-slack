@@ -1,5 +1,9 @@
 import React from "react";
-import { WorkspaceButton, WorkspaceModal } from "../../shared/style";
+import {
+  WorkspaceButton,
+  WorkspaceModal,
+  WorkspaceName,
+} from "../../shared/style";
 
 const ButtonList = (props) => {
   const EnterWorkspace = () => {
@@ -8,6 +12,7 @@ const ButtonList = (props) => {
   return (
     <div>
       <WorkspaceButton onClick={EnterWorkspace}>92</WorkspaceButton>
+
       <WorkspaceButton onClick={EnterWorkspace}>92</WorkspaceButton>
       <WorkspaceButton onClick={EnterWorkspace}>92</WorkspaceButton>
       <WorkspaceButton onClick={EnterWorkspace}>92</WorkspaceButton>
