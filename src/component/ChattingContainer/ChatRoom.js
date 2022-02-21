@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { over } from "stompjs";
 import SockJS from "sockjs-client";
 import { useDispatch, useSelector } from "react-redux";
+
 var stompClient = null;
 const ChatRoom = () => {
   // const dispatch = useDispatch()
@@ -11,12 +12,16 @@ const ChatRoom = () => {
   // const directMessages = useSelector((state) => state.dmReducer.id)
   // ** 해당 워크스페이스 아이디를 가져옴. 예외처리를 위해
   // const workSpaceId = useSelector((state) => state.workSpaceReducer.id)
+
   // ** 개인 채팅 기능 => Map 을 쓴 이유는 object 형태의 객체들의 배열을 담아야 하기 때문입니다.
   const [privateChats, setPrivateChats] = useState(new Map());
+
   // ** 오픈 채팅 기능 얘 같은 경우는 방이 하나 기 때문에 채팅창 리스트만 담으면 됩니다. 이번에는 안 쓸 예정입니다.
   const [publicChats, setPublicChats] = useState([]);
+
   // ** 탭 => 채팅방 이름입니다.
   const [tab, setTab] = useState("CHATROOM");
+
   // ** 채팅하면서 나오는 데이터 => 앞으로 들어가야 할 것은 imageUrl 입니다.
   const [userData, setUserData] = useState({
     username: "",
@@ -87,6 +92,7 @@ const ChatRoom = () => {
         break;
     }
   };
+
   //** 프라이빗 메시지가 있다면, payloadData를 privateChats 에 push 시켜주어라 라는 것 */
   const onPrivateMessage = (payload) => {
     console.log(payload);
@@ -103,9 +109,11 @@ const ChatRoom = () => {
       setPrivateChats(new Map(privateChats));
     }
   };
+
   const onError = (err) => {
     console.log(err);
   };
+
   // ** 메시지 핸들러 => 메시지를 적는 input value 를 핸들링하기 위한 함수  onChange라고 생각하면 편함
   const handleMessage = (event) => {
     const { value } = event.target;
@@ -124,6 +132,7 @@ const ChatRoom = () => {
       setUserData({ ...userData, message: "" });
     }
   };
+
   // ** 이것은 개인 채팅방 보내기 버튼이다.
   const sendPrivateValue = () => {
     if (stompClient) {
@@ -133,6 +142,7 @@ const ChatRoom = () => {
         message: userData.message,
         status: "MESSAGE",
       };
+
       if (userData.username !== tab) {
         privateChats.get(tab).push(chatMessage);
         setPrivateChats(new Map(privateChats));
@@ -141,6 +151,7 @@ const ChatRoom = () => {
       setUserData({ ...userData, message: "" });
     }
   };
+
   //** 유저네임 핸들러 */
   const handleUsername = (event) => {
     const { value } = event.target;
@@ -197,6 +208,7 @@ const ChatRoom = () => {
                   </li>
                 ))}
               </ul>
+
               <div className="send-message">
                 <input
                   type="text"
@@ -235,6 +247,7 @@ const ChatRoom = () => {
                   </li>
                 ))}
               </ul>
+
               <div className="send-message">
                 <input
                   type="text"
@@ -272,4 +285,5 @@ const ChatRoom = () => {
     </div>
   );
 };
+
 export default ChatRoom;
