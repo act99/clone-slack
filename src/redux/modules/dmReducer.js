@@ -14,7 +14,7 @@ const addSpace = createAction(ADD_DM, (dm) => ({
 //initialState
 const initialState = {
   workID: 0,
-  workspaceName: "53",
+  workName: "53",
   dmsList: [
     {
       receiverID: 0,
