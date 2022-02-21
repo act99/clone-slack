@@ -2,6 +2,25 @@ import React, { useEffect, useState } from "react";
 import { over } from "stompjs";
 import SockJS from "sockjs-client";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  Button,
+  ButtonGroup,
+  IconButton,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { Box } from "@mui/system";
+import SendIcon from "@mui/icons-material/Send";
+import AddIcon from "@mui/icons-material/Add";
+import VideocamIcon from "@mui/icons-material/Videocam";
+import MicNoneIcon from "@mui/icons-material/MicNone";
+import MoodIcon from "@mui/icons-material/Mood";
+import { styled } from "@mui/material/styles";
+import FormatBoldIcon from "@mui/icons-material/FormatBold";
+import FormatItalicIcon from "@mui/icons-material/FormatItalic";
+import LinkIcon from "@mui/icons-material/Link";
+import CodeIcon from "@mui/icons-material/Code";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 var stompClient = null;
 const ChatRoom = () => {
@@ -161,127 +180,210 @@ const ChatRoom = () => {
   const registerUser = () => {
     connect();
   };
+  // MUI style을 위한 코드
+  const ValidationTextField = styled(TextField)({
+    "& input:valid + fieldset": {
+      borderColor: "green",
+      borderWidth: 0,
+    },
+    "& input:invalid + fieldset": {
+      borderColor: "red",
+      borderWidth: 0,
+    },
+    "& input:valid:focus + fieldset": {
+      borderLeftWidth: 0,
+      borderColor: "white",
+      padding: "4px !important", // override inline-style
+    },
+  });
   return (
     <div className="container">
-      {userData.connected ? (
-        <div className="chat-box">
-          <div className="member-list">
-            <ul>
+      <div className="chat-box">
+        <div className="member-list">
+          <ul>
+            <li
+              onClick={() => {
+                setTab("CHATROOM");
+              }}
+              className={`member ${tab === "CHATROOM" && "active"}`}
+            >
+              Chatroom
+            </li>
+            {[...privateChats.keys()].map((name, index) => (
               <li
                 onClick={() => {
-                  setTab("CHATROOM");
+                  setTab(name);
                 }}
-                className={`member ${tab === "CHATROOM" && "active"}`}
+                className={`member ${tab === name && "active"}`}
+                key={index}
               >
-                Chatroom
+                {name}
               </li>
-              {[...privateChats.keys()].map((name, index) => (
+            ))}
+          </ul>
+        </div>
+        {tab === "CHATROOM" && (
+          <div className="chat-content">
+            <ul className="chat-messages">
+              {publicChats.map((chat, index) => (
                 <li
-                  onClick={() => {
-                    setTab(name);
-                  }}
-                  className={`member ${tab === name && "active"}`}
+                  className={`message ${
+                    chat.senderName === userData.username && "self"
+                  }`}
                   key={index}
                 >
-                  {name}
+                  {chat.senderName !== userData.username && (
+                    <div className="avatar">{chat.senderName}</div>
+                  )}
+                  <div className="message-data">{chat.message}</div>
+                  {chat.senderName === userData.username && (
+                    <div className="avatar self">{chat.senderName}</div>
+                  )}
                 </li>
               ))}
             </ul>
-          </div>
-          {tab === "CHATROOM" && (
-            <div className="chat-content">
-              <ul className="chat-messages">
-                {publicChats.map((chat, index) => (
-                  <li
-                    className={`message ${
-                      chat.senderName === userData.username && "self"
-                    }`}
-                    key={index}
-                  >
-                    {chat.senderName !== userData.username && (
-                      <div className="avatar">{chat.senderName}</div>
-                    )}
-                    <div className="message-data">{chat.message}</div>
-                    {chat.senderName === userData.username && (
-                      <div className="avatar self">{chat.senderName}</div>
-                    )}
-                  </li>
-                ))}
-              </ul>
+            <Box sx={{ border: "solid 1px #e2e2e2", borderRadius: "10px" }}>
+              <Box
+                sx={{
+                  h: 5,
+                  backgroundColor: "#e2e2e2",
+                  borderTopLeftRadius: 10,
+                  borderTopRightRadius: 10,
+                  // borderBottomLeftRadius: 10,
+                  // borderBottomRightRadius: 10,
+                }}
+              >
+                <ButtonGroup variant="text" aria-label="text button group">
+                  <IconButton onClick={() => console.log("굵기 버튼")}>
+                    <FormatBoldIcon />
+                  </IconButton>
+                  <IconButton onClick={() => console.log("굵기 버튼")}>
+                    <FormatItalicIcon />
+                  </IconButton>
+                  <IconButton onClick={() => console.log("링크 버튼")}>
+                    <LinkIcon />
+                  </IconButton>
+                  <IconButton onClick={() => console.log("코드 스니펫 버튼")}>
+                    <CodeIcon />
+                  </IconButton>
+                </ButtonGroup>
+              </Box>
+              <textarea
+                placeholder="이주영님에게 메시지 보내기"
+                value={userData.message}
+                onChange={handleMessage}
+                size="small"
+                style={{
+                  fontWeight: "bold",
+                  border: "solid 0px",
+                  padding: "10px",
+                  width: "95%",
+                  resize: "none",
+                  outlineColor: "#ffffff",
+                  backgroundColor: "#ffffff",
+                  // outline-color: #FE6B8B;
+                }}
+              />
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <ButtonGroup>
+                  <IconButton onClick={() => console.log("추가버튼")}>
+                    <AddIcon />
+                  </IconButton>
+                  <IconButton onClick={() => console.log("비디오 버튼")}>
+                    <VideocamIcon />
+                  </IconButton>
+                  <IconButton onClick={() => console.log("녹음 버튼")}>
+                    <MicNoneIcon />
+                  </IconButton>
+                  <IconButton onClick={() => console.log("아이콘 버튼")}>
+                    <MoodIcon />
+                  </IconButton>
+                </ButtonGroup>
 
-              <div className="send-message">
-                <input
-                  type="text"
-                  className="input-message"
-                  placeholder="enter the message"
-                  value={userData.message}
-                  onChange={handleMessage}
-                />
-                <button
+                <IconButton
                   type="button"
                   className="send-button"
                   onClick={sendValue}
                 >
-                  send
-                </button>
-              </div>
-            </div>
-          )}
-          {tab !== "CHATROOM" && (
-            <div className="chat-content">
-              <ul className="chat-messages">
-                {[...privateChats.get(tab)].map((chat, index) => (
-                  <li
-                    className={`message ${
-                      chat.senderName === userData.username && "self"
-                    }`}
-                    key={index}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      backgroundColor: "green",
+                      px: 1,
+                      py: 0.7,
+                      justifyContent: "center",
+                      justifyItems: "center",
+                      border: "solid 0px",
+                      borderRadius: "10px",
+                    }}
                   >
-                    {chat.senderName !== userData.username && (
-                      <div className="avatar">{chat.senderName}</div>
-                    )}
-                    <div className="message-data">{chat.message}</div>
-                    {chat.senderName === userData.username && (
-                      <div className="avatar self">{chat.senderName}</div>
-                    )}
-                  </li>
-                ))}
-              </ul>
-
-              <div className="send-message">
-                <input
-                  type="text"
-                  className="input-message"
-                  placeholder="enter the message"
-                  value={userData.message}
-                  onChange={handleMessage}
-                />
-                <button
-                  type="button"
-                  className="send-button"
-                  onClick={sendPrivateValue}
+                    <SendIcon sx={{ color: "white" }} />
+                    <Typography
+                      sx={{
+                        mx: 1,
+                        fontWeight: "bold",
+                        fontSize: 18,
+                        color: "white",
+                      }}
+                    >
+                      |
+                    </Typography>
+                    <ExpandMoreIcon sx={{ color: "white" }} />
+                  </Box>
+                </IconButton>
+              </Box>
+            </Box>
+          </div>
+        )}
+        {tab !== "CHATROOM" && (
+          <div className="chat-content">
+            <ul className="chat-messages">
+              {[...privateChats.get(tab)].map((chat, index) => (
+                <li
+                  className={`message ${
+                    chat.senderName === userData.username && "self"
+                  }`}
+                  key={index}
                 >
-                  send
-                </button>
-              </div>
+                  {chat.senderName !== userData.username && (
+                    <div className="avatar">{chat.senderName}</div>
+                  )}
+                  <div className="message-data">{chat.message}</div>
+                  {chat.senderName === userData.username && (
+                    <div className="avatar self">{chat.senderName}</div>
+                  )}
+                </li>
+              ))}
+            </ul>
+
+            <div className="send-message">
+              <TextField
+                hiddenLabel
+                id="filled-hidden-label-small"
+                defaultValue="enter the message"
+                value={userData.message}
+                onChange={handleMessage}
+                size="small"
+                sx={{ backgroundColor: "#ffffff", width: "100%" }}
+              />
+              <button
+                type="button"
+                className="send-button"
+                onClick={sendPrivateValue}
+              >
+                send
+              </button>
             </div>
-          )}
-        </div>
-      ) : (
-        <div className="register">
-          <input
-            id="user-name"
-            placeholder="Enter your name"
-            name="userName"
-            value={userData.username}
-            onChange={handleUsername}
-            margin="normal"
-          />
-          <button type="button" onClick={registerUser}>
-            connect
-          </button>
-        </div>
-      )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

@@ -33,6 +33,7 @@ function App() {
       history.replace("/signup");
     }
   }, []);
+
   return (
     <>
       <ConnectedRouter history={history}>
