@@ -1,23 +1,17 @@
 import * as React from "react";
-import ListSubheader from "@mui/material/ListSubheader";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import DraftsIcon from "@mui/icons-material/Drafts";
-import SendIcon from "@mui/icons-material/Send";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import StarBorder from "@mui/icons-material/StarBorder";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
-import { deepOrange } from "@mui/material/colors";
-
 import { history } from "../../redux/store";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { actionsCreators as dmActions } from "../../redux/modules/dmReducer";
 
 export default function DirectList() {
   const [open, setOpen] = React.useState(true);
@@ -31,6 +25,20 @@ export default function DirectList() {
   const userinfo = useSelector((state) => state.loginReducer);
   const dmsinfo = useSelector((state) => state.dmReducer);
   const dmsList = dmsinfo.dmsList;
+
+  // 테스트 코드
+  const dispatch = useDispatch();
+  const addDMS = () => {
+    dispatch(
+      dmActions.addSpace({
+        workID: 2,
+        workspaceName: "53",
+        receiverID: 2,
+        receiverName: "김철수",
+        isNew: false,
+      })
+    );
+  };
 
   return (
     <List
@@ -48,7 +56,7 @@ export default function DirectList() {
             return (
               <ListItemButton
                 sx={{ pl: 4, padding: "0px 16px 0px 32px" }}
-                key={p.receiverID + "" + p.receiverName}
+                key={p.receiverID + "" + p.receiverName + idx}
               >
                 <ListItemIcon>
                   <Stack direction="row" spacing={2}>
@@ -85,12 +93,7 @@ export default function DirectList() {
                 </Avatar>
               </Stack>
             </ListItemIcon>
-            <ListItemText
-              style={{ color: "#cccbcb" }}
-              onClick={() => {
-                console.log("팀원 추가");
-              }}
-            >
+            <ListItemText style={{ color: "#cccbcb" }} onClick={addDMS}>
               팀원 추가
             </ListItemText>
           </ListItemButton>

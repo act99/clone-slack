@@ -7,7 +7,9 @@ const ADD_DM = "ADD_DM";
 
 // action creator
 const setDM = createAction(SET_DM, (workID, dm_list) => ({ workID, dm_list }));
-const addSpace = createAction(ADD_DM, (dm) => ({ dm }));
+const addSpace = createAction(ADD_DM, (dm) => ({
+  dm,
+}));
 
 //initialState
 const initialState = {
@@ -44,10 +46,14 @@ const getDmDB = (workID) => {
 export default handleActions(
   {
     [SET_DM]: (state, action) => produce(state, (draft) => {}),
+    [ADD_DM]: (state, action) =>
+      produce(state, (draft) => {
+        draft.dmsList = [...draft.dmsList, action.payload.dm];
+      }),
   },
   initialState
 );
 
-const actionsCreators = { setDM };
+const actionsCreators = { setDM, addSpace };
 
 export { actionsCreators };

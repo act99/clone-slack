@@ -2,7 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Profile from "../component/ChattingContainer/Profile";
 import Bookmark from "../component/ChattingContainer/Bookmark";
-import { Button, ButtonGroup } from "@mui/material";
+import { Button, ButtonGroup, TextField } from "@mui/material";
 import ChatRoom from "../component/ChattingContainer/ChatRoom";
 const ChattingContainer = (props) => {
   return (
@@ -32,8 +32,9 @@ const ChattingContainer = (props) => {
       </Box>
       <Box
         sx={{
-          width: "100%",
+          width: "75vw",
           height: "84vh",
+          px: 5,
           // backgroundColor: "black",
           "&:hover": {
             backgroundColor: "primary.main",
@@ -41,17 +42,6 @@ const ChattingContainer = (props) => {
           },
         }}
       >
-        {/* <Box
-          sx={{
-            width: "100%",
-            height: "100%",
-            // backgroundColor: "red",
-            "&:hover": {
-              backgroundColor: "primary.main",
-              opacity: [0.9, 0.8, 0.7],
-            },
-          }}
-        /> */}
         <Box
           sx={{
             width: "100%",
@@ -158,16 +148,32 @@ const ChattingContainer = (props) => {
             backgroundColor: "black",
           }}
         >
-          <ButtonGroup
-            variant="text"
-            aria-label="text button group"
-            sx={{ p: 1 }}
+          <Box
+            sx={{
+              mt: 2,
+              h: 5,
+              backgroundColor: "#eeeeee",
+              borderTopLeftRadius: 10,
+              borderTopRightRadius: 10,
+              // borderBottomLeftRadius: 10,
+              // borderBottomRightRadius: 10,
+            }}
           >
-            <Button>One</Button>
-            <Button>Two</Button>
-            <Button>Three</Button>
-          </ButtonGroup>
-          <ChatRoom />
+            <ButtonGroup variant="text" aria-label="text button group">
+              <Button>One</Button>
+              <Button>Two</Button>
+              <Button>Three</Button>
+            </ButtonGroup>
+          </Box>
+          <TextField
+            hiddenLabel
+            id="filled-hidden-label-small"
+            defaultValue="Small"
+            // variant="filled"
+            size="small"
+            sx={{ backgroundColor: "#ffffff", width: "100%" }}
+          />
+          {/* <ChatRoom /> */}
         </Box>
       </Box>
     </>

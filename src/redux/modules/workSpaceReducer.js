@@ -32,13 +32,17 @@ const initialState = {
   ],
   // is_loaded: false,
 };
+// 테스트 코드
 
 // middleware
 
 // reducer
 export default handleActions(
   {
-    [SET_SPACE]: (state, action) => produce(state, (draft) => {}),
+    [SET_SPACE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.workspaceList = [...action.payload.space_list];
+      }),
     [ADD_SPACE]: (state, action) =>
       produce(state, (draft) => {
         draft.workspaceList.push(action.payload.space);
@@ -47,6 +51,6 @@ export default handleActions(
   initialState
 );
 
-const actionsCreators = { setSpace };
+const actionsCreators = { setSpace, addSpace };
 
 export { actionsCreators };

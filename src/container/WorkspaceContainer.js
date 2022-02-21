@@ -15,7 +15,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { history } from "../redux/store";
 import { actionsCreators as dmActions } from "../redux/modules/dmReducer";
-
+import { actionsCreators as workSpaceActions } from "../redux/modules/workSpaceReducer";
 import ButtonList from "../component/WorkspaceContainer/ButtonList";
 
 const WorkspaceContainer = (props) => {
@@ -40,6 +40,13 @@ const WorkspaceContainer = (props) => {
   console.log(workSpaceList);
 
   const addWorkSpace = () => {
+    dispatch(
+      workSpaceActions.addSpace({
+        workID: 5,
+        workName: "53", // 백엔드에서 받아올때 앞에 두글자만 가져와서 state에 저장하기
+        isNew: false, // 해당 workspace에 새로운 메세지가 들어왔는지 (T/F로만 할지, 숫자로 할지)
+      })
+    );
     console.log("워크스페이스 개설");
   };
 
@@ -51,7 +58,7 @@ const WorkspaceContainer = (props) => {
         {workSpaceList.map((p, idx) => {
           return (
             <WorkspaceButton
-              key={p.workID + "" + p.workName}
+              key={p.workID + "" + p.workName + idx}
               id={p.workID}
               onClick={() => {
                 history.push(`/${userinfo.token.split(" ")[1]}/${p.workID}/0`);
