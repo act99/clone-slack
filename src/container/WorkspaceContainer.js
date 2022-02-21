@@ -15,6 +15,7 @@ import { history } from "../redux/store";
 import ButtonList from "../component/WorkspaceContainer/ButtonList";
 
 const WorkspaceContainer = (props) => {
+  const userinfo = useSelector((state) => state.loginReducer);
   const workSpaceList = useSelector(
     (state) => state.workSpaceReducer.workspaceList
   );
@@ -30,7 +31,7 @@ const WorkspaceContainer = (props) => {
               key={p.workID + "" + p.workName}
               id={p.workID}
               onClick={() => {
-                history.push(`/${p.workID}/0`);
+                history.push(`/${userinfo.token.split(" ")[1]}/${p.workID}/0`);
                 console.log(p.workID, p.workName);
               }}
             >
