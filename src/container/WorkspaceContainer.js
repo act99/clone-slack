@@ -9,12 +9,14 @@ import {
   WorkspaceWrapper,
 } from "../shared/style";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { history } from "../redux/store";
+import { actionsCreators as dmActions } from "../redux/modules/dmReducer";
 
 import ButtonList from "../component/WorkspaceContainer/ButtonList";
 
 const WorkspaceContainer = (props) => {
+  const dispatch = useDispatch();
   const userinfo = useSelector((state) => state.loginReducer);
   const workSpaceList = useSelector(
     (state) => state.workSpaceReducer.workspaceList
@@ -33,6 +35,7 @@ const WorkspaceContainer = (props) => {
               onClick={() => {
                 history.push(`/${userinfo.token.split(" ")[1]}/${p.workID}/0`);
                 console.log(p.workID, p.workName);
+                dispatch(dmActions.setDM(p.workID));
               }}
             >
               {p.workName}
