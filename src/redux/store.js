@@ -4,6 +4,10 @@ import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import thunk from "redux-thunk";
 import loginReducer from "./modules/loginReducer";
 import workSpaceReducer from "./modules/workSpaceReducer";
+import storage from "redux-persist/lib/storage";
+import persistReducer from "redux-persist/es/persistReducer";
+import persistStore from "redux-persist/es/persistStore";
+
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
@@ -11,6 +15,14 @@ const rootReducer = combineReducers({
   loginReducer: loginReducer,
   workSpaceReducer: workSpaceReducer,
 });
+
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["loginReducer"],
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const middlewares = [thunk.withExtraArgument({ history: history })];
 
@@ -28,8 +40,18 @@ const composeEnhancers =
       })
     : compose;
 
-const enhancer = composeEnhancers(applyMiddleware(...middlewares));
+// const enhancer = composeEnhancers(applyMiddleware(...middlewares));
 
-let store = (initialStore) => createStore(rootReducer, enhancer);
+// let store = (initialStore) => createStore(rootReducer, enhancer);
+// const store = createStore(rootReducer, enhancer);
 
-export default store();
+const configureStore = () => {
+  let store = createStore(
+    persistedReducer,
+    composeEnhancers(applyMiddleware(...middlewares))
+  );
+  let persistor = persistStore(store);
+  return { store, persistor };
+};
+
+export default configureStore;
