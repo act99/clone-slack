@@ -30,6 +30,29 @@ const ChattingContainer = (props) => {
       >
         <Bookmark />
       </Box>
+      {/* <Box
+        sx={{
+          width: "100%",
+          height: "49px",
+          alignItems: "center",
+        }}
+        style={{
+          borderBottom: "solid 1px #E2E2E2",
+        }}
+      >
+        <Profile />
+      </Box>
+      <Box
+        sx={{
+          width: "100%",
+          height: "36px",
+        }}
+        style={{
+          borderBottom: "solid 1px  #E2E2E2",
+        }}
+      >
+        <Bookmark />
+      </Box>
       <Box
         sx={{
           width: "75vw",
@@ -173,9 +196,10 @@ const ChattingContainer = (props) => {
             size="small"
             sx={{ backgroundColor: "#ffffff", width: "100%" }}
           />
-          {/* <ChatRoom /> */}
+          <ChatRoom />
         </Box>
-      </Box>
+      </Box> */}
+      <ChatRoom />
     </>
   );
 };
