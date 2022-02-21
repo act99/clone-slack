@@ -16,23 +16,23 @@ function App() {
   const dispatch = useDispatch();
   const userinfo = useSelector((state) => state.loginReducer);
   const goToken = userinfo.token;
-  React.useEffect(() => {
-    console.log(userinfo.token);
-    const token = userinfo.token;
-    // 쿠키가 있을 때
-    if (document.cookie) {
-      // 혹시 로그인 정보에 토큰이 없다면
-      if (token === null) {
-        history.replace("/signin");
-      } else {
-        // 완전히 둘 다 있을 때
-        dispatch(loginActions.loginCheckDB());
-        history.replace(`/${token.split(" ")[1]}/0/0`);
-      }
-    } else {
-      history.replace("/signin");
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   console.log(userinfo.token);
+  //   const token = userinfo.token;
+  //   // 쿠키가 있을 때
+  //   if (document.cookie) {
+  //     // 혹시 로그인 정보에 토큰이 없다면
+  //     if (token === null) {
+  //       history.replace("/signin");
+  //     } else {
+  //       // 완전히 둘 다 있을 때
+  //       dispatch(loginActions.loginCheckDB());
+  //       history.replace(`/${token.split(" ")[1]}/0/0`);
+  //     }
+  //   } else {
+  //     history.replace("/signin");
+  //   }
+  // }, []);
   return (
     <>
       <ConnectedRouter history={history}>
