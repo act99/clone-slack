@@ -15,13 +15,19 @@ import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import { deepOrange } from "@mui/material/colors";
 
+import { useSelector } from "react-redux";
+import { history } from "../../redux/store";
+
 export default function DirectList() {
   const [open, setOpen] = React.useState(true);
 
   const handleClick = () => {
     setOpen(!open);
   };
-
+  const userinfo = useSelector((state) => state.loginReducer);
+  const dmsinfo = useSelector((state) => state.dmReducer);
+  const dmsList = dmsinfo.dmsList;
+  console.log(dmsinfo, dmsList);
   return (
     <List
       sx={{ width: "100%", maxWidth: 360, bgcolor: "#3f0e40" }}
@@ -34,42 +40,33 @@ export default function DirectList() {
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4, padding: "0px 16px 0px 32px" }}>
-            <ListItemIcon>
-              <Stack direction="row" spacing={2}>
-                <Avatar
-                  src="/broken-image.jpg"
-                  variant="rounded"
-                  sx={{ width: 24, height: 24 }}
-                />
-              </Stack>
-            </ListItemIcon>
-            <ListItemText primary="이주석" style={{ color: "#cccbcb" }} />
-          </ListItemButton>
-          <ListItemButton sx={{ pl: 4, padding: "0px 16px 0px 32px" }}>
-            <ListItemIcon>
-              <Stack direction="row" spacing={2}>
-                <Avatar
-                  src="/broken-image.jpg"
-                  variant="rounded"
-                  sx={{ width: 24, height: 24 }}
-                />
-              </Stack>
-            </ListItemIcon>
-            <ListItemText primary="이주영" style={{ color: "#cccbcb" }} />
-          </ListItemButton>
-          <ListItemButton sx={{ pl: 4, padding: "0px 16px 0px 32px" }}>
-            <ListItemIcon>
-              <Stack direction="row" spacing={2}>
-                <Avatar
-                  src="/broken-image.jpg"
-                  variant="rounded"
-                  sx={{ width: 24, height: 24 }}
-                />
-              </Stack>
-            </ListItemIcon>
-            <ListItemText primary="이주영" style={{ color: "#cccbcb" }} />
-          </ListItemButton>
+          {dmsList.map((p, idx) => {
+            return (
+              <ListItemButton sx={{ pl: 4, padding: "0px 16px 0px 32px" }}>
+                <ListItemIcon>
+                  <Stack direction="row" spacing={2}>
+                    <Avatar
+                      src="/broken-image.jpg"
+                      variant="rounded"
+                      sx={{ width: 24, height: 24 }}
+                    />
+                  </Stack>
+                </ListItemIcon>
+                <ListItemText
+                  style={{ color: "#cccbcb" }}
+                  onClick={() => {
+                    history.push(
+                      `/${userinfo.token.split(" ")[1]}/${dmsinfo.workID}/${
+                        p.receiverID
+                      }`
+                    );
+                  }}
+                >
+                  {p.receiverName}
+                </ListItemText>
+              </ListItemButton>
+            );
+          })}
         </List>
       </Collapse>
     </List>
