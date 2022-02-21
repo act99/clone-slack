@@ -8,8 +8,8 @@ import Collapse from "@mui/material/Collapse";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import DraftsIcon from "@mui/icons-material/Drafts";
 import SendIcon from "@mui/icons-material/Send";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import StarBorder from "@mui/icons-material/StarBorder";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
@@ -28,16 +28,13 @@ export default function DirectList() {
       component="nav"
       aria-labelledby="nested-list-subheader"
     >
-      <ListItemButton onClick={handleClick}>
-        <ListItemText
-          primary="다이렉트메세지"
-          style={{ color: "#cccbcb", padding: "0px 5px" }}
-        />
-        {open ? <ExpandLess /> : <ExpandMore />}
+      <ListItemButton onClick={handleClick} sx={{ color: "#cccbcb" }}>
+        {open ? <ArrowDropDownIcon /> : <ArrowRightIcon />}
+        <ListItemText primary="다이렉트메세지" style={{ padding: "0px 5px" }} />
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4, padding: "8px 16px 0px 32px" }}>
+          <ListItemButton sx={{ pl: 4, padding: "0px 16px 0px 32px" }}>
             <ListItemIcon>
               <Stack direction="row" spacing={2}>
                 <Avatar
@@ -49,7 +46,7 @@ export default function DirectList() {
             </ListItemIcon>
             <ListItemText primary="이주석" style={{ color: "#cccbcb" }} />
           </ListItemButton>
-          <ListItemButton sx={{ pl: 4, padding: "8px 16px 0px 32px" }}>
+          <ListItemButton sx={{ pl: 4, padding: "0px 16px 0px 32px" }}>
             <ListItemIcon>
               <Stack direction="row" spacing={2}>
                 <Avatar
@@ -61,7 +58,7 @@ export default function DirectList() {
             </ListItemIcon>
             <ListItemText primary="이주영" style={{ color: "#cccbcb" }} />
           </ListItemButton>
-          <ListItemButton sx={{ pl: 4, padding: "8px 16px 0px 32px" }}>
+          <ListItemButton sx={{ pl: 4, padding: "0px 16px 0px 32px" }}>
             <ListItemIcon>
               <Stack direction="row" spacing={2}>
                 <Avatar

@@ -2,6 +2,7 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -88,6 +89,7 @@ export default function Profile() {
         >
           이주석
         </Typography>
+        <ExpandMoreIcon />
       </IconButton>
       <BootstrapDialog
         onClose={handleClose}

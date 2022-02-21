@@ -2,14 +2,17 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Profile from "../component/ChattingContainer/Profile";
 import Bookmark from "../component/ChattingContainer/Bookmark";
+
 import { Button, ButtonGroup } from "@mui/material";
+import ChatComponent from "../component/ChattingContainer/ChatRoom";
 const ChattingContainer = (props) => {
   return (
     <>
       <Box
         sx={{
           width: "100%",
-          height: "5vh",
+          height: "49px",
+          alignItems: "center",
         }}
         style={{
           borderBottom: "solid 1px #e2e2e2",
@@ -20,7 +23,7 @@ const ChattingContainer = (props) => {
       <Box
         sx={{
           width: "100%",
-          height: "4vh",
+          height: "36px",
         }}
         style={{
           borderBottom: "solid 1px  #e2e2e2",

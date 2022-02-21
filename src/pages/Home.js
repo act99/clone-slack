@@ -23,13 +23,12 @@ const Home = () => {
     >
       <Bar />
       <Grid container>
-        <Grid item xs={6} md={0.5} sx={{ backgroundColor: "#3f0e40" }}>
-          <WorkspaceContainer />
-        </Grid>
-        <Grid item xs={6} md={1.5} sx={{ backgroundColor: "#3f0e40" }}>
+        <WorkspaceContainer />
+
+        <Grid item xs={2} sx={{ backgroundColor: "#3f0e40" }}>
           <MenuContainer />
         </Grid>
-        <Grid item xs={6} md={10}>
+        <Grid item xs>
           <ChattingContainer />
         </Grid>
       </Grid>

@@ -50,7 +50,7 @@ export const LogOutButton = styled.button`
 `;
 export const WorkspaceWrapper = styled.div`
   display: flex;
-  flex: 1;
+  /* flex: 1; */
 `;
 export const Workspaces = styled.div`
   width: 65px;
@@ -174,6 +174,7 @@ export const WorkspaceButton = styled.button`
   background: #616061;
   border: 3px solid #3f0e40;
   margin-bottom: 15px;
+  padding: 0px;
   font-size: 18px;
   font-weight: 700;
   color: white;
