@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, Card, CardContent, TextField } from "@mui/material";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -18,34 +18,98 @@ import { actionsCreators as dmActions } from "../redux/modules/dmReducer";
 import { actionsCreators as workSpaceActions } from "../redux/modules/workSpaceReducer";
 import ButtonList from "../component/WorkspaceContainer/ButtonList";
 
+// workspace 생성 modal
+import PropTypes from "prop-types";
+import { styled } from "@mui/material/styles";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import PersonIcon from "@mui/icons-material/Person";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
+
 const WorkspaceContainer = (props) => {
-  // toggle list
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  // modal
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
   };
   const handleClose = () => {
-    setAnchorEl(null);
+    setOpen(false);
   };
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
 
+  const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+    "& .MuiDialogContent-root": {
+      padding: theme.spacing(2),
+    },
+    "& .MuiDialogActions-root": {
+      padding: theme.spacing(1),
+    },
+  }));
+
+  const BootstrapDialogTitle = (props) => {
+    const { children, onClose, ...other } = props;
+
+    return (
+      <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+        {children}
+        {onClose ? (
+          <IconButton
+            aria-label="close"
+            onClick={onClose}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        ) : null}
+      </DialogTitle>
+    );
+  };
+
+  BootstrapDialogTitle.propTypes = {
+    children: PropTypes.node,
+    onClose: PropTypes.func.isRequired,
+  };
+  const modalStyle = {
+    // position: "absolute",
+    // top: "50%",
+    // left: "50%",
+
+    width: 400,
+    bgcolor: "background.paper",
+
+    borderRadius: "5px",
+    boxShadow: 24,
+    p: 3,
+  };
+
+  //
   const dispatch = useDispatch();
   const userinfo = useSelector((state) => state.loginReducer);
   const workSpaceList = useSelector(
     (state) => state.workSpaceReducer.workspaceList
   );
-  console.log(workSpaceList);
+  // console.log(workSpaceList);
 
+  // workspace 생성
+  const [workName, setWorkName] = React.useState("");
   const addWorkSpace = () => {
-    dispatch(
-      workSpaceActions.addSpace({
-        workID: 5,
-        workName: "53", // 백엔드에서 받아올때 앞에 두글자만 가져와서 state에 저장하기
-        isNew: false, // 해당 workspace에 새로운 메세지가 들어왔는지 (T/F로만 할지, 숫자로 할지)
-      })
-    );
-    console.log("워크스페이스 개설");
+    // dispatch(
+    //   workSpaceActions.addSpace({
+    //     workName: workName, // 백엔드에서 받아올때 앞에 두글자만 가져와서 state에 저장하기
+    //   })
+    // );
+    console.log(workName, "워크스페이스 개설");
   };
 
   return (
@@ -69,27 +133,60 @@ const WorkspaceContainer = (props) => {
           );
         })}
 
-        <Button aria-describedby={id} onClick={handleClick}>
-          <AddButton>+</AddButton>
-        </Button>
-        <Popover
-          id={id}
-          open={open}
-          anchorEl={anchorEl}
+        <AddButton onClick={handleClick}>+</AddButton>
+
+        <BootstrapDialog
           onClose={handleClose}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "left",
-          }}
+          aria-labelledby="customized-dialog-title"
+          open={open}
         >
-          <Typography sx={{ p: 2, cursor: "pointer" }} onClick={addWorkSpace}>
-            새 워크스페이스 개설
-          </Typography>
-        </Popover>
+          <Box sx={modalStyle}>
+            <BootstrapDialogTitle
+              id="customized-dialog-title"
+              onClose={handleClose}
+            >
+              <Box sx={{ display: "flex", flexDirection: "row" }}>
+                <Typography
+                  variant="h6"
+                  component="h2"
+                  sx={{ fontWeight: "bold" }}
+                >
+                  새 워크스페이스 생성
+                </Typography>
+              </Box>
+            </BootstrapDialogTitle>
+            <Typography
+              id="modal-modal-description"
+              variant="subtitle1"
+              sx={{ mt: 2, fontWeight: "bold" }}
+            >
+              워크스페이스 이름
+            </Typography>
+            <Box
+              component="form"
+              sx={{
+                "& > :not(style)": { m: 1, width: "100%" },
+              }}
+              noValidate
+              autoComplete="off"
+            >
+              <TextField
+                id="outlined-basic"
+                variant="outlined"
+                onChange={(e) => {
+                  setWorkName(e.target.value);
+                }}
+              />
+            </Box>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={addWorkSpace}
+            >
+              생성
+            </Button>
+          </Box>
+        </BootstrapDialog>
       </Workspaces>
     </WorkspaceWrapper>
 

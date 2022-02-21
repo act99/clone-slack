@@ -30,7 +30,7 @@ function App() {
         history.replace(`/${token.split(" ")[1]}/0/0`);
       }
     } else {
-      history.replace("/signin");
+      history.replace("/signup");
     }
   }, []);
   return (
