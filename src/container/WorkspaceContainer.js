@@ -19,16 +19,14 @@ import { actionsCreators as dmActions } from "../redux/modules/dmReducer";
 import ButtonList from "../component/WorkspaceContainer/ButtonList";
 
 const WorkspaceContainer = (props) => {
+  // toggle list
   const [anchorEl, setAnchorEl] = React.useState(null);
-
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
