@@ -11,9 +11,6 @@ const addChat = createAction(ADD_CHAT, (chat) => ({ chat }));
 
 //initialState
 // 가져올 때 chatID 도 가져올 것
-const initialState = {
-  list: [{ ...initialChat }],
-};
 
 // add 시에는
 const initialChat = {
@@ -25,6 +22,10 @@ const initialChat = {
   content: "",
   createdAt: "",
   updatedAt: "",
+};
+// 전체 채팅
+const initialState = {
+  list: [],
 };
 
 // middleware
