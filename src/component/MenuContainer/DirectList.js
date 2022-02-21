@@ -74,6 +74,26 @@ export default function DirectList() {
               </ListItemButton>
             );
           })}
+          <ListItemButton sx={{ pl: 4, padding: "0px 16px 0px 32px" }}>
+            <ListItemIcon>
+              <Stack direction="row" spacing={2}>
+                <Avatar
+                  variant="rounded"
+                  sx={{ width: 24, height: 24, bgcolor: "#552456" }}
+                >
+                  +
+                </Avatar>
+              </Stack>
+            </ListItemIcon>
+            <ListItemText
+              style={{ color: "#cccbcb" }}
+              onClick={() => {
+                console.log("팀원 추가");
+              }}
+            >
+              팀원 추가
+            </ListItemText>
+          </ListItemButton>
         </List>
       </Collapse>
     </List>

@@ -37,7 +37,7 @@ const initialState = {
 
 const getDmDB = (workID) => {
   return function (dispatch, getState, { history }) {};
-  // workID를 받아오면 저쪽에 post를 하고 해당 dmlist를 받아오는 형태.
+  // workID를 입력해서 저쪽에 get 하고 해당 dmlist를 받아오는 형태.
 };
 
 // reducer

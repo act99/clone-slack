@@ -39,6 +39,10 @@ const initialState = {
 export default handleActions(
   {
     [SET_SPACE]: (state, action) => produce(state, (draft) => {}),
+    [ADD_SPACE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.workspaceList.push(action.payload.space);
+      }),
   },
   initialState
 );
