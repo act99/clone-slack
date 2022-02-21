@@ -6,7 +6,7 @@ const SET_DM = "SET_DM";
 const ADD_DM = "ADD_DM";
 
 // action creator
-const setDM = createAction(SET_DM, (dm_list) => ({ dm_list }));
+const setDM = createAction(SET_DM, (workID, dm_list) => ({ workID, dm_list }));
 const addSpace = createAction(ADD_DM, (dm) => ({ dm }));
 
 //initialState
@@ -34,6 +34,11 @@ const initialState = {
 };
 
 // middleware
+
+const getDmDB = (workID) => {
+  return function (dispatch, getState, { history }) {};
+  // workID를 입력해서 저쪽에 get 하고 해당 dmlist를 받아오는 형태.
+};
 
 // reducer
 export default handleActions(

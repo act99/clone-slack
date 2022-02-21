@@ -15,8 +15,9 @@ import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import { deepOrange } from "@mui/material/colors";
 
-import { useSelector } from "react-redux";
 import { history } from "../../redux/store";
+import { useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function DirectList() {
   const [open, setOpen] = React.useState(true);
@@ -24,10 +25,13 @@ export default function DirectList() {
   const handleClick = () => {
     setOpen(!open);
   };
+
+  const params = useParams();
+  const work_index = parseInt(params.workId);
   const userinfo = useSelector((state) => state.loginReducer);
   const dmsinfo = useSelector((state) => state.dmReducer);
   const dmsList = dmsinfo.dmsList;
-  console.log(dmsinfo, dmsList);
+
   return (
     <List
       sx={{ width: "100%", maxWidth: 360, bgcolor: "#3f0e40" }}
@@ -42,7 +46,10 @@ export default function DirectList() {
         <List component="div" disablePadding>
           {dmsList.map((p, idx) => {
             return (
-              <ListItemButton sx={{ pl: 4, padding: "0px 16px 0px 32px" }}>
+              <ListItemButton
+                sx={{ pl: 4, padding: "0px 16px 0px 32px" }}
+                key={p.receiverID + "" + p.receiverName}
+              >
                 <ListItemIcon>
                   <Stack direction="row" spacing={2}>
                     <Avatar
@@ -56,7 +63,7 @@ export default function DirectList() {
                   style={{ color: "#cccbcb" }}
                   onClick={() => {
                     history.push(
-                      `/${userinfo.token.split(" ")[1]}/${dmsinfo.workID}/${
+                      `/${userinfo.token.split(" ")[1]}/${work_index}/${
                         p.receiverID
                       }`
                     );
@@ -67,6 +74,26 @@ export default function DirectList() {
               </ListItemButton>
             );
           })}
+          <ListItemButton sx={{ pl: 4, padding: "0px 16px 0px 32px" }}>
+            <ListItemIcon>
+              <Stack direction="row" spacing={2}>
+                <Avatar
+                  variant="rounded"
+                  sx={{ width: 24, height: 24, bgcolor: "#552456" }}
+                >
+                  +
+                </Avatar>
+              </Stack>
+            </ListItemIcon>
+            <ListItemText
+              style={{ color: "#cccbcb" }}
+              onClick={() => {
+                console.log("팀원 추가");
+              }}
+            >
+              팀원 추가
+            </ListItemText>
+          </ListItemButton>
         </List>
       </Collapse>
     </List>
