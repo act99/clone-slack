@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -17,6 +17,7 @@ const Home = () => {
     color: theme.palette.text.secondary,
     fontWeight: "bold",
   }));
+
   return (
     <Box
       sx={{ flexGrow: 1, width: "100vw", height: "100vh", display: "absolute" }}

@@ -4,17 +4,17 @@ import Profile from "../component/ChattingContainer/Profile";
 import Bookmark from "../component/ChattingContainer/Bookmark";
 import { Button, ButtonGroup } from "@mui/material";
 import ChatRoom from "../component/ChattingContainer/ChatRoom";
-
 const ChattingContainer = (props) => {
   return (
     <>
       <Box
         sx={{
           width: "100%",
-          height: "5vh",
+          height: "49px",
+          alignItems: "center",
         }}
         style={{
-          borderBottom: "solid 1px #e2e2e2",
+          borderBottom: "solid 1px #E2E2E2",
         }}
       >
         <Profile />
@@ -22,10 +22,10 @@ const ChattingContainer = (props) => {
       <Box
         sx={{
           width: "100%",
-          height: "4vh",
+          height: "36px",
         }}
         style={{
-          borderBottom: "solid 1px  #e2e2e2",
+          borderBottom: "solid 1px  #E2E2E2",
         }}
       >
         <Bookmark />
@@ -173,5 +173,4 @@ const ChattingContainer = (props) => {
     </>
   );
 };
-
 export default ChattingContainer;

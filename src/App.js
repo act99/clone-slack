@@ -27,8 +27,8 @@ function App() {
           <Route path="/signin" exact component={Signin} />
           <Route path="/signup" exact component={Signup} />
         </Container>
-        <Box sx={{ width: "100%", height: "100%" }}>
-          <Route path="/:workspaceId/:directId" exact component={Home} />
+        <Box sx={{ width: "100vw", height: "100%" }}>
+          <Route path="/" exact component={Home} />
         </Box>
       </ConnectedRouter>
     </>

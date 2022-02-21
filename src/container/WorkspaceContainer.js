@@ -19,7 +19,6 @@ const WorkspaceContainer = (props) => {
     (state) => state.workSpaceReducer.workspaceList
   );
   console.log(workSpaceList);
-
   return (
     // <Box sx={{ flexGrow: 1, height: 1, backgroundColor: "#3F0E40" }}>
 
@@ -28,9 +27,11 @@ const WorkspaceContainer = (props) => {
         {workSpaceList.map((p, idx) => {
           return (
             <WorkspaceButton
+              key={p.workID + "" + p.workName}
               id={p.workID}
               onClick={() => {
                 history.push(`/${p.workID}/0`);
+                console.log(p.workID, p.workName);
               }}
             >
               {p.workName}
