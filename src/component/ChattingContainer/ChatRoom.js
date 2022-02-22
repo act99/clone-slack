@@ -22,85 +22,76 @@ import LinkIcon from "@mui/icons-material/Link";
 import CodeIcon from "@mui/icons-material/Code";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { actionCreators as loginActions } from "../../redux/modules/loginReducer";
+
+const tokenCheck = document.cookie;
+const token = tokenCheck.split("=")[1];
 var stompClient = null;
 const ChatRoom = () => {
-  // const dispatch = useDispatch()
   // ** 유저 정보를 가져와서 useState 로 선언한 메시지 정보 변환 => 만약 token 있고 userinfo 있으면 username 을 바꿔주고 connected 를 true로 useEffect 를 사용할 것
-  // const userinfo = useSelector((state) => state.loginReducer);
   // ** 다이렉트 메세지 id 값들을 넘겨받으면 privateChat 리스트가 패치되게끔 한다. useEffect 사용할 것임.
-  // const directMessages = useSelector((state) => state.dmReducer.id)
   // ** 해당 워크스페이스 아이디를 가져옴. 예외처리를 위해
-  // const workSpaceId = useSelector((state) => state.workSpaceReducer.id)
+  const dispatch = useDispatch();
+  const userinfo = useSelector((state) => state.loginReducer);
+  const directMessages = useSelector((state) => state.dmReducer.id);
+  const workSpaceId = useSelector((state) => state.workSpaceReducer.id);
+
   // ** 개인 채팅 기능 => Map 을 쓴 이유는 object 형태의 객체들의 배열을 담아야 하기 때문입니다.
-  const [privateChats, setPrivateChats] = useState(new Map());
   // ** 오픈 채팅 기능 얘 같은 경우는 방이 하나 기 때문에 채팅창 리스트만 담으면 됩니다. 이번에는 안 쓸 예정입니다.
-  const [publicChats, setPublicChats] = useState([]);
   // ** 탭 => 채팅방 이름입니다.
+  const [privateChats, setPrivateChats] = useState(new Map());
+  const [publicChats, setPublicChats] = useState([]);
   const [tab, setTab] = useState("CHATROOM");
+  let loginNickname = userinfo.userinfo.nickname;
+
   // ** 채팅하면서 나오는 데이터 => 앞으로 들어가야 할 것은 imageUrl 입니다.
   const [userData, setUserData] = useState({
-    username: "",
-    receivername: "",
-    imageUrl: "",
+    username: loginNickname,
+    receivername: "act99",
+    // imageUrl: "",
     connected: false,
     message: "",
   });
-  // ** 여기다 넣어야 할 것은
+
   useEffect(() => {
-    // ** userinfo 가 있으며, token 이 있으면 로그인 상태기 때문에, userData 에 username 을 닉네임으로 바꿔주고 connected 를 true 로 바꿔줍니다.
-    // userinfo && token ? setUserData({username: userinfo.nickname, receivername: "", imageUrl: "", connected: true, message: ""})
-    // ** workSpaces 아이디가 없을 때
-    // if (workSpaces === null) {
-    //   alert("워크스페이스 아이디가 없는 에러가 생겼습니다.");
-    // }
+    console.log(loginNickname);
+    let forSetData = {
+      username: loginNickname,
+      receivername: "act99",
+      // imageUrl: "",
+      connected: true,
+      message: "",
+    };
+    setUserData(forSetData);
     console.log(userData);
-  }, [userData]);
-  const tokenCheck = document.cookie;
-  const token = tokenCheck.split("=")[1];
-  console.log(token);
+    connect();
+  }, []);
+
   // ** connect 의 경우 소켓을 뚫어주는 역할을 한다. BaseUrl 에다가 /ws 를 붙여 소켓을 뚫어준다.
   const connect = () => {
-    let Sock = new SockJS(
-      "http://52.78.96.234:8080/ws"
-      //   , null, {
-      //   transports: [
-      //     "xdr-streaming",
-      //     "xhr-streaming",
-      //     "iframe-eventsource",
-      //     "iframe-htmlfile",
-      //     "xdr-polling",
-      //     "xhr-polling",
-      //     "iframe-xhr-polling",
-      //     "jsonp-polling",
-      //   ],
-      //   headers: { authorization: token },
-      // }
-    );
+    let Sock = new SockJS("http://52.78.96.234:8080/ws");
     let options = { debug: true, protocols: VERSIONS.supportedProtocols };
     let headers = { token: token };
-    // let Sock = new SockJS("http://52.78.96.234:8080/ws");
     stompClient = over(Sock, options);
-    stompClient.connect(
-      headers,
-      // { "content-type": "text/event-stream" },
-      onConnected,
-      onError
-    );
+    stompClient.connect(headers, onConnected, onError);
   };
+
   // ** 커넥트가 됐을 때, 기본적으로 open 방을 열고, 본인의 private 방을 연다. (카톡같은 느낌 ?) subscribe : 구독이며, 소켓 url 을 의미
   const onConnected = () => {
+    console.log("onConnected 쪽 입니다.");
     setUserData({ ...userData, connected: true });
     // ** onMessageReceived 공통 메시지 받을 것 구독상태가 되면 response 가 열려있기 때문에 event 가 발생 시 event를 받는다.
-    stompClient.subscribe("/chatroom/public", onMessageReceived);
+    stompClient.subscribe("/room/1", onMessageReceived);
     // ** onPrivateMessage 개인 메시지 받을 것 구독상태가 되면 response 가 열려있기 때문에 event 가 발생 시 event를 받는다.
     stompClient.subscribe(
       "/user/" + userData.username + "/private",
       onPrivateMessage
     );
+    //** 일단 빼놓음 */
     userJoin();
   };
   // ** userJoin의 경우, 내가 어떤 채팅 방에 들어갔을 때, receiver 에게 sendName을 보내주기 위한 것입니다. 제이슨 형태로 보내줍니다.
   const userJoin = () => {
+    console.log("userJoin 쪽입니다.");
     var chatMessage = {
       senderName: userData.username,
       status: "JOIN",
@@ -109,8 +100,10 @@ const ChatRoom = () => {
   };
   // ** onMessageReceived 의 경우 나중에 알림 기능까지 넣어도 괜찮을 것 같으며, 시간날 때 알림기능 넣으면 괜춘
   const onMessageReceived = (payload) => {
+    console.log(payload);
     // ** event 로 받은 페이로드 값을 제이슨화시켜준다.
     var payloadData = JSON.parse(payload.body);
+    console.log(payloadData);
     // ** event에는 status 코드가 존재한다.
     // ** 입력한 변수가 status 이며 이게 true 여기서는 200일 때,
     switch (payloadData.status) {
@@ -128,11 +121,15 @@ const ChatRoom = () => {
         break;
       //** 만약 메시지라면, 메시지 추가시켜라  */
       case "MESSAGE":
+        console.log(publicChats);
         publicChats.push(payloadData);
         setPublicChats([...publicChats]);
         break;
+      default:
+        console.log("default");
     }
   };
+
   //** 프라이빗 메시지가 있다면, payloadData를 privateChats 에 push 시켜주어라 라는 것 */
   const onPrivateMessage = (payload) => {
     console.log(payload);
@@ -149,9 +146,11 @@ const ChatRoom = () => {
       setPrivateChats(new Map(privateChats));
     }
   };
+
   const onError = (err) => {
     console.log(err);
   };
+
   // ** 메시지 핸들러 => 메시지를 적는 input value 를 핸들링하기 위한 함수  onChange라고 생각하면 편함
   const handleMessage = (event) => {
     const { value } = event.target;
@@ -162,6 +161,7 @@ const ChatRoom = () => {
     if (stompClient) {
       var chatMessage = {
         senderName: userData.username,
+        receiverName: "act99",
         message: userData.message,
         status: "MESSAGE",
       };
@@ -170,6 +170,7 @@ const ChatRoom = () => {
       setUserData({ ...userData, message: "" });
     }
   };
+
   // ** 이것은 개인 채팅방 보내기 버튼이다.
   const sendPrivateValue = () => {
     if (stompClient) {
@@ -179,6 +180,7 @@ const ChatRoom = () => {
         message: userData.message,
         status: "MESSAGE",
       };
+
       if (userData.username !== tab) {
         privateChats.get(tab).push(chatMessage);
         setPrivateChats(new Map(privateChats));
@@ -187,6 +189,7 @@ const ChatRoom = () => {
       setUserData({ ...userData, message: "" });
     }
   };
+
   //** 유저네임 핸들러 */
   const handleUsername = (event) => {
     const { value } = event.target;
@@ -197,22 +200,7 @@ const ChatRoom = () => {
     connect();
   };
   // MUI style을 위한 코드
-  const ValidationTextField = styled(TextField)({
-    "& input:valid + fieldset": {
-      borderColor: "green",
-      borderWidth: 0,
-    },
-    "& input:invalid + fieldset": {
-      borderColor: "red",
-      borderWidth: 0,
-    },
-    "& input:valid:focus + fieldset": {
-      borderLeftWidth: 0,
-      borderColor: "white",
-      padding: "4px !important", // override inline-style
-    },
-  });
-  const dispatch = useDispatch();
+
   return (
     <div className="container">
       <div className="chat-box">
@@ -270,14 +258,17 @@ const ChatRoom = () => {
                   {chat.senderName === userData.username && (
                     <div className="avatar self">{chat.senderName}</div>
                   )}
+                  <div>
+                    <li>{chat}</li>
+                  </div>
                 </li>
               ))}
             </ul>
-            <Box sx={{ border: "solid 1px #E2E2E2", borderRadius: "10px" }}>
+            <Box sx={{ border: "solid 1px #e2e2e2", borderRadius: "10px" }}>
               <Box
                 sx={{
                   h: 5,
-                  backgroundColor: "#E2E2E2",
+                  backgroundColor: "#e2e2e2",
                   borderTopLeftRadius: 10,
                   borderTopRightRadius: 10,
                   // borderBottomLeftRadius: 10,
@@ -310,8 +301,8 @@ const ChatRoom = () => {
                   padding: "10px",
                   width: "95%",
                   resize: "none",
-                  outlineColor: "#FFFFFF",
-                  backgroundColor: "#FFFFFF",
+                  outlineColor: "#ffffff",
+                  backgroundColor: "#ffffff",
                   // outline-color: #FE6B8B;
                 }}
               />
@@ -336,6 +327,7 @@ const ChatRoom = () => {
                     <MoodIcon />
                   </IconButton>
                 </ButtonGroup>
+
                 <IconButton
                   type="button"
                   className="send-button"
@@ -392,6 +384,7 @@ const ChatRoom = () => {
                 </li>
               ))}
             </ul>
+
             <div className="send-message">
               <TextField
                 hiddenLabel
@@ -400,7 +393,7 @@ const ChatRoom = () => {
                 value={userData.message}
                 onChange={handleMessage}
                 size="small"
-                sx={{ backgroundColor: "#FFFFFF", width: "100%" }}
+                sx={{ backgroundColor: "#ffffff", width: "100%" }}
               />
               <button
                 type="button"
@@ -416,4 +409,5 @@ const ChatRoom = () => {
     </div>
   );
 };
+
 export default ChatRoom;
