@@ -31,7 +31,7 @@ export default function DirectList() {
   const addDMS = () => {
     dispatch(
       dmActions.addSpace({
-        workID: 2,
+        workId: 2,
         workspaceName: "53",
         receiverID: 2,
         receiverName: "김철수",

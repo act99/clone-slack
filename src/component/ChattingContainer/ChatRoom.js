@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { over } from "stompjs";
+import { over, VERSIONS } from "stompjs";
 import SockJS from "sockjs-client";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -21,7 +21,7 @@ import FormatItalicIcon from "@mui/icons-material/FormatItalic";
 import LinkIcon from "@mui/icons-material/Link";
 import CodeIcon from "@mui/icons-material/Code";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
+import { actionCreators as loginActions } from "../../redux/modules/loginReducer";
 var stompClient = null;
 const ChatRoom = () => {
   // const dispatch = useDispatch()
@@ -31,16 +31,12 @@ const ChatRoom = () => {
   // const directMessages = useSelector((state) => state.dmReducer.id)
   // ** 해당 워크스페이스 아이디를 가져옴. 예외처리를 위해
   // const workSpaceId = useSelector((state) => state.workSpaceReducer.id)
-
   // ** 개인 채팅 기능 => Map 을 쓴 이유는 object 형태의 객체들의 배열을 담아야 하기 때문입니다.
   const [privateChats, setPrivateChats] = useState(new Map());
-
   // ** 오픈 채팅 기능 얘 같은 경우는 방이 하나 기 때문에 채팅창 리스트만 담으면 됩니다. 이번에는 안 쓸 예정입니다.
   const [publicChats, setPublicChats] = useState([]);
-
   // ** 탭 => 채팅방 이름입니다.
   const [tab, setTab] = useState("CHATROOM");
-
   // ** 채팅하면서 나오는 데이터 => 앞으로 들어가야 할 것은 imageUrl 입니다.
   const [userData, setUserData] = useState({
     username: "",
@@ -59,11 +55,37 @@ const ChatRoom = () => {
     // }
     console.log(userData);
   }, [userData]);
+  const tokenCheck = document.cookie;
+  const token = tokenCheck.split("=")[1];
+  console.log(token);
   // ** connect 의 경우 소켓을 뚫어주는 역할을 한다. BaseUrl 에다가 /ws 를 붙여 소켓을 뚫어준다.
   const connect = () => {
-    let Sock = new SockJS("http://52.78.96.234:8080/ws");
-    stompClient = over(Sock);
-    stompClient.connect({}, onConnected, onError);
+    let Sock = new SockJS(
+      "http://52.78.96.234:8080/ws"
+      //   , null, {
+      //   transports: [
+      //     "xdr-streaming",
+      //     "xhr-streaming",
+      //     "iframe-eventsource",
+      //     "iframe-htmlfile",
+      //     "xdr-polling",
+      //     "xhr-polling",
+      //     "iframe-xhr-polling",
+      //     "jsonp-polling",
+      //   ],
+      //   headers: { authorization: token },
+      // }
+    );
+    let options = { debug: true, protocols: VERSIONS.supportedProtocols };
+    let headers = { token: token };
+    // let Sock = new SockJS("http://52.78.96.234:8080/ws");
+    stompClient = over(Sock, options);
+    stompClient.connect(
+      headers,
+      // { "content-type": "text/event-stream" },
+      onConnected,
+      onError
+    );
   };
   // ** 커넥트가 됐을 때, 기본적으로 open 방을 열고, 본인의 private 방을 연다. (카톡같은 느낌 ?) subscribe : 구독이며, 소켓 url 을 의미
   const onConnected = () => {
@@ -111,7 +133,6 @@ const ChatRoom = () => {
         break;
     }
   };
-
   //** 프라이빗 메시지가 있다면, payloadData를 privateChats 에 push 시켜주어라 라는 것 */
   const onPrivateMessage = (payload) => {
     console.log(payload);
@@ -128,11 +149,9 @@ const ChatRoom = () => {
       setPrivateChats(new Map(privateChats));
     }
   };
-
   const onError = (err) => {
     console.log(err);
   };
-
   // ** 메시지 핸들러 => 메시지를 적는 input value 를 핸들링하기 위한 함수  onChange라고 생각하면 편함
   const handleMessage = (event) => {
     const { value } = event.target;
@@ -151,7 +170,6 @@ const ChatRoom = () => {
       setUserData({ ...userData, message: "" });
     }
   };
-
   // ** 이것은 개인 채팅방 보내기 버튼이다.
   const sendPrivateValue = () => {
     if (stompClient) {
@@ -161,7 +179,6 @@ const ChatRoom = () => {
         message: userData.message,
         status: "MESSAGE",
       };
-
       if (userData.username !== tab) {
         privateChats.get(tab).push(chatMessage);
         setPrivateChats(new Map(privateChats));
@@ -170,7 +187,6 @@ const ChatRoom = () => {
       setUserData({ ...userData, message: "" });
     }
   };
-
   //** 유저네임 핸들러 */
   const handleUsername = (event) => {
     const { value } = event.target;
@@ -196,9 +212,24 @@ const ChatRoom = () => {
       padding: "4px !important", // override inline-style
     },
   });
+  const dispatch = useDispatch();
   return (
     <div className="container">
       <div className="chat-box">
+        <button
+          onClick={() => {
+            dispatch(loginActions.logOutDB());
+          }}
+        >
+          logout
+        </button>
+        <button
+          onClick={() => {
+            connect();
+          }}
+        >
+          gdgdgdg
+        </button>
         <div className="member-list">
           <ul>
             <li
@@ -242,11 +273,11 @@ const ChatRoom = () => {
                 </li>
               ))}
             </ul>
-            <Box sx={{ border: "solid 1px #e2e2e2", borderRadius: "10px" }}>
+            <Box sx={{ border: "solid 1px #E2E2E2", borderRadius: "10px" }}>
               <Box
                 sx={{
                   h: 5,
-                  backgroundColor: "#e2e2e2",
+                  backgroundColor: "#E2E2E2",
                   borderTopLeftRadius: 10,
                   borderTopRightRadius: 10,
                   // borderBottomLeftRadius: 10,
@@ -279,8 +310,8 @@ const ChatRoom = () => {
                   padding: "10px",
                   width: "95%",
                   resize: "none",
-                  outlineColor: "#ffffff",
-                  backgroundColor: "#ffffff",
+                  outlineColor: "#FFFFFF",
+                  backgroundColor: "#FFFFFF",
                   // outline-color: #FE6B8B;
                 }}
               />
@@ -305,7 +336,6 @@ const ChatRoom = () => {
                     <MoodIcon />
                   </IconButton>
                 </ButtonGroup>
-
                 <IconButton
                   type="button"
                   className="send-button"
@@ -362,7 +392,6 @@ const ChatRoom = () => {
                 </li>
               ))}
             </ul>
-
             <div className="send-message">
               <TextField
                 hiddenLabel
@@ -371,7 +400,7 @@ const ChatRoom = () => {
                 value={userData.message}
                 onChange={handleMessage}
                 size="small"
-                sx={{ backgroundColor: "#ffffff", width: "100%" }}
+                sx={{ backgroundColor: "#FFFFFF", width: "100%" }}
               />
               <button
                 type="button"
@@ -387,5 +416,4 @@ const ChatRoom = () => {
     </div>
   );
 };
-
 export default ChatRoom;

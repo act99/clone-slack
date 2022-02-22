@@ -5,6 +5,7 @@ import thunk from "redux-thunk";
 import loginReducer from "./modules/loginReducer";
 import workSpaceReducer from "./modules/workSpaceReducer";
 import dmReducer from "./modules/dmReducer";
+import bookmarkReducer from "./modules/bookmarkReducer";
 import storage from "redux-persist/lib/storage";
 import persistReducer from "redux-persist/es/persistReducer";
 import persistStore from "redux-persist/es/persistStore";
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   loginReducer: loginReducer,
   workSpaceReducer: workSpaceReducer,
   dmReducer: dmReducer,
+  bookmarkReducer: bookmarkReducer,
 });
 const persistConfig = {
   key: "root",
