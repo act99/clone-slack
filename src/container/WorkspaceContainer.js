@@ -99,17 +99,21 @@ const WorkspaceContainer = (props) => {
   const workSpaceList = useSelector(
     (state) => state.workSpaceReducer.workspaceList
   );
-  // console.log(workSpaceList);
+  console.log(workSpaceList);
+
+  React.useEffect(() => {
+    dispatch(workSpaceActions.getSpaceDB());
+  }, []);
 
   // workspace 생성
-  const [workName, setWorkName] = React.useState("");
+  const workName = React.useRef();
   const addWorkSpace = () => {
-    // dispatch(
-    //   workSpaceActions.addSpace({
-    //     workName: workName, // 백엔드에서 받아올때 앞에 두글자만 가져와서 state에 저장하기
-    //   })
-    // );
-    console.log(workName, "워크스페이스 개설");
+    dispatch(
+      workSpaceActions.addSpaceDB(
+        workName.current.value // 백엔드에서 받아올때 앞에 두글자만 가져와서 state에 저장하기
+      )
+    );
+    console.log(workName.current.value, "워크스페이스 개설");
   };
 
   return (
@@ -120,12 +124,12 @@ const WorkspaceContainer = (props) => {
         {workSpaceList.map((p, idx) => {
           return (
             <WorkspaceButton
-              key={p.workID + "" + p.workName + idx}
-              id={p.workID}
+              key={p.workId + "" + p.workName + idx}
+              id={p.workId}
               onClick={() => {
-                history.push(`/${userinfo.token.split(" ")[1]}/${p.workID}/0`);
-                console.log(p.workID, p.workName);
-                dispatch(dmActions.setDM(p.workID));
+                history.push(`/${userinfo.token.split(" ")[1]}/${p.workId}/0`);
+                console.log(p.workId, p.workName);
+                dispatch(dmActions.setDM(p.workId));
               }}
             >
               {p.workName}
@@ -173,15 +177,16 @@ const WorkspaceContainer = (props) => {
               <TextField
                 id="outlined-basic"
                 variant="outlined"
-                onChange={(e) => {
-                  setWorkName(e.target.value);
-                }}
+                inputRef={workName}
               />
             </Box>
             <Button
               variant="contained"
               color="secondary"
-              onClick={addWorkSpace}
+              onClick={() => {
+                addWorkSpace();
+                handleClose();
+              }}
             >
               생성
             </Button>

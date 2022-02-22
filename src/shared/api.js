@@ -5,6 +5,7 @@ const token = tokenCheck.split("=")[1];
 const api = axios.create({
   // 실제 베이스 유알엘
   baseURL: "http://52.78.96.234:8080",
+  // baseURL: "http://3.37.123.52:8080",
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json",
@@ -31,4 +32,19 @@ export const apis = {
     api.post(`/user/userinfo`, {
       authorization: token,
     }),
+
+  getSpace: () => api.get("/api/workspaces"),
+
+  addSpace: (workName) =>
+    api.post("/api/workspaces", {
+      workName: workName,
+    }),
+
+  deleteSpace: (workID) => api.delete(`/api/workspaces/${workID}`),
+
+  getMark: (receiverName) => api.get(`/api/bookmark/${receiverName}`),
+
+  addMark: (bookmark) => api.post("/api/bookmark", bookmark),
+
+  deleteMark: (bookmarkId) => api.delete(`/api/bookmark/${bookmarkId}`),
 };

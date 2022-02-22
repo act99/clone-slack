@@ -6,6 +6,9 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Avatar from "@mui/material/Avatar";
 import { WorkspaceName } from "../../shared/style";
 import { deepOrange } from "@mui/material/colors";
+import { useDispatch, useSelector } from "react-redux";
+import { actionsCreators } from "../../redux/modules/workSpaceReducer";
+import { useParams } from "react-router-dom";
 
 export default function MenuHeader() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -21,8 +24,11 @@ export default function MenuHeader() {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
+  const dispatch = useDispatch();
+  const params = useParams();
+  const work_index = parseInt(params.workId);
   const WorkspaceLogout = () => {
-    console.log("workspace logout");
+    dispatch(actionsCreators.deleteSpaceDB(work_index));
   };
 
   return (

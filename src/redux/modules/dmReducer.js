@@ -17,17 +17,17 @@ const initialState = {
   workName: "53",
   dmsList: [
     {
-      receiverID: 0,
+      receiverId: 0,
       receiverName: "이주영",
       isNew: false,
     },
     {
-      receiverID: 1,
+      receiverId: 1,
       receiverName: "이주석",
       isNew: false,
     },
     {
-      receiverID: 2,
+      receiverId: 2,
       receiverName: "김철수",
       isNew: false,
     },
