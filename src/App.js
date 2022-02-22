@@ -1,6 +1,6 @@
 import "./App.css";
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "./redux/store";
 import Home from "./pages/Home";
@@ -16,22 +16,17 @@ function App() {
   const dispatch = useDispatch();
   const userinfo = useSelector((state) => state.loginReducer);
   const goToken = userinfo.token;
+  const cookie = document.cookie;
   React.useEffect(() => {
-    console.log(userinfo.token);
-    const token = userinfo.token;
-    // 쿠키가 있을 때
-    if (document.cookie) {
-      // 혹시 로그인 정보에 토큰이 없다면
-      if (token === null) {
-        history.replace("/signin");
-      } else {
-        // 완전히 둘 다 있을 때
-        dispatch(loginActions.loginCheckDB());
-        history.replace(`/${token.split(" ")[1]}/0/0`);
-      }
-    } else {
-      history.replace("/signup");
+    // dispatch(loginActions.logOutDB());
+    if (!cookie) {
+      // dispatch(loginActions.logOutDB());
+      // history.replace("/signin");
     }
+    // if (document.cookie && userinfo.token === null) {
+    //   dispatch(loginActions.loginCheckDB());
+    // }
+    console.log(userinfo.token);
   }, []);
 
   return (
@@ -39,16 +34,22 @@ function App() {
       <ConnectedRouter history={history}>
         {/* <CssBaseline /> */}
         <Container maxWidth="xxl">
-          <Route path="/signin" exact component={Signin} />
-          <Route path="/signup" exact component={Signup} />
+          <Switch>
+            <Route path="/signin" exact component={Signin} />
+            <Route path="/signup" exact component={Signup} />
+          </Switch>
         </Container>
         <Box sx={{ width: "100vw", height: "100%" }}>
-          <Route path="/" exact component={First} />
-          <Route
-            path={`/${goToken.split(" ")[1]}/:workId/:dmsId`}
-            exact
-            component={Home}
-          />
+          <Switch>
+            <Route path="/" exact component={First} />
+            {userinfo.token !== null && (
+              <Route
+                path={`/${goToken.split(" ")[1]}/:workId/:dmsId`}
+                exact
+                component={Home}
+              />
+            )}
+          </Switch>
         </Box>
       </ConnectedRouter>
     </>
