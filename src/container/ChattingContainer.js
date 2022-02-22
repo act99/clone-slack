@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Profile from "../component/ChattingContainer/Profile";
 import Bookmark from "../component/ChattingContainer/Bookmark";
 import { Button, ButtonGroup, TextField } from "@mui/material";
-import ChatRoom from "../component/ChattingContainer/ChatRoom";
+import Test from "../component/ChattingContainer/Test";
 const ChattingContainer = (props) => {
   return (
     <>
@@ -199,7 +199,7 @@ const ChattingContainer = (props) => {
           <ChatRoom />
         </Box>
       </Box> */}
-      <ChatRoom />
+      <Test />
     </>
   );
 };

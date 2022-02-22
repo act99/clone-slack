@@ -18,6 +18,7 @@ function App() {
   const goToken = userinfo.token;
   const cookie = document.cookie;
   React.useEffect(() => {
+    // dispatch(loginActions.logOutDB());
     if (!cookie) {
       // dispatch(loginActions.logOutDB());
       // history.replace("/signin");
@@ -43,7 +44,7 @@ function App() {
             <Route path="/" exact component={First} />
             {userinfo.token !== null && (
               <Route
-                // path={`/${goToken.split(" ")[1]}/:workId/:dmsId`}
+                path={`/${goToken.split(" ")[1]}/:workId/:dmsId`}
                 exact
                 component={Home}
               />

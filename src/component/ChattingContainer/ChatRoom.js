@@ -46,7 +46,7 @@ const ChatRoom = () => {
   // ** 채팅하면서 나오는 데이터 => 앞으로 들어가야 할 것은 imageUrl 입니다.
   const [userData, setUserData] = useState({
     username: loginNickname,
-    receivername: "CHATROOM",
+    receivername: "act99",
     // imageUrl: "",
     connected: false,
     message: "",
@@ -56,7 +56,7 @@ const ChatRoom = () => {
     console.log(loginNickname);
     let forSetData = {
       username: loginNickname,
-      receivername: "CHATROOM",
+      receivername: "act99",
       // imageUrl: "",
       connected: true,
       message: "",
@@ -80,7 +80,7 @@ const ChatRoom = () => {
     console.log("onConnected 쪽 입니다.");
     setUserData({ ...userData, connected: true });
     // ** onMessageReceived 공통 메시지 받을 것 구독상태가 되면 response 가 열려있기 때문에 event 가 발생 시 event를 받는다.
-    stompClient.subscribe("/chatroom/public/1", onMessageReceived);
+    stompClient.subscribe("/room/1", onMessageReceived);
     // ** onPrivateMessage 개인 메시지 받을 것 구독상태가 되면 response 가 열려있기 때문에 event 가 발생 시 event를 받는다.
     stompClient.subscribe(
       "/user/" + userData.username + "/private",
@@ -161,7 +161,7 @@ const ChatRoom = () => {
     if (stompClient) {
       var chatMessage = {
         senderName: userData.username,
-        receiverName: "CHATROOM",
+        receiverName: "act99",
         message: userData.message,
         status: "MESSAGE",
       };
