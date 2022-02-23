@@ -10,6 +10,7 @@ import storage from "redux-persist/lib/storage";
 import persistReducer from "redux-persist/es/persistReducer";
 import persistStore from "redux-persist/es/persistStore";
 import chatReducer from "./modules/chatReducer";
+import imageReducer from "./modules/imageReducer";
 export const history = createBrowserHistory();
 const rootReducer = combineReducers({
   router: connectRouter(history),
@@ -18,7 +19,7 @@ const rootReducer = combineReducers({
   dmReducer: dmReducer,
   chatReducer: chatReducer,
   bookmarkReducer: bookmarkReducer,
-  chatReducer: chatReducer,
+  imageReducer: imageReducer,
 });
 const persistConfig = {
   key: "root",
