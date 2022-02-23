@@ -31,6 +31,8 @@ import EmojiList from "./Emojilist";
 import CodeChanger from "./CodeChanger";
 import CodeChat from "./CodeChat";
 
+// 스크롤 바 사라지게 하기
+
 const tokenCheck = document.cookie;
 const token = tokenCheck.split("=")[1];
 var stompClient = null;
@@ -69,6 +71,7 @@ const ChatRoom = () => {
     setUserData({ ...userData, message: value });
     setViewMessage(value);
   };
+
   //** submit handling */
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -79,9 +82,12 @@ const ChatRoom = () => {
       message: userData.message,
       receiverName: userData.receivername,
     };
-    dispatch(chatActions.addMessage(messageData));
+    dispatch(chatActions.addMessageDB(messageData));
     // setMessages([...messages, userData]);
     console.log(userData);
+    if (userData.message.slice(0, 3).includes("+++")) {
+      handleCodeClose();
+    }
     setUserData({ ...userData, message: "" });
     setViewMessage("");
   };
@@ -92,14 +98,6 @@ const ChatRoom = () => {
     }
   };
   //** 엔터 시 제출용  */
-
-  //** 채팅창 스크롤 기능 구현을 위한 공간 */
-
-  //** 채팅창 스크롤 기능 구현을 위한 공간 */
-
-  //** 채팅창 박스*/
-
-  //** 채팅창 박스*/
 
   //** 프로필 팝오버*/
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -191,9 +189,8 @@ const ChatRoom = () => {
       >
         {messages.map((item, index) => {
           return (
-            <>
+            <div key={index + item.senderName}>
               <Box
-                key={index + item.message}
                 sx={{
                   mt: 1,
                 }}
@@ -258,14 +255,14 @@ const ChatRoom = () => {
                     {item.message.slice(0, 3).includes("+++") ? (
                       <CodeChat code={item.message} />
                     ) : (
-                      <Typography sx={{ fontSize: "15px" }}>
+                      <div style={{ fontSize: "15px" }}>
                         {changeHtml(item.message)}
-                      </Typography>
+                      </div>
                     )}
                   </Grid>
                 </Grid>
               </Box>
-            </>
+            </div>
           );
         })}
       </Box>
@@ -317,6 +314,7 @@ const ChatRoom = () => {
         </Box>
         <form onSubmit={handleSubmit} onKeyDown={onEnterPress}>
           <textarea
+            // contentEditable="true"
             placeholder="이주영님에게 메시지 보내기"
             value={viewMessage}
             onChange={handleMessage}
@@ -375,7 +373,7 @@ const ChatRoom = () => {
                 <ButtonGroup variant="text">
                   {EmojiList.emojiList1.map((item, index) => {
                     return (
-                      <div key={index + item}>
+                      <div key={index + item.toString()}>
                         <Button
                           onClick={() => {
                             addEmoji(item);
@@ -390,7 +388,7 @@ const ChatRoom = () => {
                 <ButtonGroup variant="text">
                   {EmojiList.emojiList2.map((item, index) => {
                     return (
-                      <div key={index + item}>
+                      <div key={index + item.toString()}>
                         <Button
                           onClick={() => {
                             addEmoji(item);
@@ -405,7 +403,7 @@ const ChatRoom = () => {
                 <ButtonGroup variant="text">
                   {EmojiList.emojiList3.map((item, index) => {
                     return (
-                      <div key={index + item}>
+                      <div key={index + item.toString()}>
                         <Button
                           onClick={() => {
                             addEmoji(item);
@@ -420,7 +418,7 @@ const ChatRoom = () => {
                 <ButtonGroup variant="text">
                   {EmojiList.emojiList4.map((item, index) => {
                     return (
-                      <div key={index + item}>
+                      <div key={index + item.toString()}>
                         <Button
                           onClick={() => {
                             addEmoji(item);
@@ -435,7 +433,7 @@ const ChatRoom = () => {
                 <ButtonGroup variant="text">
                   {EmojiList.emojiList5.map((item, index) => {
                     return (
-                      <div key={index + item}>
+                      <div key={index + item.toString()}>
                         <Button
                           onClick={() => {
                             addEmoji(item);

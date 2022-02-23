@@ -58,6 +58,13 @@ export const apis = {
 
   deleteMark: (bookmarkId) => api.delete(`/api/bookmark/${bookmarkId}`),
 
+  addChat: (message) =>
+    api.post("/api/dms/5", {
+      memberId: 1,
+      memberName: "pootter@naver.com",
+      chat: message,
+    }),
+
   createRoom: function (data) {
     return axios.post(`/api/chat/rooms`, data);
   },
