@@ -20,17 +20,17 @@ const initialState = {
   bookmarkList: [
     {
       bookmarkId: 0,
-      bookmarkUrl: "www.naver.com", // 백엔드에서 받아올때 앞에 두글자만 가져와서 state에 저장하기
+      bookmarkUrl: "http://www.naver.com", // 백엔드에서 받아올때 앞에 두글자만 가져와서 state에 저장하기
       bookmarkName: "네이버", // 해당 workspace에 새로운 메세지가 들어왔는지 (T/F로만 할지, 숫자로 할지)
     },
     {
       bookmarkId: 1,
-      bookmarkUrl: "www.naver.com", // 백엔드에서 받아올때 앞에 두글자만 가져와서 state에 저장하기
+      bookmarkUrl: "http://www.naver.com", // 백엔드에서 받아올때 앞에 두글자만 가져와서 state에 저장하기
       bookmarkName: "네이버", // 해당 workspace에 새로운 메세지가 들어왔는지 (T/F로만 할지, 숫자로 할지)
     },
     {
       bookmarkId: 2,
-      bookmarkUrl: "www.naver.com", // 백엔드에서 받아올때 앞에 두글자만 가져와서 state에 저장하기
+      bookmarkUrl: "http://www.naver.com", // 백엔드에서 받아올때 앞에 두글자만 가져와서 state에 저장하기
       bookmarkName: "네이버", // 해당 workspace에 새로운 메세지가 들어왔는지 (T/F로만 할지, 숫자로 할지)
     },
   ],
@@ -45,7 +45,7 @@ const getMarkDB = (receiverName) => {
       .getMark(receiverName)
       .then((res) => {
         console.log(res);
-        // dispatch(setMark(res.data));
+        dispatch(setMark(res.data));
       })
       .catch((err) => {
         console.log(err);

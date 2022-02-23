@@ -42,6 +42,14 @@ export const apis = {
 
   deleteSpace: (workID) => api.delete(`/api/workspaces/${workID}`),
 
+  getDm: (workId) => api.get(`/api/dms?workId=${workId}`),
+
+  addDm: (workId, memberName) =>
+    api.post(`/api/members/${workId}`, {
+      workId: workId,
+      memberName: memberName,
+    }),
+
   getMark: (receiverName) => api.get(`/api/bookmark/${receiverName}`),
 
   addMark: (bookmark) => api.post("/api/bookmark", bookmark),

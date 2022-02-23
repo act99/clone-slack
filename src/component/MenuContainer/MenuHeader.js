@@ -27,6 +27,9 @@ export default function MenuHeader() {
   const dispatch = useDispatch();
   const params = useParams();
   const work_index = parseInt(params.workId);
+
+  const dmsinfo = useSelector((state) => state.dmReducer);
+
   const WorkspaceLogout = () => {
     dispatch(actionsCreators.deleteSpaceDB(work_index));
   };
@@ -44,7 +47,7 @@ export default function MenuHeader() {
             margin: "5px",
           }}
         >
-          클론코딩
+          {dmsinfo.workName}
         </p>
       </Button>
       <Popover
@@ -60,8 +63,8 @@ export default function MenuHeader() {
         {/* <Avatar variant="rounded" sx={{ width: 36, height: 36 }}>
           클론
         </Avatar> */}
-        <Typography sx={{ p: 2 }} onClick={WorkspaceLogout}>
-          클론코딩에서 로그아웃
+        <Typography sx={{ p: 2, cursor: "pointer" }} onClick={WorkspaceLogout}>
+          {dmsinfo.workName}에서 로그아웃
         </Typography>
       </Popover>
     </div>

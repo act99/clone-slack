@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { over, VERSIONS } from "stompjs";
 import SockJS from "sockjs-client";
+import { useParams } from "react-router-dom";
 
 const tokenCheck = document.cookie;
-const token = tokenCheck.split("=")[1];
+const token = tokenCheck.split("=")[1].split(" ")[1];
+console.log(token);
 var stompClient = null;
 const Test = () => {
+  const params = useParams();
+  const workId = params.workId;
+  console.log(workId);
   const [privateChats, setPrivateChats] = useState(new Map());
   const [publicChats, setPublicChats] = useState([]);
   const [tab, setTab] = useState("CHATROOM");
   const [userData, setUserData] = useState({
     username: "",
-    receivername: "",
+    receiverName: "gdgd",
     connected: false,
     message: "",
+    roomId: parseInt(workId),
     // roomId: 1,
   });
   useEffect(() => {
@@ -25,30 +31,35 @@ const Test = () => {
     let options = { debug: true, protocols: VERSIONS.supportedProtocols };
     let headers = { token: token };
     stompClient = over(Sock, options);
-    stompClient.connect(headers, onConnected, onError);
+    stompClient.connect(onConnected, onError);
   };
 
   const onConnected = () => {
     setUserData({ ...userData, connected: true });
-    stompClient.subscribe("/chat/room/1", onMessageReceived);
-    stompClient.subscribe(
-      "/user/" + userData.username + "/private",
-      onPrivateMessage
-    );
+    stompClient.subscribe(`/chatroom/public/${workId}`, onMessageReceived);
+    stompClient.subscribe(`sub/chat/room/${workId}`, onPrivateMessage);
     userJoin();
   };
 
   const userJoin = () => {
     var chatMessage = {
       senderName: userData.username,
-      status: "JOIN",
+      receiverName: "gdgd",
+      type: "JOIN",
+      roomId: parseInt(workId),
     };
-    stompClient.send("/chat/room/1", {}, JSON.stringify(chatMessage));
+    stompClient.send(`/private-message`, {}, JSON.stringify(chatMessage));
+    stompClient.send(
+      `/chatroom/public/${workId}`,
+      {},
+      JSON.stringify(chatMessage)
+    );
+    stompClient.send(`chat/room/${workId}`, {}, JSON.stringify(chatMessage));
   };
 
   const onMessageReceived = (payload) => {
     var payloadData = JSON.parse(payload.body);
-    switch (payloadData.status) {
+    switch (payloadData.type) {
       case "JOIN":
         if (!privateChats.get(payloadData.senderName)) {
           privateChats.set(payloadData.senderName, []);
@@ -89,10 +100,14 @@ const Test = () => {
       var chatMessage = {
         senderName: userData.username,
         message: userData.message,
-        status: "MESSAGE",
+        receiverName: "gdgd",
+        type: "MESSAGE",
+        roomId: parseInt(workId),
       };
       console.log(chatMessage);
-      stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
+      stompClient.send("/chatroom/public", {}, JSON.stringify(chatMessage), {
+        token: token,
+      });
       setUserData({ ...userData, message: "" });
     }
   };
@@ -101,16 +116,19 @@ const Test = () => {
     if (stompClient) {
       var chatMessage = {
         senderName: userData.username,
-        receiverName: tab,
-        message: userData.message,
-        status: "MESSAGE",
+        receiverName: "gdgd",
+        message: "안녕",
+        type: "MESSAGE",
+        roomId: parseInt(workId),
       };
 
       if (userData.username !== tab) {
         privateChats.get(tab).push(chatMessage);
         setPrivateChats(new Map(privateChats));
       }
-      stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
+      stompClient.send("chat/room", {}, JSON.stringify(chatMessage), {
+        token: token,
+      });
       setUserData({ ...userData, message: "" });
     }
   };
@@ -209,7 +227,6 @@ const Test = () => {
                   </li>
                 ))}
               </ul>
-
               <div className="send-message">
                 <input
                   type="text"
@@ -247,5 +264,4 @@ const Test = () => {
     </div>
   );
 };
-
 export default Test;
