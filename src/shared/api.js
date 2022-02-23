@@ -33,9 +33,9 @@ export const apis = {
       authorization: token,
     }),
 
-  // getSpace: () => api.get("/api/workspaces"),
+  getSpace: () => api.get("/api/workspaces"),
 
-  getSpace: () => api.get("/user/workinfo"),
+  // getSpace: () => api.get("/user/workinfo"),
 
   addSpace: (workName) =>
     api.post("/api/workspaces", {
@@ -44,7 +44,8 @@ export const apis = {
 
   deleteSpace: (workID) => api.delete(`/api/workspaces/${workID}`),
 
-  getDm: (workId) => api.get(`/api/dms?workId=${workId}`),
+  // getDm: (workId) => api.get(`/api/members?workId=${workId}`),
+  getDm: (workId) => api.get(`/api/members/${workId}`),
 
   addDm: (workId, memberName) =>
     api.post(`/api/members/${workId}`, {

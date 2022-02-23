@@ -26,6 +26,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import PersonIcon from "@mui/icons-material/Person";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
+
 export default function DirectList() {
   const [open, setOpen] = React.useState(true);
   const handleClick = () => {
@@ -33,10 +34,11 @@ export default function DirectList() {
   };
   const params = useParams();
   const work_index = parseInt(params.workId);
+  const memberId = parseInt(params.receiverId);
   const userinfo = useSelector((state) => state.loginReducer);
   const dmsinfo = useSelector((state) => state.dmReducer);
   const dmsList = dmsinfo.dmsList;
-  console.log(dmsList);
+  console.log(work_index, dmsList);
   // 테스트 코드
   const dispatch = useDispatch();
   return (
@@ -70,13 +72,14 @@ export default function DirectList() {
                   style={{ color: "#CCCBCB" }}
                   onClick={() => {
                     history.push(
-                      `/${userinfo.token.split(" ")[1]}/${work_index}/${
-                        p.memberId
-                      }`
+                      `/${
+                        userinfo.token.split(" ")[1]
+                      }/${work_index}/${memberId}`
                     );
+                    dispatch(dmActions.getDmDB(work_index));
                   }}
                 >
-                  {p.memberNickname}
+                  {p.memberName}
                 </ListItemText>
               </ListItemButton>
             );
@@ -143,7 +146,8 @@ const DirectAdd = (props) => {
   const dispatch = useDispatch();
   const memberName = React.useRef();
   const addDm = () => {
-    dispatch(dmActions.addDmDB(props.work_index, memberName.current.value));
+    console.log(props.workId);
+    dispatch(dmActions.addDmDB(props.workId, memberName.current.value));
   };
   return (
     <div>

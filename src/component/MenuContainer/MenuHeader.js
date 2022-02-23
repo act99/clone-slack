@@ -28,8 +28,9 @@ export default function MenuHeader() {
   const params = useParams();
   const work_index = parseInt(params.workId);
 
-  const dmsinfo = useSelector((state) => state.dmReducer);
+  const workName = useSelector((state) => state.dmReducer.workName);
 
+  console.log(workName);
   const WorkspaceLogout = () => {
     dispatch(actionsCreators.deleteSpaceDB(work_index));
   };
@@ -47,7 +48,7 @@ export default function MenuHeader() {
             margin: "5px",
           }}
         >
-          {dmsinfo.workName}
+          {workName}
         </p>
       </Button>
       <Popover
@@ -61,7 +62,7 @@ export default function MenuHeader() {
         }}
       >
         <Typography sx={{ p: 2, cursor: "pointer" }} onClick={WorkspaceLogout}>
-          {dmsinfo.workName}에서 로그아웃
+          {workName}에서 로그아웃
         </Typography>
       </Popover>
     </div>

@@ -38,7 +38,7 @@ const Upload = (props) => {
   };
 
   return (
-    <div style={{ width: "150px", margin: "auto", padding: "35px" }}>
+    <div style={{ width: "150px", margin: "auto" }}>
       {/* disabled 속성 주면 파일선택 버튼 안눌린다. */}
       <img
         src={
@@ -54,7 +54,7 @@ const Upload = (props) => {
         }}
       />
       <ImageLabel className="input-file-button" for="input-file">
-        이미지 찾기
+        사진 업로드
       </ImageLabel>
       <input
         id="input-file"
@@ -71,10 +71,12 @@ const Upload = (props) => {
 };
 
 const ImageLabel = styled.label`
-  padding: 6px 25px;
-  background-color: #ff6600;
-  border-radius: 10px;
-  color: white;
+  width: 200px;
+
+  padding: 6px 32px;
+  border: 1px solid #c0c0c0;
+  border-radius: 5px;
+  font-weight: 900;
   cursor: pointer;
 `;
 
