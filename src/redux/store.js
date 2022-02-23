@@ -18,6 +18,7 @@ const rootReducer = combineReducers({
   dmReducer: dmReducer,
   chatReducer: chatReducer,
   bookmarkReducer: bookmarkReducer,
+  chatReducer: chatReducer,
 });
 const persistConfig = {
   key: "root",

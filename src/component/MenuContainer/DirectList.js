@@ -12,7 +12,6 @@ import { history } from "../../redux/store";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { actionsCreators as dmActions } from "../../redux/modules/dmReducer";
-
 // workspace 생성 modal
 import { Box, Typography, Button, TextField } from "@mui/material";
 import PropTypes from "prop-types";
@@ -27,14 +26,11 @@ import CloseIcon from "@mui/icons-material/Close";
 import PersonIcon from "@mui/icons-material/Person";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
-
 export default function DirectList() {
   const [open, setOpen] = React.useState(true);
-
   const handleClick = () => {
     setOpen(!open);
   };
-
   const params = useParams();
   const work_index = parseInt(params.workId);
   const userinfo = useSelector((state) => state.loginReducer);
@@ -43,14 +39,13 @@ export default function DirectList() {
   console.log(dmsList);
   // 테스트 코드
   const dispatch = useDispatch();
-
   return (
     <List
-      sx={{ width: "100%", maxWidth: 360, bgcolor: "#3f0e40" }}
+      sx={{ width: "100%", maxWidth: 360, bgcolor: "#3F0E40" }}
       component="nav"
       aria-labelledby="nested-list-subheader"
     >
-      <ListItemButton onClick={handleClick} sx={{ color: "#cccbcb" }}>
+      <ListItemButton onClick={handleClick} sx={{ color: "#CCCBCB" }}>
         {open ? <ArrowDropDownIcon /> : <ArrowRightIcon />}
         <ListItemText primary="다이렉트메세지" style={{ padding: "0px 5px" }} />
       </ListItemButton>
@@ -72,7 +67,7 @@ export default function DirectList() {
                   </Stack>
                 </ListItemIcon>
                 <ListItemText
-                  style={{ color: "#cccbcb" }}
+                  style={{ color: "#CCCBCB" }}
                   onClick={() => {
                     history.push(
                       `/${userinfo.token.split(" ")[1]}/${work_index}/${
@@ -86,25 +81,21 @@ export default function DirectList() {
               </ListItemButton>
             );
           })}
-
           <DirectAdd workId={work_index} workName={dmsinfo.workName} />
         </List>
       </Collapse>
     </List>
   );
 }
-
 const DirectAdd = (props) => {
   // modal
   const [open, setOpen] = React.useState(false);
-
   const handleClick = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
-
   const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     "& .MuiDialogContent-root": {
       padding: theme.spacing(2),
@@ -113,10 +104,8 @@ const DirectAdd = (props) => {
       padding: theme.spacing(1),
     },
   }));
-
   const BootstrapDialogTitle = (props) => {
     const { children, onClose, ...other } = props;
-
     return (
       <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
         {children}
@@ -137,7 +126,6 @@ const DirectAdd = (props) => {
       </DialogTitle>
     );
   };
-
   BootstrapDialogTitle.propTypes = {
     children: PropTypes.node,
     onClose: PropTypes.func.isRequired,
@@ -146,21 +134,17 @@ const DirectAdd = (props) => {
     // position: "absolute",
     // top: "50%",
     // left: "50%",
-
     width: 400,
     bgcolor: "background.paper",
-
     borderRadius: "5px",
     boxShadow: 24,
     p: 3,
   };
-
   const dispatch = useDispatch();
   const memberName = React.useRef();
   const addDm = () => {
     dispatch(dmActions.addDmDB(props.work_index, memberName.current.value));
   };
-
   return (
     <div>
       <ListItemButton
@@ -177,7 +161,7 @@ const DirectAdd = (props) => {
             </Avatar>
           </Stack>
         </ListItemIcon>
-        <ListItemText style={{ color: "#cccbcb" }}>팀원 추가</ListItemText>
+        <ListItemText style={{ color: "#CCCBCB" }}>팀원 추가</ListItemText>
       </ListItemButton>
       <BootstrapDialog
         onClose={handleClose}
