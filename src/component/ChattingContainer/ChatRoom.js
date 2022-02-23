@@ -7,6 +7,7 @@ import {
   ButtonGroup,
   Grid,
   IconButton,
+  Popover,
   TextField,
   Typography,
 } from "@mui/material";
@@ -25,6 +26,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { actionCreators as loginActions } from "../../redux/modules/loginReducer";
 import { useParams } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
+import { actionsCreators as chatActions } from "../../redux/modules/chatReducer";
+import EmojiList from "./Emojilist";
 
 const tokenCheck = document.cookie;
 const token = tokenCheck.split("=")[1];
@@ -41,7 +44,10 @@ const ChatRoom = () => {
     connected: false,
     message: "",
   });
-  const [messages, setMessages] = React.useState([]);
+  // const [messages, setMessages] = React.useState([]);
+  const dispatch = useDispatch();
+  const messages = useSelector((state) => state.chatReducer.messageList);
+  console.log(messages);
   const inputRef = React.useRef();
 
   const handleMessage = (event) => {
@@ -53,8 +59,15 @@ const ChatRoom = () => {
     event.preventDefault();
     let message = inputRef.current.value;
     setUserData({ ...userData, message: message });
-    setMessages([...messages, userData]);
+    const messageData = {
+      senderName: userData.username,
+      message: userData.message,
+      receiverName: userData.receivername,
+    };
+    dispatch(chatActions.addMessage(messageData));
+    // setMessages([...messages, userData]);
     console.log(userData);
+    setUserData({ ...userData, message: "" });
   };
 
   //** 채팅창 스크롤 기능 구현을 위한 공간 */
@@ -65,6 +78,46 @@ const ChatRoom = () => {
 
   //** 채팅창 박스*/
 
+  //** 프로필 팝오버*/
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const handleProfileClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
+  //** 프로필 팝오버*/
+
+  //** 이모지 팝오버 */
+  const [emojiEl, setEmojiEl] = React.useState(null);
+  const emojiOpen = Boolean(emojiEl);
+  const emojiId = emojiOpen ? "simple-popover" : undefined;
+  const handleEmojiClick = (event) => {
+    setEmojiEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+    setEmojiEl(null);
+  };
+  const addEmoji = (emoji) => {
+    setUserData({ ...userData, message: userData.message + emoji });
+  };
+  //** 이모지 팝오버 */
+  //** 글씨 굵기 추가 */
+  const boldText = () => {
+    const start = inputRef.current.selectionStart; // 드래그 부분 시작인덱스
+    const end = inputRef.current.selectionEnd; // 드래그 부분 종료 인덱스
+    const startText = inputRef.current.value.substring(0, start); // 드래그 영역 앞부분
+    const targetText = inputRef.current.value.substring(start, end); // 드래그 영역
+    const endText = inputRef.current.value.substring(end); // 드래그 영역 뒷부분
+
+    const result = startText + "<b>" + targetText + "</b>" + endText;
+    // 드래그 영역 앞뒤로 <br> 추가
+    setUserData({ ...userData, message: userData.message });
+  };
+  //** 코드 스니펫 */
+  // const setCode = () => {}
+  //** 코드 스니펫 */
   return (
     <Box sx={{ px: 3 }}>
       <Box sx={{ height: 600, backgroundColor: "#ffffff", overflow: "auto" }}>
@@ -78,14 +131,15 @@ const ChatRoom = () => {
             >
               <Grid
                 container
-                // spacing={}
                 sx={{
-                  // minHeight: 10,
                   backgroundColor: "#ffffff",
                 }}
               >
                 <Grid item xs={0.6}>
-                  <IconButton sx={{ margin: "auto" }}>
+                  <IconButton
+                    sx={{ margin: "auto" }}
+                    onClick={handleProfileClick}
+                  >
                     <PersonIcon
                       sx={{
                         color: "white",
@@ -97,12 +151,40 @@ const ChatRoom = () => {
                         fontSize: "40px",
                         mb: 0,
                       }}
+                      aria-describedby={id}
                     />
                   </IconButton>
+                  <Popover
+                    id={id}
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    sx={{ width: 400 }}
+                  >
+                    <PersonIcon
+                      sx={{
+                        color: "white",
+                        backgroundColor: "#44bedf",
+                        border: "solid 0px",
+                        borderRadius: "5px",
+                        fontSize: "300px",
+                      }}
+                      aria-describedby={id}
+                    />
+                    <Typography
+                      sx={{ p: 2, fontWeight: "bold", fontSize: "20px" }}
+                    >
+                      리덕스 사용자
+                    </Typography>
+                  </Popover>
                 </Grid>
                 <Grid item xs={11.4}>
                   <Typography sx={{ fontWeight: "bold", fontSize: "17px" }}>
-                    {item.username}
+                    {item.senderName}
                   </Typography>
                   <Typography sx={{ fontSize: "15px" }}>
                     {item.message}
@@ -110,11 +192,6 @@ const ChatRoom = () => {
                 </Grid>
               </Grid>
             </Box>
-
-            // <Box key={index} sx={{ minHeight: 10, backgroundColor: "#eeeeee" }}>
-            //   <div>{item.username}</div>
-            //   <div>{item.message}</div>
-            // </Box>
           );
         })}
       </Box>
@@ -134,7 +211,7 @@ const ChatRoom = () => {
             <IconButton onClick={() => console.log("굵기 버튼")}>
               <FormatBoldIcon />
             </IconButton>
-            <IconButton onClick={() => console.log("굵기 버튼")}>
+            <IconButton onClick={() => console.log("기울기 버튼")}>
               <FormatItalicIcon />
             </IconButton>
             <IconButton onClick={() => console.log("링크 버튼")}>
@@ -145,13 +222,25 @@ const ChatRoom = () => {
             </IconButton>
           </ButtonGroup>
         </Box>
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={handleSubmit}
+          // onKeyPress={(e) => {
+          //   if (e.key === "Enter") {
+          //     handleSubmit();
+          //   }
+          // }}
+        >
           <textarea
             placeholder="이주영님에게 메시지 보내기"
             value={userData.message}
             onChange={handleMessage}
             size="small"
             ref={inputRef}
+            onKeyPress={(e) => {
+              if (e.key === "Enter" && e.shiftKey) {
+                inputRef.current.value = inputRef.current.value + "<br/>";
+              }
+            }}
             style={{
               fontWeight: "bold",
               border: "solid 0px",
@@ -180,9 +269,90 @@ const ChatRoom = () => {
               <IconButton onClick={() => console.log("녹음 버튼")}>
                 <MicNoneIcon />
               </IconButton>
-              <IconButton onClick={() => console.log("아이콘 버튼")}>
+              <IconButton onClick={handleEmojiClick}>
                 <MoodIcon />
               </IconButton>
+              <Popover
+                id={emojiId}
+                open={emojiOpen}
+                anchorEl={emojiEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                sx={{ width: 400 }}
+              >
+                <Typography sx={{ p: 2, fontWeight: "bold", fontSize: "20px" }}>
+                  이모티콘 선택
+                </Typography>
+                <hr style={{ borderBottom: "" }} />
+                <ButtonGroup variant="text">
+                  {EmojiList.emojiList1.map((item, index) => {
+                    return (
+                      <Button
+                        onClick={() => {
+                          addEmoji(item);
+                        }}
+                      >
+                        {item}
+                      </Button>
+                    );
+                  })}
+                </ButtonGroup>
+                <ButtonGroup variant="text">
+                  {EmojiList.emojiList2.map((item, index) => {
+                    return (
+                      <Button
+                        onClick={() => {
+                          addEmoji(item);
+                        }}
+                      >
+                        {item}
+                      </Button>
+                    );
+                  })}
+                </ButtonGroup>
+                <ButtonGroup variant="text">
+                  {EmojiList.emojiList3.map((item, index) => {
+                    return (
+                      <Button
+                        onClick={() => {
+                          addEmoji(item);
+                        }}
+                      >
+                        {item}
+                      </Button>
+                    );
+                  })}
+                </ButtonGroup>
+                <ButtonGroup variant="text">
+                  {EmojiList.emojiList4.map((item, index) => {
+                    return (
+                      <Button
+                        onClick={() => {
+                          addEmoji(item);
+                        }}
+                      >
+                        {item}
+                      </Button>
+                    );
+                  })}
+                </ButtonGroup>
+                <ButtonGroup variant="text">
+                  {EmojiList.emojiList5.map((item, index) => {
+                    return (
+                      <Button
+                        onClick={() => {
+                          addEmoji(item);
+                        }}
+                      >
+                        {item}
+                      </Button>
+                    );
+                  })}
+                </ButtonGroup>
+              </Popover>
             </ButtonGroup>
 
             <IconButton type="submit" className="send-button">
