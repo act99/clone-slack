@@ -40,7 +40,7 @@ function App() {
         </Container>
         <Box sx={{ width: "100vw", height: "100%" }}>
           <Switch>
-            <Route path="/" exact component={Home} />
+            <Route path="/" exact component={First} />
             {userinfo.token !== null && (
               <Route
                 path={`/${goToken.split(" ")[1]}/:workId/:receiverId`}
