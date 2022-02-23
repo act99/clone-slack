@@ -30,33 +30,37 @@ export default function Bookmark() {
     (state) => state.bookmarkReducer
   ).bookmarkList;
   console.log(bookmarkList);
+
   React.useEffect(() => {
     // dispatch(bookmarkActions.setMark());
     dispatch(bookmarkActions.getMarkDB("이주영"));
   }, []);
+
   return (
     <div style={{ height: "100%", display: "flex" }}>
       {bookmarkList.map((p, idx) => {
         return (
-          <Button
-            key={idx}
-            sx={{
-              ml: 1,
-              display: "block",
-              color: "#707170",
-              fontWeight: "bold",
-              fontSize: 12,
-              my: "auto",
-              height: "100%",
-            }}
-            onClick={() => {
-              p.bookmarkUrl.includes("http")
-                ? window.open(`${p.bookmarkUrl}`)
-                : window.open(`https://${p.bookmarkUrl}`);
-            }}
-          >
-            {p.bookmarkName}
-          </Button>
+          <>
+            <Button
+              key={idx + p.bookmarkUrl}
+              sx={{
+                ml: 1,
+                display: "block",
+                color: "#707170",
+                fontWeight: "bold",
+                fontSize: 12,
+                my: "auto",
+                height: "100%",
+              }}
+              onClick={() => {
+                p.bookmarkUrl.includes("http")
+                  ? window.open(`${p.bookmarkUrl}`)
+                  : window.open(`https://${p.bookmarkUrl}`);
+              }}
+            >
+              {p.bookmarkName}
+            </Button>
+          </>
         );
       })}
       <Button

@@ -9,6 +9,7 @@ import bookmarkReducer from "./modules/bookmarkReducer";
 import storage from "redux-persist/lib/storage";
 import persistReducer from "redux-persist/es/persistReducer";
 import persistStore from "redux-persist/es/persistStore";
+import chatReducer from "./modules/chatReducer";
 export const history = createBrowserHistory();
 const rootReducer = combineReducers({
   router: connectRouter(history),
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   workSpaceReducer: workSpaceReducer,
   dmReducer: dmReducer,
   bookmarkReducer: bookmarkReducer,
+  chatReducer: chatReducer,
 });
 const persistConfig = {
   key: "root",
