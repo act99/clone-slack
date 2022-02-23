@@ -81,12 +81,7 @@ const ProfileUpload = (props) => {
     children: PropTypes.node,
     onClose: PropTypes.func.isRequired,
   };
-  const modalStyle = {
-    width: "600px",
-    bgcolor: "background.paper",
-    borderRadius: "5px",
-    boxShadow: 24,
-  };
+
   return (
     <div>
       <Avatar
@@ -107,7 +102,7 @@ const ProfileUpload = (props) => {
         aria-labelledby="customized-dialog-title"
         open={open}
       >
-        <Box style={modalStyle}>
+        <Box sx={{ padding: "30px" }}>
           <BootstrapDialogTitle
             id="customized-dialog-title"
             onClose={handleClose}
