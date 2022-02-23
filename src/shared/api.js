@@ -33,7 +33,9 @@ export const apis = {
       authorization: token,
     }),
 
-  getSpace: () => api.get("/api/workspaces"),
+  // getSpace: () => api.get("/api/workspaces"),
+
+  getSpace: () => api.get("/user/workinfo"),
 
   addSpace: (workName) =>
     api.post("/api/workspaces", {

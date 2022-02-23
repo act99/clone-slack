@@ -19,7 +19,10 @@ const initialState = {
   workId: 0,
   memberId: 0,
   messageList: [
-    { senderName: "송신자", receiverName: "수신자", message: "메시지" },
+    { senderName: "송신자", receiverName: "수신자", message: "안녕" },
+    { senderName: "송신자", receiverName: "수신자", message: "안녕안녕" },
+    { senderName: "송신자", receiverName: "수신자", message: "우와" },
+    { senderName: "송신자", receiverName: "수신자", message: "사과" },
   ],
 };
 
