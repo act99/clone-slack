@@ -2,12 +2,14 @@ import React from "react";
 import CodeEditor from "@uiw/react-textarea-code-editor";
 
 function CodeChat(props) {
-  const [code, setCode] = React.useState(
-    `function add(a, b) {\n  return a + b;\n}`
-  );
+  // const [code, setCode] = React.useState(
+  //   `function add(a, b) {\n  return a + b;\n}`
+  // );
+  const { code } = props;
+  const codeEdit = code.slice(3, code.length - 3);
   return (
     <CodeEditor
-      value={code}
+      value={codeEdit}
       language="js"
       padding={15}
       style={{
