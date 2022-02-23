@@ -1,25 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { over, VERSIONS } from "stompjs";
 import SockJS from "sockjs-client";
+import { useParams } from "react-router-dom";
 
 const tokenCheck = document.cookie;
 const token = tokenCheck.split("=")[1];
 var stompClient = null;
 const Test = () => {
+  const params = useParams();
+  const workId = params.workId;
+  console.log(workId);
   const [privateChats, setPrivateChats] = useState(new Map());
   const [publicChats, setPublicChats] = useState([]);
   const [tab, setTab] = useState("CHATROOM");
   const [userData, setUserData] = useState({
     username: "",
-    receivername: "",
+    receiverName: "gdgd",
     connected: false,
     message: "",
+    roomId: parseInt(workId),
     // roomId: 1,
   });
   useEffect(() => {
     console.log(userData);
   }, [userData]);
-
   const connect = () => {
     let Sock = new SockJS("http://52.78.96.234:8080/ws");
     let options = { debug: true, protocols: VERSIONS.supportedProtocols };
@@ -27,25 +31,27 @@ const Test = () => {
     stompClient = over(Sock, options);
     stompClient.connect(headers, onConnected, onError);
   };
-
   const onConnected = () => {
     setUserData({ ...userData, connected: true });
-    stompClient.subscribe("/chat/room/1", onMessageReceived);
-    stompClient.subscribe(
-      "/user/" + userData.username + "/private",
-      onPrivateMessage
-    );
+    stompClient.subscribe(`/chatroom/public/${workId}`, onMessageReceived);
+    stompClient.subscribe(`/room/${workId}`, onPrivateMessage);
     userJoin();
   };
-
   const userJoin = () => {
     var chatMessage = {
       senderName: userData.username,
+      receiverName: "gdgd",
       status: "JOIN",
+      workId: parseInt(workId),
     };
-    stompClient.send("/chat/room/1", {}, JSON.stringify(chatMessage));
+    stompClient.send(`/app/private-message`, {}, JSON.stringify(chatMessage));
+    stompClient.send(
+      `/chatroom/public/${workId}`,
+      {},
+      JSON.stringify(chatMessage)
+    );
+    stompClient.send(`/room/${workId}`, {}, JSON.stringify(chatMessage));
   };
-
   const onMessageReceived = (payload) => {
     var payloadData = JSON.parse(payload.body);
     switch (payloadData.status) {
@@ -61,7 +67,6 @@ const Test = () => {
         break;
     }
   };
-
   const onPrivateMessage = (payload) => {
     console.log(payload);
     var payloadData = JSON.parse(payload.body);
@@ -75,11 +80,9 @@ const Test = () => {
       setPrivateChats(new Map(privateChats));
     }
   };
-
   const onError = (err) => {
     console.log(err);
   };
-
   const handleMessage = (event) => {
     const { value } = event.target;
     setUserData({ ...userData, message: value });
@@ -89,37 +92,38 @@ const Test = () => {
       var chatMessage = {
         senderName: userData.username,
         message: userData.message,
+        receiverName: "gdgd",
         status: "MESSAGE",
+        roomId: parseInt(workId),
       };
       console.log(chatMessage);
-      stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
+      stompClient.send("/chatroom/public", {}, JSON.stringify(chatMessage));
       setUserData({ ...userData, message: "" });
     }
   };
-
   const sendPrivateValue = () => {
+    console.log("private");
     if (stompClient) {
       var chatMessage = {
         senderName: userData.username,
-        receiverName: tab,
-        message: userData.message,
+        receiverName: "gdgd",
+        message: "안녕",
         status: "MESSAGE",
+        roomId: parseInt(workId),
       };
-
       if (userData.username !== tab) {
         privateChats.get(tab).push(chatMessage);
         setPrivateChats(new Map(privateChats));
       }
-      stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
+      console.log("정상작동");
+      stompClient.send(`/room/${workId}`, {}, JSON.stringify(chatMessage));
       setUserData({ ...userData, message: "" });
     }
   };
-
   const handleUsername = (event) => {
     const { value } = event.target;
     setUserData({ ...userData, username: value });
   };
-
   const registerUser = () => {
     connect();
   };
@@ -170,7 +174,6 @@ const Test = () => {
                   </li>
                 ))}
               </ul>
-
               <div className="send-message">
                 <input
                   type="text"
@@ -209,7 +212,6 @@ const Test = () => {
                   </li>
                 ))}
               </ul>
-
               <div className="send-message">
                 <input
                   type="text"
@@ -247,5 +249,4 @@ const Test = () => {
     </div>
   );
 };
-
 export default Test;

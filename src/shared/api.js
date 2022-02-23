@@ -47,4 +47,14 @@ export const apis = {
   addMark: (bookmark) => api.post("/api/bookmark", bookmark),
 
   deleteMark: (bookmarkId) => api.delete(`/api/bookmark/${bookmarkId}`),
+
+  createRoom: function (data) {
+    return axios.post(`/api/chat/rooms`, data);
+  },
+  getChatList: function () {
+    return axios.get(`/api/chat/rooms`);
+  },
+  getChatMessages: function (roomId) {
+    return axios.get(`/api/chat/rooms/${roomId}/messages`);
+  },
 };

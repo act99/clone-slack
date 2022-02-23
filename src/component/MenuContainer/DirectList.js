@@ -72,7 +72,7 @@ export default function DirectList() {
                   onClick={() => {
                     history.push(
                       `/${userinfo.token.split(" ")[1]}/${work_index}/${
-                        p.receiverID
+                        p.receiverId
                       }`
                     );
                   }}

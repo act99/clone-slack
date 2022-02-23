@@ -50,7 +50,9 @@ export default function Bookmark() {
               height: "100%",
             }}
             onClick={() => {
-              window.open(`${p.bookmarkUrl}`, "_blank");
+              p.bookmarkUrl.includes("http")
+                ? window.open(`${p.bookmarkUrl}`)
+                : window.open(`https://${p.bookmarkUrl}`);
             }}
           >
             {p.bookmarkName}
