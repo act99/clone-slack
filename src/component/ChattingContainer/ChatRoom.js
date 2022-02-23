@@ -44,17 +44,20 @@ const ChatRoom = () => {
     connected: false,
     message: "",
   });
+  const [viewMessage, setViewMessage] = React.useState("");
   // const [messages, setMessages] = React.useState([]);
   const dispatch = useDispatch();
   const messages = useSelector((state) => state.chatReducer.messageList);
   console.log(messages);
   const inputRef = React.useRef();
 
+  //** onChange message handling */
   const handleMessage = (event) => {
     const { value } = event.target;
     setUserData({ ...userData, message: value });
+    setViewMessage(value);
   };
-
+  //** submit handling */
   const handleSubmit = (event) => {
     event.preventDefault();
     let message = inputRef.current.value;
@@ -68,6 +71,7 @@ const ChatRoom = () => {
     // setMessages([...messages, userData]);
     console.log(userData);
     setUserData({ ...userData, message: "" });
+    setViewMessage("");
   };
 
   //** 채팅창 스크롤 기능 구현을 위한 공간 */
@@ -101,6 +105,7 @@ const ChatRoom = () => {
   };
   const addEmoji = (emoji) => {
     setUserData({ ...userData, message: userData.message + emoji });
+    setViewMessage(viewMessage + emoji);
   };
   //** 이모지 팝오버 */
   //** 글씨 굵기 추가 */
@@ -110,88 +115,111 @@ const ChatRoom = () => {
     const startText = inputRef.current.value.substring(0, start); // 드래그 영역 앞부분
     const targetText = inputRef.current.value.substring(start, end); // 드래그 영역
     const endText = inputRef.current.value.substring(end); // 드래그 영역 뒷부분
-
     const result = startText + "<b>" + targetText + "</b>" + endText;
     // 드래그 영역 앞뒤로 <br> 추가
-    setUserData({ ...userData, message: userData.message });
+    setUserData({ ...userData, message: result });
+    setViewMessage(result);
   };
+  //** 글씨 굵기 추가 */
+
+  //** 글씨 기울기 추가 */
+  const italicText = () => {
+    const start = inputRef.current.selectionStart; // 드래그 부분 시작인덱스
+    const end = inputRef.current.selectionEnd; // 드래그 부분 종료 인덱스
+    const startText = inputRef.current.value.substring(0, start); // 드래그 영역 앞부분
+    const targetText = inputRef.current.value.substring(start, end); // 드래그 영역
+    const endText = inputRef.current.value.substring(end); // 드래그 영역 뒷부분
+    const result = startText + "<i>" + targetText + "</i>" + endText;
+    // 드래그 영역 앞뒤로 <br> 추가
+    setUserData({ ...userData, message: result });
+    setViewMessage(result);
+  };
+  //** 글씨 기울기 추가 */
+
   //** 코드 스니펫 */
   // const setCode = () => {}
   //** 코드 스니펫 */
+  // ** html 코드를 입력하기 위한...
+  const changeHtml = (item) => {
+    return <div dangerouslySetInnerHTML={{ __html: item }}></div>;
+  };
+  // ** html 코드를 입력하기 위한...
   return (
     <Box sx={{ px: 3 }}>
       <Box sx={{ height: 600, backgroundColor: "#ffffff", overflow: "auto" }}>
         {messages.map((item, index) => {
           return (
-            <Box
-              key={index + item.message}
-              sx={{
-                mt: 1,
-              }}
-            >
-              <Grid
-                container
+            <>
+              <Box
+                key={index + item.message}
                 sx={{
-                  backgroundColor: "#ffffff",
+                  mt: 1,
                 }}
               >
-                <Grid item xs={0.6}>
-                  <IconButton
-                    sx={{ margin: "auto" }}
-                    onClick={handleProfileClick}
-                  >
-                    <PersonIcon
-                      sx={{
-                        color: "white",
-                        backgroundColor: "#44bedf",
-                        border: "solid 0px",
-                        borderRadius: "5px",
-                        ml: 1,
-                        mr: 1,
-                        fontSize: "40px",
-                        mb: 0,
-                      }}
-                      aria-describedby={id}
-                    />
-                  </IconButton>
-                  <Popover
-                    id={id}
-                    open={open}
-                    anchorEl={anchorEl}
-                    onClose={handleClose}
-                    anchorOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    sx={{ width: 400 }}
-                  >
-                    <PersonIcon
-                      sx={{
-                        color: "white",
-                        backgroundColor: "#44bedf",
-                        border: "solid 0px",
-                        borderRadius: "5px",
-                        fontSize: "300px",
-                      }}
-                      aria-describedby={id}
-                    />
-                    <Typography
-                      sx={{ p: 2, fontWeight: "bold", fontSize: "20px" }}
+                <Grid
+                  container
+                  sx={{
+                    backgroundColor: "#ffffff",
+                  }}
+                >
+                  <Grid item xs={0.6}>
+                    <IconButton
+                      sx={{ margin: "auto" }}
+                      onClick={handleProfileClick}
                     >
-                      리덕스 사용자
+                      <PersonIcon
+                        sx={{
+                          color: "white",
+                          backgroundColor: "#44bedf",
+                          border: "solid 0px",
+                          borderRadius: "5px",
+                          ml: 1,
+                          mr: 1,
+                          fontSize: "40px",
+                          mb: 0,
+                        }}
+                        aria-describedby={id}
+                      />
+                    </IconButton>
+                    <Popover
+                      id={id}
+                      open={open}
+                      anchorEl={anchorEl}
+                      onClose={handleClose}
+                      anchorOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                      sx={{ width: 400 }}
+                    >
+                      <PersonIcon
+                        sx={{
+                          color: "white",
+                          backgroundColor: "#44bedf",
+                          border: "solid 0px",
+                          borderRadius: "5px",
+                          fontSize: "300px",
+                        }}
+                        aria-describedby={id}
+                      />
+                      <Typography
+                        sx={{ p: 2, fontWeight: "bold", fontSize: "20px" }}
+                      >
+                        리덕스 사용자
+                      </Typography>
+                    </Popover>
+                  </Grid>
+                  <Grid item xs={11.4}>
+                    <Typography sx={{ fontWeight: "bold", fontSize: "17px" }}>
+                      {item.senderName}
                     </Typography>
-                  </Popover>
+                    <Typography sx={{ fontSize: "15px" }}>
+                      {changeHtml(item.message)}
+                    </Typography>
+                  </Grid>
                 </Grid>
-                <Grid item xs={11.4}>
-                  <Typography sx={{ fontWeight: "bold", fontSize: "17px" }}>
-                    {item.senderName}
-                  </Typography>
-                  <Typography sx={{ fontSize: "15px" }}>
-                    {item.message}
-                  </Typography>
-                </Grid>
-              </Grid>
-            </Box>
+              </Box>
+            </>
           );
         })}
       </Box>
@@ -208,10 +236,10 @@ const ChatRoom = () => {
           }}
         >
           <ButtonGroup variant="text" aria-label="text button group">
-            <IconButton onClick={() => console.log("굵기 버튼")}>
+            <IconButton onClick={boldText}>
               <FormatBoldIcon />
             </IconButton>
-            <IconButton onClick={() => console.log("기울기 버튼")}>
+            <IconButton onClick={italicText}>
               <FormatItalicIcon />
             </IconButton>
             <IconButton onClick={() => console.log("링크 버튼")}>
@@ -232,7 +260,7 @@ const ChatRoom = () => {
         >
           <textarea
             placeholder="이주영님에게 메시지 보내기"
-            value={userData.message}
+            value={viewMessage}
             onChange={handleMessage}
             size="small"
             ref={inputRef}
