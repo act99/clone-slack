@@ -57,7 +57,6 @@ const addDmDB = (workId, memberName) => {
 
         dispatch(
           addDm({
-            memberId: 5,
             memberName: memberName,
             memberNickname: memberName,
           })

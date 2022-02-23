@@ -26,6 +26,16 @@ const initialState = {
   ],
 };
 
+const addMessageDB = (chatInfo) => {
+  return function (dispatch, getState, { history }) {
+    apis
+      .addChat("gdsgdsfsdafsad")
+      .then((res) => console.log(res.data))
+      .catch((error) => console.log(error));
+    console.log(chatInfo);
+  };
+};
+
 // reducer
 export default handleActions(
   {
@@ -46,6 +56,7 @@ export default handleActions(
 const actionsCreators = {
   getMessages,
   addMessage,
+  addMessageDB,
 };
 
 export { actionsCreators };
