@@ -93,7 +93,7 @@ const WorkspaceContainer = (props) => {
     p: 3,
   };
 
-  //
+  // 워크스페이스 조회
   const dispatch = useDispatch();
   const userinfo = useSelector((state) => state.loginReducer);
   const workSpaceList = useSelector(
@@ -162,7 +162,12 @@ const WorkspaceContainer = (props) => {
             <Typography
               id="modal-modal-description"
               variant="subtitle1"
-              sx={{ mt: 2, fontWeight: "bold" }}
+              sx={{
+                mt: 2,
+                paddingLeft: "16px",
+                fontWeight: "bold",
+                fontSize: "15px",
+              }}
             >
               워크스페이스 이름
             </Typography>
@@ -178,6 +183,12 @@ const WorkspaceContainer = (props) => {
                 id="outlined-basic"
                 variant="outlined"
                 inputRef={workName}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    addWorkSpace();
+                    handleClose();
+                  }
+                }}
               />
             </Box>
             <Button
@@ -187,6 +198,7 @@ const WorkspaceContainer = (props) => {
                 addWorkSpace();
                 handleClose();
               }}
+              sx={{ float: "right" }}
             >
               생성
             </Button>

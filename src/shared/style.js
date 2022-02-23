@@ -110,7 +110,7 @@ export const Channels = styled.nav`
     font-size: 15px;
   }
 `;
-export const WorkspaceName = styled.button`
+export const WorkspaceName = styled.div`
   height: 64px;
   line-height: 64px;
   border: none;
