@@ -38,7 +38,7 @@ const Upload = (props) => {
   };
 
   return (
-    <React.Fragment>
+    <div style={{ width: "150px", margin: "auto", padding: "35px" }}>
       {/* disabled 속성 주면 파일선택 버튼 안눌린다. */}
       <img
         src={
@@ -50,7 +50,7 @@ const Upload = (props) => {
           width: "150px",
           height: "150px",
           borderRadius: "5px",
-          margin: "auto",
+          margin: "10px auto",
         }}
       />
       <ImageLabel className="input-file-button" for="input-file">
@@ -66,7 +66,7 @@ const Upload = (props) => {
       />
 
       {/* <Button _onClick={uploadFB}>업로드하기</Button> */}
-    </React.Fragment>
+    </div>
   );
 };
 
