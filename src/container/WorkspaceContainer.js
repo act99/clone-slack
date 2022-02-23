@@ -99,7 +99,14 @@ const WorkspaceContainer = (props) => {
   const workSpaceList = useSelector(
     (state) => state.workSpaceReducer.workspaceList
   );
-  console.log(workSpaceList);
+  // 내가 생성한 워크스페이스
+  const myCreateSpace = workSpaceList.filter(
+    (l) => l.nickname === userinfo.userinfo.nickname
+  );
+  console.log(myCreateSpace);
+
+  //내가 다이렉트 메세지에 포함된 워크스페이스
+  // const myJoinSpace = workSpaceList.filter((l)=>l.)
 
   React.useEffect(() => {
     dispatch(workSpaceActions.getSpaceDB());
@@ -129,7 +136,7 @@ const WorkspaceContainer = (props) => {
               onClick={() => {
                 history.push(`/${userinfo.token.split(" ")[1]}/${p.workId}/0`);
                 console.log(p.workId, p.workName);
-                dispatch(dmActions.setDM(p.workId));
+                dispatch(dmActions.getDmDB(p.workId, p.workName));
               }}
             >
               {p.workName}

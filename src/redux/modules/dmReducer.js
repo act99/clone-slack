@@ -7,7 +7,10 @@ const SET_DM = "SET_DM";
 const ADD_DM = "ADD_DM";
 
 // action creator
-const setDM = createAction(SET_DM, (workID, dm_list) => ({ workID, dm_list }));
+const setDM = createAction(SET_DM, (workName, dm_list) => ({
+  workName,
+  dm_list,
+}));
 const addDm = createAction(ADD_DM, (dm) => ({
   dm,
 }));
@@ -38,11 +41,14 @@ const initialState = {
 
 // middleware
 
-const getDmDB = (workId) => {
+const getDmDB = (workId, workName) => {
   return function (dispatch, getState, { history }) {
     apis
       .getDm(workId)
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res);
+        dispatch(setDM(workName, res.data));
+      })
       .catch((err) => console.log(err));
   };
   // workID를 입력해서 저쪽에 get 하고 해당 dmlist를 받아오는 형태.
@@ -57,6 +63,8 @@ const addDmDB = (workId, memberName) => {
 
         dispatch(
           addDm({
+            // memberId: 5,
+
             memberName: memberName,
             memberNickname: memberName,
           })
@@ -71,7 +79,11 @@ const addDmDB = (workId, memberName) => {
 // reducer
 export default handleActions(
   {
-    [SET_DM]: (state, action) => produce(state, (draft) => {}),
+    [SET_DM]: (state, action) =>
+      produce(state, (draft) => {
+        draft.dmsList = [...action.payload.dm_list];
+        draft.workName = action.payload.workName;
+      }),
     [ADD_DM]: (state, action) =>
       produce(state, (draft) => {
         draft.dmsList = [...draft.dmsList, action.payload.dm];
