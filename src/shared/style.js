@@ -132,7 +132,7 @@ export const WorkspaceName = styled.div`
   cursor: pointer;
 `;
 export const MenuScroll = styled.div`
-  height: calc(100vh - 102px);
+  height: calc(100vh - 104px);
   overflow-y: auto;
 `;
 export const WorkspaceModal = styled.div`

@@ -31,6 +31,11 @@ export default function Bookmark() {
   ).bookmarkList;
   console.log(bookmarkList);
 
+  function getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+  console.log(getRandomArbitrary(1, 100000));
+
   React.useEffect(() => {
     // dispatch(bookmarkActions.setMark());
     dispatch(bookmarkActions.getMarkDB("이주영"));
@@ -42,7 +47,7 @@ export default function Bookmark() {
         return (
           <>
             <Button
-              key={idx + p.bookmarkUrl}
+              key={idx + p.bookmarkUrl + p.bookmarkId}
               sx={{
                 ml: 1,
                 display: "block",

@@ -303,15 +303,19 @@ const ChatRoom = () => {
                 horizontal: "right",
               }}
             >
-              <Box sx={{ width: 500, height: 600, overflow: "auto" }}>
-                <CodeChanger />
+              <Box sx={{ width: 500, height: 650, overflow: "auto" }}>
+                <Typography
+                  sx={{ fontSize: "33px", fontWeight: "bold", ml: 3 }}
+                >
+                  코드 스니펫
+                </Typography>
+                <CodeChanger submit={handleSubmit} setMessage={setUserData} />
               </Box>
             </Popover>
           </ButtonGroup>
         </Box>
         <form onSubmit={handleSubmit} onKeyDown={onEnterPress}>
           <textarea
-            contentEditable="true"
             placeholder="이주영님에게 메시지 보내기"
             value={viewMessage}
             onChange={handleMessage}
@@ -370,65 +374,75 @@ const ChatRoom = () => {
                 <ButtonGroup variant="text">
                   {EmojiList.emojiList1.map((item, index) => {
                     return (
-                      <Button
-                        onClick={() => {
-                          addEmoji(item);
-                        }}
-                      >
-                        {item}
-                      </Button>
+                      <div key={index + item}>
+                        <Button
+                          onClick={() => {
+                            addEmoji(item);
+                          }}
+                        >
+                          {item}
+                        </Button>
+                      </div>
                     );
                   })}
                 </ButtonGroup>
                 <ButtonGroup variant="text">
                   {EmojiList.emojiList2.map((item, index) => {
                     return (
-                      <Button
-                        onClick={() => {
-                          addEmoji(item);
-                        }}
-                      >
-                        {item}
-                      </Button>
+                      <div key={index + item}>
+                        <Button
+                          onClick={() => {
+                            addEmoji(item);
+                          }}
+                        >
+                          {item}
+                        </Button>
+                      </div>
                     );
                   })}
                 </ButtonGroup>
                 <ButtonGroup variant="text">
                   {EmojiList.emojiList3.map((item, index) => {
                     return (
-                      <Button
-                        onClick={() => {
-                          addEmoji(item);
-                        }}
-                      >
-                        {item}
-                      </Button>
+                      <div key={index + item}>
+                        <Button
+                          onClick={() => {
+                            addEmoji(item);
+                          }}
+                        >
+                          {item}
+                        </Button>
+                      </div>
                     );
                   })}
                 </ButtonGroup>
                 <ButtonGroup variant="text">
                   {EmojiList.emojiList4.map((item, index) => {
                     return (
-                      <Button
-                        onClick={() => {
-                          addEmoji(item);
-                        }}
-                      >
-                        {item}
-                      </Button>
+                      <div key={index + item}>
+                        <Button
+                          onClick={() => {
+                            addEmoji(item);
+                          }}
+                        >
+                          {item}
+                        </Button>
+                      </div>
                     );
                   })}
                 </ButtonGroup>
                 <ButtonGroup variant="text">
                   {EmojiList.emojiList5.map((item, index) => {
                     return (
-                      <Button
-                        onClick={() => {
-                          addEmoji(item);
-                        }}
-                      >
-                        {item}
-                      </Button>
+                      <div key={index + item}>
+                        <Button
+                          onClick={() => {
+                            addEmoji(item);
+                          }}
+                        >
+                          {item}
+                        </Button>
+                      </div>
                     );
                   })}
                 </ButtonGroup>

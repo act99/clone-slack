@@ -2,6 +2,7 @@ import React from "react";
 import CodeEditor from "@uiw/react-textarea-code-editor";
 
 function CodeChanger(props) {
+  console.log(props);
   const [code, setCode] = React.useState(
     `function add(a, b) {\n  return a + b;\n}`
   );
@@ -9,6 +10,7 @@ function CodeChanger(props) {
     <CodeEditor
       value={code}
       language="js"
+      minHeight="600px"
       placeholder="Please enter JS code."
       onChange={(evn) => setCode(evn.target.value)}
       padding={15}
