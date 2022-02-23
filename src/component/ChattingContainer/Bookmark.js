@@ -31,8 +31,8 @@ export default function Bookmark() {
   ).bookmarkList;
   console.log(bookmarkList);
   React.useEffect(() => {
-    dispatch(bookmarkActions.setMark());
-    // dispatch(bookmarkActions.getMarkDB());
+    // dispatch(bookmarkActions.setMark());
+    dispatch(bookmarkActions.getMarkDB("이주영"));
   }, []);
   return (
     <div style={{ height: "100%", display: "flex" }}>
@@ -122,10 +122,10 @@ const BookmarkModal = () => {
   const receiverId = params.receiverId;
 
   const dmsList = useSelector((state) => state.dmReducer.dmsList);
-
   const receiverName = dmsList.filter(
     (l, idx) => l.receiverId === parseInt(receiverId)
   )[0].receiverName;
+  console.log(receiverId, receiverName);
 
   const addMark = () => {
     const mark_list = {
@@ -133,8 +133,8 @@ const BookmarkModal = () => {
       bookmarkName: bookmarkName.current.value,
       bookmarkUrl: bookmarkUrl.current.value,
     };
-    dispatch(bookmarkActions.addMark(mark_list));
-    // dispatch(bookmarkActions.addMarkDB(mark_list));
+    // dispatch(bookmarkActions.addMark(mark_list));
+    dispatch(bookmarkActions.addMarkDB(mark_list));
     console.log(mark_list, "북마크 생성");
   };
 
