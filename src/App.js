@@ -41,13 +41,13 @@ function App() {
         <Box sx={{ width: "100vw", height: "100%" }}>
           <Switch>
             <Route path="/" exact component={Home} />
-            {/* {userinfo.token !== null && (
+            {userinfo.token !== null && (
               <Route
                 path={`/${goToken.split(" ")[1]}/:workId/:receiverId`}
                 exact
                 component={Home}
               />
-            )} */}
+            )}
           </Switch>
         </Box>
       </ConnectedRouter>

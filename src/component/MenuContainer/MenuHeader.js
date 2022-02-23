@@ -39,7 +39,7 @@ export default function MenuHeader() {
       <Button
         aria-describedby={id}
         onClick={handleClick}
-        sx={{ color: "white", fontWeight: 900, fontSize: "19px" }}
+        style={{ color: "white", fontWeight: 900, fontSize: "19px" }}
       >
         <ExpandMoreIcon />
         <p
@@ -60,9 +60,6 @@ export default function MenuHeader() {
           horizontal: "left",
         }}
       >
-        {/* <Avatar variant="rounded" sx={{ width: 36, height: 36 }}>
-          클론
-        </Avatar> */}
         <Typography sx={{ p: 2, cursor: "pointer" }} onClick={WorkspaceLogout}>
           {dmsinfo.workName}에서 로그아웃
         </Typography>

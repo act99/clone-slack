@@ -16,6 +16,7 @@ const rootReducer = combineReducers({
   loginReducer: loginReducer,
   workSpaceReducer: workSpaceReducer,
   dmReducer: dmReducer,
+  chatReducer: chatReducer,
   bookmarkReducer: bookmarkReducer,
   chatReducer: chatReducer,
 });

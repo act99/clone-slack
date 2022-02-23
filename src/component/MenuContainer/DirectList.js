@@ -186,7 +186,12 @@ const DirectAdd = (props) => {
           <Typography
             id="modal-modal-description"
             variant="subtitle1"
-            sx={{ mt: 2, fontWeight: "bold" }}
+            sx={{
+              mt: 2,
+              paddingLeft: "16px",
+              fontWeight: "bold",
+              fontSize: "15px",
+            }}
           >
             받는 사람:
           </Typography>
@@ -203,6 +208,12 @@ const DirectAdd = (props) => {
               variant="outlined"
               placeholder="name@naver.com"
               inputRef={memberName}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  addDm();
+                  handleClose();
+                }
+              }}
             />
           </Box>
           <Button
@@ -212,6 +223,7 @@ const DirectAdd = (props) => {
               addDm();
               handleClose();
             }}
+            sx={{ float: "right" }}
           >
             보내기
           </Button>
