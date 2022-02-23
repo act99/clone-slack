@@ -140,7 +140,6 @@ const ChatRoom = () => {
     setEmojiEl(null);
     setCodeSnippet(null);
   };
-
   //** 코드스니펫 팝오버 */
 
   //** 코드 스니펫 */
@@ -256,11 +255,13 @@ const ChatRoom = () => {
                     <Typography sx={{ fontWeight: "bold", fontSize: "17px" }}>
                       {item.senderName}
                     </Typography>
-                    <Typography sx={{ fontSize: "15px" }}>
-                      {changeHtml(item.message)}
-                    </Typography>
-                    {/* 코드 챗 ㄱㄱ */}
-                    <CodeChat />
+                    {item.message.slice(0, 3).includes("+++") ? (
+                      <CodeChat code={item.message} />
+                    ) : (
+                      <Typography sx={{ fontSize: "15px" }}>
+                        {changeHtml(item.message)}
+                      </Typography>
+                    )}
                   </Grid>
                 </Grid>
               </Box>
@@ -304,12 +305,12 @@ const ChatRoom = () => {
               }}
             >
               <Box sx={{ width: 500, height: 650, overflow: "auto" }}>
-                <Typography
-                  sx={{ fontSize: "33px", fontWeight: "bold", ml: 3 }}
-                >
-                  코드 스니펫
-                </Typography>
-                <CodeChanger submit={handleSubmit} setMessage={setUserData} />
+                <CodeChanger
+                  userData={userData}
+                  submit={handleSubmit}
+                  setMessage={setUserData}
+                  closeMessage={handleCodeClose}
+                />
               </Box>
             </Popover>
           </ButtonGroup>
