@@ -24,7 +24,7 @@ const Home = () => {
     >
       <Bar />
       <Grid container>
-        <WorkspaceContainer />
+        <WorkspaceContainer xs />
 
         <Grid item xs={2} sx={{ backgroundColor: "#3f0e40" }}>
           <MenuContainer />

@@ -31,6 +31,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import PersonIcon from "@mui/icons-material/Person";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import Upload from "./Upload";
 
 const ProfileUpload = (props) => {
   // modal
@@ -189,7 +190,7 @@ const ProfileUpload = (props) => {
               </Box>
             </Grid>
             <Grid item xs={4}>
-              이미지
+              <Upload />
             </Grid>
           </Grid>
           <Button
