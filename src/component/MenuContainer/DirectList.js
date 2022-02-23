@@ -77,6 +77,7 @@ export default function DirectList() {
                     history.push(
                       `/${userinfo.token.split(" ")[1]}/${work_index}/${
                         p.memberId
+                        p.receiverId
                       }`
                     );
                   }}

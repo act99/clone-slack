@@ -53,6 +53,7 @@ const loginCheckDB = () => {
       apis
         .userInfo(token)
         .then((res) => {
+          console.log(res.data);
           dispatch(
             setUser({
               email: res.data.username,
