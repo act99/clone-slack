@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { over, VERSIONS } from "stompjs";
 import SockJS from "sockjs-client";
 import { useDispatch, useSelector } from "react-redux";
@@ -51,6 +51,16 @@ const ChatRoom = () => {
   console.log(messages);
   const inputRef = React.useRef();
 
+  //** submit 시 항상 아래로 고정시키기 위해, div scroll to 하기 위해 */
+  const scrollRef = React.useRef();
+  const scollToMyRef = () => {
+    const scroll =
+      scrollRef.current.scrollHeight - scrollRef.current.clientHeight;
+    scrollRef.current.scrollTo(0, scroll);
+  };
+
+  //** submit 시 항상 아래로 고정시키기 위해, div scroll to 하기 위해 */
+
   //** onChange message handling */
   const handleMessage = (event) => {
     const { value } = event.target;
@@ -73,6 +83,13 @@ const ChatRoom = () => {
     setUserData({ ...userData, message: "" });
     setViewMessage("");
   };
+  //** 엔터 시 제출용  */
+  const onEnterPress = (e) => {
+    if (e.keyCode === 13 && e.shiftKey === false) {
+      return handleSubmit(e);
+    }
+  };
+  //** 엔터 시 제출용  */
 
   //** 채팅창 스크롤 기능 구현을 위한 공간 */
 
@@ -144,9 +161,16 @@ const ChatRoom = () => {
     return <div dangerouslySetInnerHTML={{ __html: item }}></div>;
   };
   // ** html 코드를 입력하기 위한...
+
+  React.useEffect(() => {
+    scollToMyRef();
+  }, [messages]);
   return (
     <Box sx={{ px: 3 }}>
-      <Box sx={{ height: 600, backgroundColor: "#ffffff", overflow: "auto" }}>
+      <Box
+        ref={scrollRef}
+        sx={{ height: 600, backgroundColor: "#ffffff", overflow: "auto" }}
+      >
         {messages.map((item, index) => {
           return (
             <>
@@ -250,14 +274,7 @@ const ChatRoom = () => {
             </IconButton>
           </ButtonGroup>
         </Box>
-        <form
-          onSubmit={handleSubmit}
-          // onKeyPress={(e) => {
-          //   if (e.key === "Enter") {
-          //     handleSubmit();
-          //   }
-          // }}
-        >
+        <form onSubmit={handleSubmit} onKeyDown={onEnterPress}>
           <textarea
             placeholder="이주영님에게 메시지 보내기"
             value={viewMessage}
@@ -270,7 +287,6 @@ const ChatRoom = () => {
               }
             }}
             style={{
-              fontWeight: "bold",
               border: "solid 0px",
               padding: "10px",
               width: "95%",
