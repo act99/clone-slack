@@ -28,6 +28,8 @@ import { useParams } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
 import { actionsCreators as chatActions } from "../../redux/modules/chatReducer";
 import EmojiList from "./Emojilist";
+import CodeChanger from "./CodeChanger";
+import CodeChat from "./CodeChat";
 
 const tokenCheck = document.cookie;
 const token = tokenCheck.split("=")[1];
@@ -125,6 +127,26 @@ const ChatRoom = () => {
     setViewMessage(viewMessage + emoji);
   };
   //** 이모지 팝오버 */
+
+  //** 코드스니펫 팝오버 */
+  const [codeSnippet, setCodeSnippet] = useState(null);
+  const codeOpen = Boolean(codeSnippet);
+  const codeId = codeOpen ? "simple-popover" : undefined;
+  const handleCodeClick = (event) => {
+    setCodeSnippet(event.currentTarget);
+  };
+  const handleCodeClose = () => {
+    setAnchorEl(null);
+    setEmojiEl(null);
+    setCodeSnippet(null);
+  };
+
+  //** 코드스니펫 팝오버 */
+
+  //** 코드 스니펫 */
+  // const setCode = () => {}
+  //** 코드 스니펫 */
+
   //** 글씨 굵기 추가 */
   const boldText = () => {
     const start = inputRef.current.selectionStart; // 드래그 부분 시작인덱스
@@ -153,9 +175,6 @@ const ChatRoom = () => {
   };
   //** 글씨 기울기 추가 */
 
-  //** 코드 스니펫 */
-  // const setCode = () => {}
-  //** 코드 스니펫 */
   // ** html 코드를 입력하기 위한...
   const changeHtml = (item) => {
     return <div dangerouslySetInnerHTML={{ __html: item }}></div>;
@@ -240,6 +259,8 @@ const ChatRoom = () => {
                     <Typography sx={{ fontSize: "15px" }}>
                       {changeHtml(item.message)}
                     </Typography>
+                    {/* 코드 챗 ㄱㄱ */}
+                    <CodeChat />
                   </Grid>
                 </Grid>
               </Box>
@@ -269,13 +290,28 @@ const ChatRoom = () => {
             <IconButton onClick={() => console.log("링크 버튼")}>
               <LinkIcon />
             </IconButton>
-            <IconButton onClick={() => console.log("코드 스니펫 버튼")}>
+            <IconButton onClick={handleCodeClick}>
               <CodeIcon />
             </IconButton>
+            <Popover
+              id={codeId}
+              open={codeOpen}
+              anchorEl={codeSnippet}
+              onClose={handleCodeClose}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+            >
+              <Box sx={{ width: 500, height: 600, overflow: "auto" }}>
+                <CodeChanger />
+              </Box>
+            </Popover>
           </ButtonGroup>
         </Box>
         <form onSubmit={handleSubmit} onKeyDown={onEnterPress}>
           <textarea
+            contentEditable="true"
             placeholder="이주영님에게 메시지 보내기"
             value={viewMessage}
             onChange={handleMessage}
