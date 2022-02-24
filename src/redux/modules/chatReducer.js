@@ -26,6 +26,28 @@ const initialState = {
   ],
 };
 
+const getMessageDB = (workId) => {
+  return function (dispatch, getState, { history }) {
+    apis
+      .getChat(workId)
+      .then((res) => console.log(res.data))
+      .catch((error) => console.log(error));
+  };
+};
+
+const addMessageDB = (workId, memberId, memberName, chat) => {
+  console.log(workId, memberId, memberName, chat);
+  return function (dispatch, getState, { history }) {
+    console.log(workId, memberId, memberName, chat);
+    apis
+      .addChat(workId, memberId, memberName, chat)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => console.log(error));
+  };
+};
+
 // reducer
 export default handleActions(
   {
@@ -46,6 +68,8 @@ export default handleActions(
 const actionsCreators = {
   getMessages,
   addMessage,
+  addMessageDB,
+  getMessageDB,
 };
 
 export { actionsCreators };

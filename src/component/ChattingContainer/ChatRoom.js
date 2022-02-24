@@ -30,11 +30,22 @@ import { actionsCreators as chatActions } from "../../redux/modules/chatReducer"
 import EmojiList from "./Emojilist";
 import CodeChanger from "./CodeChanger";
 import CodeChat from "./CodeChat";
+// 스크롤 바 사라지게 하기
 
 const tokenCheck = document.cookie;
 const token = tokenCheck.split("=")[1];
 var stompClient = null;
 const ChatRoom = () => {
+  // ** async db 작업을 위한 것
+  const params = useParams();
+  const workId = params.workId;
+  const memberId = params.receiverId;
+
+  // const memberName = params.receiverName;
+  const memberName = useSelector((state) => state.dmReducer.dmsList);
+  // console.log(memberName);
+  console.log(params);
+  // ** async db 작업을 위한 것
   //** */ 나중에 넣으면 될 것 로그인 정보임
   // const userinfo = useSelector((state) => state.loginReducer);
   // const loginNickname = userinfo.userinfo.nickname;
@@ -69,6 +80,7 @@ const ChatRoom = () => {
     setUserData({ ...userData, message: value });
     setViewMessage(value);
   };
+
   //** submit handling */
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -79,9 +91,19 @@ const ChatRoom = () => {
       message: userData.message,
       receiverName: userData.receivername,
     };
-    dispatch(chatActions.addMessage(messageData));
+    dispatch(
+      chatActions.addMessageDB(
+        workId,
+        memberId,
+        `dorxm999@gmail.com`,
+        messageData.message
+      )
+    );
     // setMessages([...messages, userData]);
     console.log(userData);
+    if (userData.message.slice(0, 3).includes("+++")) {
+      handleCodeClose();
+    }
     setUserData({ ...userData, message: "" });
     setViewMessage("");
   };
@@ -92,14 +114,6 @@ const ChatRoom = () => {
     }
   };
   //** 엔터 시 제출용  */
-
-  //** 채팅창 스크롤 기능 구현을 위한 공간 */
-
-  //** 채팅창 스크롤 기능 구현을 위한 공간 */
-
-  //** 채팅창 박스*/
-
-  //** 채팅창 박스*/
 
   //** 프로필 팝오버*/
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -181,6 +195,7 @@ const ChatRoom = () => {
   // ** html 코드를 입력하기 위한...
 
   React.useEffect(() => {
+    dispatch(chatActions.getMessageDB(workId));
     scollToMyRef();
   }, [messages]);
   return (
@@ -191,9 +206,8 @@ const ChatRoom = () => {
       >
         {messages.map((item, index) => {
           return (
-            <>
+            <div key={index + item.senderName}>
               <Box
-                key={index + item.message}
                 sx={{
                   mt: 1,
                 }}
@@ -258,14 +272,14 @@ const ChatRoom = () => {
                     {item.message.slice(0, 3).includes("+++") ? (
                       <CodeChat code={item.message} />
                     ) : (
-                      <Typography sx={{ fontSize: "15px" }}>
+                      <div style={{ fontSize: "15px" }}>
                         {changeHtml(item.message)}
-                      </Typography>
+                      </div>
                     )}
                   </Grid>
                 </Grid>
               </Box>
-            </>
+            </div>
           );
         })}
       </Box>
@@ -317,6 +331,7 @@ const ChatRoom = () => {
         </Box>
         <form onSubmit={handleSubmit} onKeyDown={onEnterPress}>
           <textarea
+            // contentEditable="true"
             placeholder="이주영님에게 메시지 보내기"
             value={viewMessage}
             onChange={handleMessage}
@@ -336,7 +351,9 @@ const ChatRoom = () => {
               backgroundColor: "#ffffff",
               // outline-color: #FE6B8B;
             }}
-          />
+          >
+            {viewMessage}
+          </textarea>
           <Box
             sx={{
               display: "flex",
@@ -375,7 +392,7 @@ const ChatRoom = () => {
                 <ButtonGroup variant="text">
                   {EmojiList.emojiList1.map((item, index) => {
                     return (
-                      <div key={index + item}>
+                      <div key={index + item.toString()}>
                         <Button
                           onClick={() => {
                             addEmoji(item);
@@ -390,7 +407,7 @@ const ChatRoom = () => {
                 <ButtonGroup variant="text">
                   {EmojiList.emojiList2.map((item, index) => {
                     return (
-                      <div key={index + item}>
+                      <div key={index + item.toString()}>
                         <Button
                           onClick={() => {
                             addEmoji(item);
@@ -405,7 +422,7 @@ const ChatRoom = () => {
                 <ButtonGroup variant="text">
                   {EmojiList.emojiList3.map((item, index) => {
                     return (
-                      <div key={index + item}>
+                      <div key={index + item.toString()}>
                         <Button
                           onClick={() => {
                             addEmoji(item);
@@ -420,7 +437,7 @@ const ChatRoom = () => {
                 <ButtonGroup variant="text">
                   {EmojiList.emojiList4.map((item, index) => {
                     return (
-                      <div key={index + item}>
+                      <div key={index + item.toString()}>
                         <Button
                           onClick={() => {
                             addEmoji(item);
@@ -435,7 +452,7 @@ const ChatRoom = () => {
                 <ButtonGroup variant="text">
                   {EmojiList.emojiList5.map((item, index) => {
                     return (
-                      <div key={index + item}>
+                      <div key={index + item.toString()}>
                         <Button
                           onClick={() => {
                             addEmoji(item);

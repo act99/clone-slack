@@ -25,11 +25,67 @@ export default function First() {
   const userinfo = useSelector((state) => state.loginReducer);
   const token = userinfo.token;
   const history = useHistory();
-  React.useEffect(() => {
-    if (userinfo.token === null) {
-      history.replace("/signin");
-    }
-  }, []);
+  React.useEffect(() => {}, [token]);
+
+  if (token === null) {
+    return (
+      <>
+        <Grid container component="main" sx={{ height: "100vh" }}>
+          <CssBaseline />
+          <Grid item xs={12} mx={"auto"} component={Paper} square>
+            <Box
+              sx={{
+                my: 8,
+                mx: 4,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <ButtonBase sx={{ width: 128, height: 64 }}>
+                <Img
+                  alt="complex"
+                  src="https://aem.dropbox.com/cms/content/dam/dropbox/www/en-us/business/app-integrations/slack/Slack_logo_new.png"
+                />
+              </ButtonBase>
+              <Grid container textAlign="center">
+                <Grid item xs sx={{ mt: 5 }}>
+                  <Typography
+                    component="h1"
+                    variant="h3"
+                    sx={{ fontWeight: "bold", ml: 1, mb: 10 }}
+                  >
+                    그럼 로그인을 해볼까요?
+                  </Typography>
+                  <Typography
+                    component="h1"
+                    variant="h7"
+                    sx={{ fontWeight: "bold", ml: 1, mb: 3, fontSize: "16px" }}
+                  >
+                    슬랙시작을 위해
+                  </Typography>
+                </Grid>
+                <Grid item></Grid>
+              </Grid>
+              <button
+                style={{
+                  backgroundColor: "purple",
+                  width: "250px",
+                  height: "50px",
+                  borderRadius: "5px",
+                }}
+                onClick={() => history.replace(`/signin`)}
+              >
+                로그인 하러가기
+              </button>
+            </Box>
+            <Box sx={{ height: "40vh" }}></Box>
+            <Copyright />
+          </Grid>
+        </Grid>
+      </>
+    );
+  }
 
   return (
     <>

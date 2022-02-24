@@ -37,6 +37,8 @@ export const apis = {
   getSpace: () => api.get("/api/workspaces"),
   // getSpace: () => api.get("/user/workinfo"),
 
+  getSpace: () => api.get("/api/workspaces"),
+
   addSpace: (workName) =>
     api.post("/api/workspaces", {
       workName: workName,
@@ -58,6 +60,14 @@ export const apis = {
   addMark: (bookmark) => api.post("/api/bookmark", bookmark),
 
   deleteMark: (bookmarkId) => api.delete(`/api/bookmark/${bookmarkId}`),
+
+  getChat: (workId) => api.get(`/api/chat/${workId}`),
+  addChat: (workId, memberId, memberName, chat) =>
+    api.post(`/api/dms/${workId}`, {
+      memberId: memberId,
+      memberName: memberName,
+      chat: chat,
+    }),
 
   createRoom: function (data) {
     return axios.post(`/api/chat/rooms`, data);
