@@ -55,6 +55,7 @@ const getDmDB = (workId, workName) => {
 };
 
 const addDmDB = (workId, memberName) => {
+  console.log(workId, memberName);
   return function (dispatch, getState, { history }) {
     apis
       .addDm(workId, memberName)
