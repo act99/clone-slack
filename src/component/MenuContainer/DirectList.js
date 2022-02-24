@@ -72,9 +72,9 @@ export default function DirectList() {
                   style={{ color: "#CCCBCB" }}
                   onClick={() => {
                     history.push(
-                      `/${
-                        userinfo.token.split(" ")[1]
-                      }/${work_index}/${memberId}`
+                      `/${userinfo.token.split(" ")[1]}/${work_index}/${
+                        p.memberId
+                      }`
                     );
                     dispatch(dmActions.getDmDB(work_index));
                   }}
