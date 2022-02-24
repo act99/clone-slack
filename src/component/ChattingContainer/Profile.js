@@ -14,6 +14,9 @@ import PersonIcon from "@mui/icons-material/Person";
 import { Box, Card, CardContent } from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import { actionCreators as loginActions } from "../../redux/modules/loginReducer";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { useDispatch, useSelector } from "react-redux";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -62,7 +65,12 @@ export default function Profile() {
   const handleClose = () => {
     setOpen(false);
   };
+  const dispatch = useDispatch();
+  const logOut = () => {
+    dispatch(loginActions.logOutDB());
+  };
 
+  const user = useSelector((state) => state.loginReducer.userinfo);
   return (
     <div>
       <IconButton onClick={handleClickOpen}>
@@ -87,7 +95,7 @@ export default function Profile() {
             color: "black",
           }}
         >
-          이주석
+          {user.nickname}
         </Typography>
         <ExpandMoreIcon />
       </IconButton>
@@ -162,15 +170,22 @@ export default function Profile() {
                       color="text.secondary"
                       gutterBottom
                     >
-                      dorxm999@gmail.com
+                      {user.email}
                     </Typography>
                   </Box>
-                  <Button
-                    sx={{ mx: 0, px: 0 }}
-                    onClick={() => alert("전체 프로필 보기 이동")}
-                  >
-                    전체 프로필 보기
-                  </Button>
+                  <Box>
+                    <Button
+                      sx={{ mx: 0, px: 0 }}
+                      onClick={() => alert("전체 프로필 보기 이동")}
+                    >
+                      전체 프로필 보기
+                    </Button>
+                  </Box>
+                  <Box>
+                    <Button sx={{ mx: 0, px: 0 }} onClick={logOut}>
+                      로그아웃 하기
+                    </Button>
+                  </Box>
                 </CardContent>
               </Card>
             </DialogContent>

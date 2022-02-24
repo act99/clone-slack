@@ -37,17 +37,23 @@ const token = tokenCheck.split("=")[1];
 var stompClient = null;
 const ChatRoom = () => {
   // ** async db 작업을 위한 것
+  const [loaded, setLoaded] = React.useState(true);
+
   const params = useParams();
   const workId = params.workId;
   const memberId = params.receiverId;
   const memberEmail = params.receiverEmail;
+  const username = useSelector((state) => state.loginReducer.userinfo.email);
+  const nickname = useSelector((state) => state.loginReducer.userinfo.nickname);
   // const memberName = params.receiverName;
   const memberName = useSelector((state) => state.dmReducer.dmsList);
   // console.log(memberName);
-  console.log(params);
   // ** async db 작업을 위한 것
   //** */ 나중에 넣으면 될 것 로그인 정보임
   // const userinfo = useSelector((state) => state.loginReducer);
+  //** 엔터 눌렀을 때 스크롤 밑으로 */
+  const [pressEnter, setPressEnter] = React.useState(false);
+  //** 엔터 눌렀을 때 스크롤 밑으로 */
   // const loginNickname = userinfo.userinfo.nickname;
   //** */
   const [userData, setUserData] = useState({
@@ -61,7 +67,6 @@ const ChatRoom = () => {
   // const [messages, setMessages] = React.useState([]);
   const dispatch = useDispatch();
   const messages = useSelector((state) => state.chatReducer.messageList);
-  console.log(messages);
   const inputRef = React.useRef();
 
   //** submit 시 항상 아래로 고정시키기 위해, div scroll to 하기 위해 */
@@ -96,16 +101,17 @@ const ChatRoom = () => {
         workId,
         memberId,
         memberEmail,
-        messageData.message
+        messageData.message,
+        nickname
       )
     );
     // setMessages([...messages, userData]);
-    console.log(userData);
     if (userData.message.slice(0, 3).includes("+++")) {
       handleCodeClose();
     }
     setUserData({ ...userData, message: "" });
     setViewMessage("");
+    pressEnter ? setPressEnter(false) : setPressEnter(true);
   };
   //** 엔터 시 제출용  */
   const onEnterPress = (e) => {
@@ -148,6 +154,7 @@ const ChatRoom = () => {
   const codeId = codeOpen ? "simple-popover" : undefined;
   const handleCodeClick = (event) => {
     setCodeSnippet(event.currentTarget);
+    handleSubmit(codeSnippet);
   };
   const handleCodeClose = () => {
     setAnchorEl(null);
@@ -195,9 +202,13 @@ const ChatRoom = () => {
   // ** html 코드를 입력하기 위한...
 
   React.useEffect(() => {
-    dispatch(chatActions.getMessageDB(workId));
     scollToMyRef();
-  }, [messages]);
+    dispatch(chatActions.getMessageDB(workId, memberId, username, memberEmail));
+    let timer = setTimeout(() => {
+      loaded ? setLoaded(false) : setLoaded(true);
+    }, 1000);
+    console.log(messages);
+  }, [workId, memberId, username, userData.message, loaded]);
   return (
     <Box sx={{ px: 3 }}>
       <Box
@@ -206,7 +217,7 @@ const ChatRoom = () => {
       >
         {messages.map((item, index) => {
           return (
-            <div key={index + item.senderName}>
+            <div key={index + item.nickname}>
               <Box
                 sx={{
                   mt: 1,
@@ -267,13 +278,13 @@ const ChatRoom = () => {
                   </Grid>
                   <Grid item xs={11.4}>
                     <Typography sx={{ fontWeight: "bold", fontSize: "17px" }}>
-                      {item.senderName}
+                      {item.nickname}
                     </Typography>
-                    {item.message.slice(0, 3).includes("+++") ? (
-                      <CodeChat code={item.message} />
+                    {item.chat.slice(0, 3).includes("+++") ? (
+                      <CodeChat code={item.chat} />
                     ) : (
                       <div style={{ fontSize: "15px" }}>
-                        {changeHtml(item.message)}
+                        {changeHtml(item.chat)}
                       </div>
                     )}
                   </Grid>

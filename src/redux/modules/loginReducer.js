@@ -70,6 +70,8 @@ const loginCheckDB = () => {
 const logOutDB = () => {
   return function (dispatch, getState, { history }) {
     deleteCookie("token");
+    deleteCookie("token");
+    deleteCookie("token");
     // localStorage.removeItem("authorization");
     dispatch(logOut({ userinfo: { email: "", nickname: "" }, token: null }));
     history.replace("/");
@@ -131,7 +133,7 @@ const actionCreators = {
   getUser,
   loginDB,
   SignUpDB,
-  loginCheckDB,
+  // loginCheckDB,
   userInfoDB,
   logOutDB,
 };

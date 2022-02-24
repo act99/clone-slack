@@ -6,18 +6,16 @@ import Button from "@mui/material/Button";
 import styled from "styled-components";
 import TextField from "@mui/material/TextField";
 import { useSelector } from "react-redux";
-
 import { Card, CardContent, Grid } from "@mui/material";
 import { IconButton } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import SearchIcon from "@mui/icons-material/Search";
 import ProfileUpload from "./ProfileUpload";
-
 const Bar = (props) => {
   return (
     <Box
       sx={{
-        backgroundColor: "#350d36",
+        backgroundColor: "#350D36",
         height: "38px",
         width: "100%",
       }}
@@ -27,24 +25,18 @@ const Bar = (props) => {
     </Box>
   );
 };
-
 export default Bar;
-
 const SearchBox = (props) => {
   // modal
   const [anchorEl, setAnchorEl] = React.useState(null);
-
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
-
   //검색 기능
   const messageList = useSelector((state) => state.chatReducer.messageList);
   console.log(messageList);
@@ -55,20 +47,17 @@ const SearchBox = (props) => {
   const search = () => {
     const targetWord = searchText.current.value;
     console.log(targetWord);
-
     messageList.forEach((p) => {
-      console.log(p.message.indexOf(targetWord));
-      if (p.message.indexOf(targetWord) === -1) {
+      console.log(p.chat.indexOf(targetWord));
+      if (p.chat.indexOf(targetWord) === -1) {
         return;
       }
       _searchList.push(p);
-
       console.log(_searchList);
     });
     setList(_searchList);
   };
   console.log(searchList);
-
   return (
     <div style={{ width: "450px", margin: "auto" }}>
       <div>
@@ -128,9 +117,9 @@ const SearchBox = (props) => {
                   container
                   // spacing={}
                   sx={{
-                    border: "1px solid #d0d0d0",
+                    border: "1px solid #D0D0D0",
                     borderRadius: "5px",
-                    backgroundColor: "#ffffff",
+                    backgroundColor: "#FFFFFF",
                     margin: "0px 5px",
                   }}
                 >
@@ -139,7 +128,7 @@ const SearchBox = (props) => {
                       <PersonIcon
                         sx={{
                           color: "white",
-                          backgroundColor: "#44bedf",
+                          backgroundColor: "#44BEDF",
                           border: "solid 0px",
                           borderRadius: "5px",
                           ml: 1,
@@ -152,11 +141,9 @@ const SearchBox = (props) => {
                   </Grid>
                   <Grid item xs={11} sx={{ padding: "7px" }}>
                     <Typography sx={{ fontWeight: "bold", fontSize: "17px" }}>
-                      {p.receiverName}
+                      {p.nickname}
                     </Typography>
-                    <Typography sx={{ fontSize: "15px" }}>
-                      {p.message}
-                    </Typography>
+                    <Typography sx={{ fontSize: "15px" }}>{p.chat}</Typography>
                   </Grid>
                 </Grid>
               </div>
@@ -166,7 +153,6 @@ const SearchBox = (props) => {
     </div>
   );
 };
-
 const SearchButton = styled.button`
   background-color: #4d394d;
   width: 450px;
@@ -176,6 +162,5 @@ const SearchButton = styled.button`
   border-radius: 5px;
   text-align: center;
   font-size: 14px;
-
   cursor: pointer;
 `;

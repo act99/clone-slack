@@ -38,7 +38,6 @@ export default function DirectList() {
   const userinfo = useSelector((state) => state.loginReducer);
   const dmsinfo = useSelector((state) => state.dmReducer);
   const dmsList = dmsinfo.dmsList;
-  console.log(work_index, dmsList);
   // 테스트 코드
   const dispatch = useDispatch();
   return (
@@ -76,7 +75,7 @@ export default function DirectList() {
                         p.memberId
                       }/${p.memberEmail}`
                     );
-                    dispatch(dmActions.getDmDB(work_index));
+                    dispatch(dmActions.getDmDB(work_index, p.workName));
                   }}
                 >
                   {p.memberName}
@@ -146,7 +145,6 @@ const DirectAdd = (props) => {
   const dispatch = useDispatch();
   const memberName = React.useRef();
   const addDm = () => {
-    console.log(props.workId);
     dispatch(dmActions.addDmDB(props.workId, memberName.current.value));
   };
   return (
