@@ -37,7 +37,7 @@ export const apis = {
   getSpace: () => api.get("/api/workspaces"),
   // getSpace: () => api.get("/user/workinfo"),
 
-  // getSpace: () => api.get("/api/workspaces"),
+  getSpace: () => api.get("/api/workspaces"),
 
   addSpace: (workName) =>
     api.post("/api/workspaces", {

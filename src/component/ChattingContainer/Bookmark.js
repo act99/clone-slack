@@ -42,10 +42,10 @@ export default function Bookmark() {
   }
   console.log(getRandomArbitrary(1, 100000));
 
-  // React.useEffect(() => {
-  //   // dispatch(bookmarkActions.setMark());
-  //   dispatch(bookmarkActions.getMarkDB(params.workId));
-  // }, [params]);
+  React.useEffect(() => {
+    // dispatch(bookmarkActions.setMark());
+    dispatch(bookmarkActions.getMarkDB(params.workId));
+  }, [params]);
 
   return (
     <div style={{ height: "100%", display: "flex" }}>
