@@ -55,9 +55,9 @@ export const apis = {
       memberName: memberName,
     }),
 
-  getMark: (receiverName) => api.get(`/api/bookmark/${receiverName}`),
+  getMark: (workId) => api.get(`/api/bookmark/${workId}`),
 
-  addMark: (bookmark) => api.post("/api/bookmark", bookmark),
+  addMark: (workId, bookmark) => api.post(`/api/bookmark/${workId}`, bookmark),
 
   deleteMark: (bookmarkId) => api.delete(`/api/bookmark/${bookmarkId}`),
 

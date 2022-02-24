@@ -39,10 +39,10 @@ const initialState = {
 // 테스트 코드
 
 // middleware
-const getMarkDB = (receiverName) => {
+const getMarkDB = (workId) => {
   return function (dispatch, getState, { history }) {
     apis
-      .getMark(receiverName)
+      .getMark(workId)
       .then((res) => {
         console.log(res);
         dispatch(setMark(res.data));
@@ -53,14 +53,14 @@ const getMarkDB = (receiverName) => {
   };
 };
 
-const addMarkDB = (bookmark) => {
+const addMarkDB = (workId, bookmark) => {
   return function (dispatch, getState, { history }) {
     apis
-      .addMark(bookmark)
+      .addMark(workId, bookmark)
       .then((res) => {
         console.log(res);
         dispatch(addMark(bookmark));
-        window.location.reload();
+        // window.location.reload();
       })
       .catch((err) => console.log(err));
   };
@@ -83,7 +83,7 @@ export default handleActions(
   {
     [SET_MARK]: (state, action) =>
       produce(state, (draft) => {
-        // draft.bookmarkList = [...action.payload.mark_list];
+        draft.bookmarkList = [...action.payload.mark_list];
       }),
     [ADD_MARK]: (state, action) =>
       produce(state, (draft) => {
