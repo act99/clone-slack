@@ -26,20 +26,26 @@ export default function Bookmark() {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
   const dispatch = useDispatch();
+  const params = useParams();
   const bookmarkList = useSelector(
     (state) => state.bookmarkReducer
   ).bookmarkList;
   console.log(bookmarkList);
+
+  const targetMarkList = bookmarkList.filter(
+    (l) => l.workId === parseInt(params.workId)
+  );
+  console.log(targetMarkList);
 
   function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
   }
   console.log(getRandomArbitrary(1, 100000));
 
-  React.useEffect(() => {
-    // dispatch(bookmarkActions.setMark());
-    dispatch(bookmarkActions.getMarkDB("이주영"));
-  }, []);
+  // React.useEffect(() => {
+  //   // dispatch(bookmarkActions.setMark());
+  //   dispatch(bookmarkActions.getMarkDB(params.workId));
+  // }, [params]);
 
   return (
     <div style={{ height: "100%", display: "flex" }}>
@@ -131,19 +137,20 @@ const BookmarkModal = () => {
   const receiverId = params.receiverId;
 
   const dmsList = useSelector((state) => state.dmReducer.dmsList);
-  const receiverName = dmsList.filter(
-    (l, idx) => l.receiverId === parseInt(receiverId)
-  )[0].receiverName;
-  console.log(receiverId, receiverName);
+  // const memberName = dmsList.filter(
+  //   (l, idx) => l.memberId === parseInt(receiverId)
+  // )[0].memberName;
+  // console.log(receiverId, memberName);
 
   const addMark = () => {
     const mark_list = {
-      receiverName: receiverName,
+      // workId: parseInt(params.workId),
+      // memberId: parseInt(params.receiverId),
       bookmarkName: bookmarkName.current.value,
       bookmarkUrl: bookmarkUrl.current.value,
     };
     // dispatch(bookmarkActions.addMark(mark_list));
-    dispatch(bookmarkActions.addMarkDB(mark_list));
+    dispatch(bookmarkActions.addMarkDB(parseInt(params.workId), mark_list));
     console.log(mark_list, "북마크 생성");
   };
 

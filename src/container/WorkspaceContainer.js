@@ -16,6 +16,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { history } from "../redux/store";
 import { actionsCreators as dmActions } from "../redux/modules/dmReducer";
 import { actionsCreators as workSpaceActions } from "../redux/modules/workSpaceReducer";
+import { actionsCreators as bookmarkActions } from "../redux/modules/workSpaceReducer";
+
 import ButtonList from "../component/WorkspaceContainer/ButtonList";
 
 // workspace 생성 modal
@@ -137,6 +139,7 @@ const WorkspaceContainer = (props) => {
                 history.push(`/${userinfo.token.split(" ")[1]}/${p.workId}/0`);
                 console.log(p.workId, p.workName);
                 dispatch(dmActions.getDmDB(p.workId, p.workName));
+                dispatch(bookmarkActions.getMarkDB(p.workId));
               }}
             >
               {p.workName}
