@@ -133,7 +133,7 @@ export default function First() {
                 height: "50px",
                 borderRadius: "5px",
               }}
-              onClick={() => history.replace(`/${token.split(" ")[1]}/0/0`)}
+              onClick={() => history.replace(`/${token.split(" ")[1]}/0/0/0`)}
             >
               슬랙 시작하기
             </button>

@@ -16,6 +16,7 @@ function App() {
   const userinfo = useSelector((state) => state.loginReducer);
   const goToken = userinfo.token;
   const cookie = document.cookie;
+  const [loaded, setLoaded] = React.useState(true);
   React.useEffect(() => {
     // dispatch(loginActions.logOutDB());
     if (!cookie) {
@@ -25,8 +26,11 @@ function App() {
     // if (document.cookie && userinfo.token === null) {
     //   dispatch(loginActions.loginCheckDB());
     // }
+    // let timer = setTimeout(() => {
+    //   loaded ? setLoaded(false) : setLoaded(true);
+    // }, 5000);
     console.log(userinfo.token);
-  }, []);
+  }, [loaded]);
 
   return (
     <>
@@ -43,7 +47,9 @@ function App() {
             <Route path="/" exact component={First} />
             {userinfo.token !== null && (
               <Route
-                path={`/${goToken.split(" ")[1]}/:workId/:receiverId/`}
+                path={`/${
+                  goToken.split(" ")[1]
+                }/:workId/:receiverId/:receiverEmail`}
                 exact
                 component={Home}
               />
