@@ -34,6 +34,8 @@ export const apis = {
     }),
 
   // getSpace: () => api.post("/user/worklist"),
+  getSpace: () => api.get("/api/workspaces"),
+  // getSpace: () => api.get("/user/workinfo"),
 
   getSpace: () => api.get("/api/workspaces"),
 

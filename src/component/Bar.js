@@ -73,7 +73,7 @@ const SearchBox = (props) => {
     <div style={{ width: "450px", margin: "auto" }}>
       <div>
         <SearchButton aria-describedby={id} onClick={handleClick}>
-          53에서 검색
+          메세지 검색
           <SearchIcon sx={{ float: "right" }} />
         </SearchButton>
       </div>
