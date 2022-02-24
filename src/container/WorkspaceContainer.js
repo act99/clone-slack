@@ -134,7 +134,9 @@ const WorkspaceContainer = (props) => {
               key={p.workId + "" + p.workName + idx}
               id={p.workId}
               onClick={() => {
-                history.push(`/${userinfo.token.split(" ")[1]}/${p.workId}/0`);
+                history.push(
+                  `/${userinfo.token.split(" ")[1]}/${p.workId}/0/0`
+                );
                 console.log(p.workId, p.workName);
                 dispatch(dmActions.getDmDB(p.workId, p.workName));
               }}

@@ -40,7 +40,7 @@ const ChatRoom = () => {
   const params = useParams();
   const workId = params.workId;
   const memberId = params.receiverId;
-
+  const memberEmail = params.receiverEmail;
   // const memberName = params.receiverName;
   const memberName = useSelector((state) => state.dmReducer.dmsList);
   // console.log(memberName);
@@ -95,7 +95,7 @@ const ChatRoom = () => {
       chatActions.addMessageDB(
         workId,
         memberId,
-        `dorxm999@gmail.com`,
+        memberEmail,
         messageData.message
       )
     );
