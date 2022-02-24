@@ -53,6 +53,7 @@ const loginCheckDB = () => {
       apis
         .userInfo(token)
         .then((res) => {
+          console.log(res.data);
           dispatch(
             setUser({
               email: res.data.username,
@@ -68,6 +69,8 @@ const loginCheckDB = () => {
 
 const logOutDB = () => {
   return function (dispatch, getState, { history }) {
+    deleteCookie("token");
+    deleteCookie("token");
     deleteCookie("token");
     // localStorage.removeItem("authorization");
     dispatch(logOut({ userinfo: { email: "", nickname: "" }, token: null }));
@@ -130,7 +133,7 @@ const actionCreators = {
   getUser,
   loginDB,
   SignUpDB,
-  loginCheckDB,
+  // loginCheckDB,
   userInfoDB,
   logOutDB,
 };

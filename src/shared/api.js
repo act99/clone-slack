@@ -5,6 +5,7 @@ const token = tokenCheck.split("=")[1];
 const api = axios.create({
   // 실제 베이스 유알엘
   baseURL: "http://52.78.96.234:8080",
+  // baseURL: "http://3.37.123.52:8080",
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json",
@@ -30,5 +31,45 @@ export const apis = {
   userInfo: (token) =>
     api.post(`/user/userinfo`, {
       authorization: token,
+    }),
+
+  // getSpace: () => api.post("/user/worklist"),
+  getSpace: () => api.get("/api/workspaces"),
+  // getSpace: () => api.get("/user/workinfo"),
+
+  // getSpace: () => api.get("/api/workspaces"),
+
+  addSpace: (workName) =>
+    api.post("/api/workspaces", {
+      workName: workName,
+    }),
+
+  deleteSpace: (workID) => api.delete(`/api/workspaces/${workID}`),
+
+  // getDm: (workId) => api.get(`/api/members?workId=${workId}`),
+  getDm: (workId) => api.get(`/api/members/${workId}`),
+
+  addDm: (workId, memberName) =>
+    api.post(`/api/members/${workId}`, {
+      workId: workId,
+      memberName: memberName,
+    }),
+
+  getMark: (workId) => api.get(`/api/bookmark/${workId}`),
+
+  addMark: (workId, bookmark) => api.post(`/api/bookmark/${workId}`, bookmark),
+
+  deleteMark: (bookmarkId) => api.delete(`/api/bookmark/${bookmarkId}`),
+
+  getChat: (workId, memberId, username) =>
+    api.post(`/api/dms/${workId}/${memberId}`, { username: username }),
+  getAnotherChat: (workId, memberId, anoterUser) =>
+    api.post(`/api/dms/${workId}/${memberId}`, { username: anoterUser }),
+
+  addChat: (workId, memberId, memberName, chat) =>
+    api.post(`/api/dms/${workId}`, {
+      memberId: memberId,
+      memberName: memberName,
+      chat: chat,
     }),
 };

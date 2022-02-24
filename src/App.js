@@ -1,112 +1,63 @@
 import "./App.css";
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "./redux/store";
 import Home from "./pages/Home";
-import styled from "@emotion/styled";
 import Container from "@mui/material/Container";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import { actionCreators as loginActions } from "./redux/modules/loginReducer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import { Link } from "@mui/material";
-
+import First from "./pages/First";
 function App() {
   const dispatch = useDispatch();
-  // React.useEffect(() => {
-  //   if (document.cookie) dispatch(loginActions.loginCheckDB());
-  // }, []);
+  const userinfo = useSelector((state) => state.loginReducer);
+  const goToken = userinfo.token;
+  const cookie = document.cookie;
+  const [loaded, setLoaded] = React.useState(true);
+  React.useEffect(() => {
+    // dispatch(loginActions.logOutDB());
+    if (!cookie) {
+      // dispatch(loginActions.logOutDB());
+      // history.replace("/signin");
+    }
+    // if (document.cookie && userinfo.token === null) {
+    //   dispatch(loginActions.loginCheckDB());
+    // }
+    // let timer = setTimeout(() => {
+    //   loaded ? setLoaded(false) : setLoaded(true);
+    // }, 5000);
+    console.log(userinfo.token);
+  }, [loaded]);
 
   return (
     <>
       <ConnectedRouter history={history}>
         {/* <CssBaseline /> */}
-        <Container maxWidth="xl">
-          <Route path="/" exact component={Home} />
-          <Route path="/signin" exact component={Signin} />
-          <Route path="/signup" exact component={Signup} />
+        <Container maxWidth="xxl">
+          <Switch>
+            <Route path="/signin" exact component={Signin} />
+            <Route path="/signup" exact component={Signup} />
+          </Switch>
         </Container>
-        {/* Footer */}
-        <Box sx={{ bgcolor: "background.paper", p: 6 }} component="footer">
-          <Typography variant="h6" align="center" gutterBottom>
-            Gongguri
-          </Typography>
-          <Typography
-            variant="subtitle1"
-            align="center"
-            color="text.secondary"
-            component="p"
-          >
-            항해99 미니프로젝트
-          </Typography>
-          <Copyright />
+        <Box sx={{ width: "100vw", height: "100%" }}>
+          <Switch>
+            <Route path="/" exact component={First} />
+            {userinfo.token !== null && (
+              <Route
+                path={`/${
+                  goToken.split(" ")[1]
+                }/:workId/:receiverId/:receiverEmail`}
+                exact
+                component={Home}
+              />
+            )}
+          </Switch>
         </Box>
-        {/* End footer */}
       </ConnectedRouter>
     </>
   );
 }
-
-function Copyright() {
-  return (
-    <>
-      <Typography variant="body2" color="text.secondary" align="center">
-        {"Copyright © "}
-        <Link color="inherit" href="https://github.com/act99/mini_project">
-          Frontend
-        </Link>
-
-        {new Date().getFullYear()}
-        {"."}
-      </Typography>
-      <Typography variant="body2" color="text.secondary" align="center">
-        {"Copyright © "}
-
-        <Link
-          color="inherit"
-          href="https://github.com/hyeonjh/gongguri_backend"
-        >
-          Back end
-        </Link>
-        {new Date().getFullYear()}
-        {"."}
-      </Typography>
-    </>
-  );
-}
-
-const Wrap = styled.div`
-  // 태블릿용, 하지만 요즘 모바일은 대부분 테블릿 용으로 맞추어도 된다.
-  // flex direction 이 column 이기 때문에 justify content 로 start 해주어야 위로 간다.
-  @media ${({ theme }) => theme.device.tablet} {
-    flex-direction: column;
-    background: blue;
-    width: 100%;
-    display: flex;
-    justify-items: center;
-    justify-content: start;
-  }
-  // 모바일용 가장 극단적인 상황에서 사용할 것
-  @media ${({ theme }) => theme.device.mobile} {
-    flex-direction: column;
-    background: red;
-    width: 100%;
-    display: flex;
-    justify-items: center;
-    justify-content: start;
-  }
-  // PC용 웹사이트 용으로 생각하면 된다.
-  width: 90%;
-  height: 100vh;
-  margin: auto;
-  background: wheat;
-  display: flex;
-  align-items: flex-start;
-  justify-items: center;
-  justify-content: center;
-`;
-
 export default App;
