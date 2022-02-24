@@ -30,13 +30,22 @@ import { actionsCreators as chatActions } from "../../redux/modules/chatReducer"
 import EmojiList from "./Emojilist";
 import CodeChanger from "./CodeChanger";
 import CodeChat from "./CodeChat";
-
 // 스크롤 바 사라지게 하기
 
 const tokenCheck = document.cookie;
 const token = tokenCheck.split("=")[1];
 var stompClient = null;
 const ChatRoom = () => {
+  // ** async db 작업을 위한 것
+  const params = useParams();
+  const workId = params.workId;
+  const memberId = params.receiverId;
+
+  // const memberName = params.receiverName;
+  const memberName = useSelector((state) => state.dmReducer.dmsList);
+  // console.log(memberName);
+  console.log(params);
+  // ** async db 작업을 위한 것
   //** */ 나중에 넣으면 될 것 로그인 정보임
   // const userinfo = useSelector((state) => state.loginReducer);
   // const loginNickname = userinfo.userinfo.nickname;
@@ -82,7 +91,14 @@ const ChatRoom = () => {
       message: userData.message,
       receiverName: userData.receivername,
     };
-    dispatch(chatActions.addMessageDB(messageData));
+    dispatch(
+      chatActions.addMessageDB(
+        workId,
+        memberId,
+        `dorxm999@gmail.com`,
+        messageData.message
+      )
+    );
     // setMessages([...messages, userData]);
     console.log(userData);
     if (userData.message.slice(0, 3).includes("+++")) {
@@ -179,6 +195,7 @@ const ChatRoom = () => {
   // ** html 코드를 입력하기 위한...
 
   React.useEffect(() => {
+    dispatch(chatActions.getMessageDB(workId));
     scollToMyRef();
   }, [messages]);
   return (
@@ -334,7 +351,9 @@ const ChatRoom = () => {
               backgroundColor: "#ffffff",
               // outline-color: #FE6B8B;
             }}
-          />
+          >
+            {viewMessage}
+          </textarea>
           <Box
             sx={{
               display: "flex",

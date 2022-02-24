@@ -33,9 +33,9 @@ export const apis = {
       authorization: token,
     }),
 
-  getSpace: () => api.get("/api/workspaces"),
+  // getSpace: () => api.post("/user/worklist"),
 
-  // getSpace: () => api.get("/user/workinfo"),
+  getSpace: () => api.get("/api/workspaces"),
 
   addSpace: (workName) =>
     api.post("/api/workspaces", {
@@ -59,11 +59,12 @@ export const apis = {
 
   deleteMark: (bookmarkId) => api.delete(`/api/bookmark/${bookmarkId}`),
 
-  addChat: (message) =>
-    api.post("/api/dms/5", {
-      memberId: 1,
-      memberName: "pootter@naver.com",
-      chat: message,
+  getChat: (workId) => api.get(`/api/chat/${workId}`),
+  addChat: (workId, memberId, memberName, chat) =>
+    api.post(`/api/dms/${workId}`, {
+      memberId: memberId,
+      memberName: memberName,
+      chat: chat,
     }),
 
   createRoom: function (data) {

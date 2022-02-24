@@ -43,7 +43,7 @@ function App() {
             <Route path="/" exact component={First} />
             {userinfo.token !== null && (
               <Route
-                path={`/${goToken.split(" ")[1]}/:workId/:receiverId`}
+                path={`/${goToken.split(" ")[1]}/:workId/:receiverId/`}
                 exact
                 component={Home}
               />
