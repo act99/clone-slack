@@ -30,17 +30,14 @@ export default function Bookmark() {
   const bookmarkList = useSelector(
     (state) => state.bookmarkReducer
   ).bookmarkList;
-  console.log(bookmarkList);
 
   const targetMarkList = bookmarkList.filter(
     (l) => l.workId === parseInt(params.workId)
   );
-  console.log(targetMarkList);
 
   function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
   }
-  console.log(getRandomArbitrary(1, 100000));
 
   React.useEffect(() => {
     // dispatch(bookmarkActions.setMark());
@@ -151,7 +148,6 @@ const BookmarkModal = () => {
     };
     // dispatch(bookmarkActions.addMark(mark_list));
     dispatch(bookmarkActions.addMarkDB(parseInt(params.workId), mark_list));
-    console.log(mark_list, "북마크 생성");
   };
 
   return (

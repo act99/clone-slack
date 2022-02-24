@@ -18,23 +18,23 @@ const addDm = createAction(ADD_DM, (dm) => ({
 //initialState
 const initialState = {
   workID: 0,
-  workName: "53",
+  workName: "홈",
   dmsList: [
-    {
-      memberId: 0,
-      memberNickname: "이주영",
-      isNew: false,
-    },
-    {
-      memberId: 1,
-      memberNickname: "이주석",
-      isNew: false,
-    },
-    {
-      memberId: 2,
-      memberNickname: "김철수",
-      isNew: false,
-    },
+    // {
+    //   memberId: 0,
+    //   memberNickname: "이주영",
+    //   isNew: false,
+    // },
+    // {
+    //   memberId: 1,
+    //   memberNickname: "이주석",
+    //   isNew: false,
+    // },
+    // {
+    //   memberId: 2,
+    //   memberNickname: "김철수",
+    //   isNew: false,
+    // },
   ],
   // is_loaded: false,
 };

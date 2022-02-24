@@ -105,7 +105,6 @@ const WorkspaceContainer = (props) => {
   const myCreateSpace = workSpaceList.filter(
     (l) => l.nickname === userinfo.userinfo.nickname
   );
-  console.log(myCreateSpace);
 
   //내가 다이렉트 메세지에 포함된 워크스페이스
   // const myJoinSpace = workSpaceList.filter((l)=>l.)
@@ -122,7 +121,6 @@ const WorkspaceContainer = (props) => {
         workName.current.value // 백엔드에서 받아올때 앞에 두글자만 가져와서 state에 저장하기
       )
     );
-    console.log(workName.current.value, "워크스페이스 개설");
   };
 
   return (
@@ -139,12 +137,11 @@ const WorkspaceContainer = (props) => {
                 history.push(
                   `/${userinfo.token.split(" ")[1]}/${p.workId}/0/0`
                 );
-                console.log(p.workId, p.workName);
                 dispatch(dmActions.getDmDB(p.workId, p.workName));
                 dispatch(bookmarkActions.getMarkDB(p.workId));
               }}
             >
-              {p.workName}
+              {p.workName[0]}
             </WorkspaceButton>
           );
         })}

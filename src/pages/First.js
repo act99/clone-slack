@@ -20,14 +20,15 @@ const Img = styled("img")({
   maxHeight: "100%",
 });
 
+const cookie = document.cookie;
 export default function First() {
   const dispatch = useDispatch();
   const userinfo = useSelector((state) => state.loginReducer);
   const token = userinfo.token;
   const history = useHistory();
-  React.useEffect(() => {}, [token]);
+  React.useEffect(() => {}, [cookie]);
 
-  if (token === null) {
+  if (!cookie) {
     return (
       <>
         <Grid container component="main" sx={{ height: "100vh" }}>
